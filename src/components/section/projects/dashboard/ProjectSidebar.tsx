@@ -118,22 +118,32 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
       {/* Category Filter Section */}
       <div className="mb-8">
-        <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4 uppercase tracking-wider transition-colors duration-300">
+        <h3 className="text-sm font-bold text-gray-800 mb-4 uppercase tracking-wider dark:text-white">
           Categories
         </h3>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           {/* All Categories Option */}
           <button
             onClick={() => onCategorySelect(null)}
-            className={`w-full px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-500 border text-left flex items-center justify-between ${
+            className={`w-full border-2 border-gray-800 rounded-lg p-3 shadow-[3px_3px_0_0_rgba(0,0,0,1)] transition-all duration-300 hover:shadow-[1px_1px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 ${
               selectedCategory === null
-                ? 'bg-themeRed dark:bg-themeRed text-white border-themeRed shadow-md'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
+                ? 'bg-themeRed text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            <span>All Categories</span>
-            <span className="text-xs font-semibold">{stats.total}</span>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-bold uppercase tracking-wider">All Projects</span>
+              <div className={`w-2 h-2 rounded-full ${selectedCategory === null ? 'bg-white' : 'bg-gray-400'}`}></div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-bold">All Categories</span>
+              <span className={`text-xs font-bold px-2 py-0.5 rounded ${
+                selectedCategory === null ? 'bg-white/20' : 'bg-gray-100 dark:bg-gray-700'
+              }`}>
+                {stats.total}
+              </span>
+            </div>
           </button>
 
           {/* Category Items */}
@@ -145,19 +155,26 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
               <button
                 key={key}
                 onClick={() => onCategorySelect(isSelected ? null : key)}
-                className={`w-full px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-500 border text-left flex items-center justify-between ${
+                className={`w-full border-2 border-gray-800 rounded-lg p-3 shadow-[3px_3px_0_0_rgba(0,0,0,1)] transition-all duration-300 hover:shadow-[1px_1px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 ${
                   isSelected
-                    ? 'bg-themeRed dark:bg-themeRed text-white border-themeRed shadow-md'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    ? 'bg-themeRed text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                 }`}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-bold uppercase tracking-wider opacity-70">
+                    {key.replace('-', ' ')}
+                  </span>
                   <div className={`w-2 h-2 rounded-full ${isSelected ? 'bg-white' : category.color}`}></div>
-                  <span>{category.label}</span>
                 </div>
-                <span className={`text-xs font-semibold ${isSelected ? 'bg-white/20' : 'bg-gray-100 dark:bg-gray-700'} px-2 py-1 rounded transition-colors duration-300`}>
-                  {count}
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold">{category.label}</span>
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded ${
+                    isSelected ? 'bg-white/20' : 'bg-gray-100 dark:bg-gray-700'
+                  }`}>
+                    {count}
+                  </span>
+                </div>
               </button>
             );
           })}
