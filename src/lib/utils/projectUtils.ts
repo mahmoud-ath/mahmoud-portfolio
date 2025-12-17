@@ -51,7 +51,7 @@ export const getProjectDuration = (createdAt: string | undefined, completedAt: s
   const end = new Date(completedAt);
   const months = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30));
 
-  if (months < 1) return 'Less than a month';
+  if (months < 1) return 'Duration';
   if (months === 1) return '1 month';
   return `${months} months`;
 };

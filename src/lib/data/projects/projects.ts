@@ -6,6 +6,8 @@
 import { Project } from '../../types/Project_Section';
 
 export const projectsData: Project[] = [
+
+  // cmh-data-management-system
   {
     id: "1",
     slug: "cmh-data-management-system",
@@ -37,6 +39,8 @@ export const projectsData: Project[] = [
     createdAt: "2025-04-01",
     completedAt: "2025-06-15"
   },
+
+  // smartmaint-predictive-maintenance
   {
     id: "2",
     slug: "smartmaint-predictive-maintenance",
@@ -68,6 +72,8 @@ export const projectsData: Project[] = [
     createdAt: "2025-01-01",
     completedAt: "2025-03-15"
   },
+
+  // morocco-road-accidents-analysis
   {
     id: "3",
     slug: "morocco-road-accidents-analysis",
@@ -105,6 +111,8 @@ export const projectsData: Project[] = [
     createdAt: "2025-01-01",
     completedAt: "2025-04-15"
   },
+
+  //tech-horizon-magazine
   {
     id: "4",
     slug: "tech-horizon-magazine",
@@ -145,5 +153,197 @@ export const projectsData: Project[] = [
     createdAt: "2024-11-01",
     completedAt: "2025-01-15"
   },
+
+  //energy-consumption-prediction-cart
+  {
+    id: "5",
+    slug: "energy-consumption-prediction-cart",
+    title: "CART - Prédiction de Consommation Énergétique",
+    description: "A comprehensive machine learning project implementing CART (Classification And Regression Tree) to predict energy consumption in smart buildings. Includes EDA, data preprocessing, feature engineering, model training, and detailed performance analysis with business insights.",
+    category: "machine-learning",
+    tags: ["machine-learning", "cart", "decision-trees", "energy-prediction", "python", "scikit-learn", "data-analysis", "iot", "regression", "feature-engineering"],
+    image: "/Projects/5.energy-consumption-prediction-cart/images/dashboard_synthese.png",
+    images: [
+      "/Projects/5.energy-consumption-prediction-cart/images/analyse_erreurs.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/arbre_decision.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/comparaison_train_test.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/dashboard_synthese.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/patterns_temporels.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/distribution_avant_apres.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/importance_variables.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/matrice_correlation.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/predictions_vs_realite.png",
+      "/Projects/5.energy-consumption-prediction-cart/images/top_correlations.png",
+      
+    ],
+    featured: true,
+    links: {
+      github: "https://github.com/mahmoud-ath/Appliances-Energy-Prediction", // Update with actual repo link
+      demo: ""
+    },
+    videos: [],
+    documentation: "/Projects/5.energy-consumption-prediction-cart/docs/RAPPORT_CART_Prediction_de_Consommation_energetique.pdf",  // LaTeX report mentioned
+    tier: "standard",
+    impactScore: 22,
+    projectType: "school", // Master AISD project
+    difficulty: 5,
+    isNew: true, // 2025 project
+    isTrending: true,
+    createdAt: "2025-01-15",
+    completedAt: "2025-02-28"
+  },
   
+  // markus-pub-website-officiel
+  {
+    id: "6",
+    slug: "markus-pub-website-officiel",
+    title: "Markus Pub Website",
+    description: "Official website for Markus Pub, a project management platform. A modern React-based website featuring team profiles, mission statements, creative showcases, and interactive UI components. Built with Next.js, AOS animations, and responsive design.",
+    category: "web-dev",
+    tags: ["react", "nextjs", "typescript", "website", "ui-design", "aos-animations", "responsive-design", "business-website"],
+    image: "/Projects/6.markus-pub-website-officiel/images/markus.png", // From your component: backgroundImage: "url('/images/hero_about.jpg')"
+    images: [
+      "/Projects/6.markus-pub-website-officiel/images/1.png",
+      "/Projects/6.markus-pub-website-officiel/images/2.png",
+      "/Projects/6.markus-pub-website-officiel/images/3.png",
+      "/Projects//6.markus-pub-website-officiel/images/markus.png" // You might want to add actual screenshots
+    ],
+    featured: true,
+    links: {
+      github: "https://github.com/mahmoud-ath/markus-pub-website-officiel",
+      demo: "https://markus-pub-website-officiel-1hxo.vercel.app/" // Assuming it's deployed on Vercel
+    },
+    videos: [],
+    documentation: "",
+    tier: "flagship", // Business website could be flagship
+    impactScore: 25,
+    projectType: "client", // Or "business" if it's for a real company
+    difficulty: 4,
+    isNew: true,
+    isTrending: true,
+    createdAt: "2025-04-01",
+    completedAt: "2025-04-20"
+  },
+  
+  // whatsapp-chat-analyzer
+   {
+    id: "7",
+    slug: "whatsapp-chat-analyzer",
+    title: "WhatsApp Chat Analyzer",
+    description: "A fun and interactive Streamlit app that visualizes and analyzes exported WhatsApp group chats. Quickly get insights like top message senders, word usage, emoji stats, message activity trends, and more.",
+    category: "data-analyst", // Or "data-viz" if you have that category
+    tags: ["streamlit", "python", "data-visualization", "chat-analysis", "pandas", "altair", "data-analytics", "whatsapp"],
+    image:"/Projects/7.whatsapp-chat-analyzer/images/overview.jpg", // You'll need to add this
+    images: [
+      "/Projects/7.whatsapp-chat-analyzer/images/overview.jpg",
+      "/Projects/7.whatsapp-chat-analyzer/images/overview.jpg"
+    ],
+    featured: true,
+    links: {
+      github: "https://github.com/mahmoud-ath/whatsapp-chat-analyzer",
+      demo: "http://localhost:8501" // Local demo - consider deploying to Streamlit Cloud for a live URL
+    },
+    videos: [],
+    documentation: "",
+    tier: "standard",
+    impactScore: 18,
+    projectType: "personal",
+    difficulty: 3,
+    isNew: true, // Set to true if recently created
+    isTrending: true,
+    createdAt: "2025-03-01", // Update with actual date
+    completedAt: "2025-03-15" // Update with actual date
+  },
+
+  // titanic-survivor-prediction
+  {
+    id: "8",
+    slug: "titanic-survivor-prediction",
+    title: "Titanic Survivor Prediction",
+    description: "This project aims to predict the survival of Titanic passengers based on their characteristics (e.g., age, gender, class). The dataset is preprocessed, and two machine learning models—K-Nearest Neighbors (KNN) and Random Forest—are implemented from scratch and using Scikit-Learn to compare their performance.",
+    category: "machine-learning", // Changed from "web-dev" based on project type
+    tags: ["machine-learning", "python", "data-science", "knn", "random-forest", "scikit-learn", "titanic", "classification"],
+    image: "/Projects/8.titanic-survivor-prediction/images/🚢 Titanic Survivor.png", // You'll need to add this image
+    images: [
+      "/Projects/8.titanic-survivor-prediction/images/🚢 Titanic Survivor.png",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0001.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0002.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0003.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0004.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0005.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0006.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0007.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0008.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0009.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0010.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0011.jpg",
+      "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0012.jpg",
+      
+
+
+    ],
+    featured: true,
+    links: {
+      github: "https://github.com/mahmoud-ath/Titanic-Survivor-Prediction",
+      demo: "" // No live demo mentioned in README
+    },
+    videos: [],
+    documentation: "", // Optional: could be a link to detailed documentation
+    tier: "standard",
+    impactScore: 15,
+    projectType: "personal",
+    difficulty: 4,
+    isNew: false,
+    isTrending: false,
+    createdAt: "2024-01-01", // Estimated - update with actual date
+    completedAt: "2024-02-15" // Estimated - update with actual date
+  },
+
+  // watchly-ai
+   {
+    id: "9",
+    slug: "watchly-ai",
+    title: "Watchly AI",
+    description: "Watchly: Discover, Track, Share. Your all-in-one hub for movies & TV. Search millions of titles, save your watchlist, and share recommendations—all powered by TMDB's live database",
+    category: "web-dev",
+    tags: [
+      "react",
+      "typescript",
+      "tailwind-css",
+      "movie-discovery",
+      "tmdb-api",
+      "responsive-design",
+      "seo-friendly",
+      "local-storage"
+    ],
+    image: "/Projects/9.watchly-ai/images/overview-1.png",
+    images: [
+      "/Projects/9.watchly-ai/images/1.png",
+      "/Projects/9.watchly-ai/images/2.png",
+      "/Projects/9.watchly-ai/images/3.png",
+      "/Projects/9.watchly-ai/images/4.png",
+      "/Projects/9.watchly-ai/images/5.png",
+      "/Projects/9.watchly-ai/images/6.png",
+      "/Projects/9.watchly-ai/images/9.png",
+      "/Projects/9.watchly-ai/images/7.png",
+    
+
+      
+    ],
+    featured: true,
+    links: {
+      github: "https://github.com/mahmoud-ath/WATCHLY-v2",
+      demo: "https://watchly-v2.vercel.app/"
+    },
+    videos: [],
+    documentation: "",
+    tier: "flagship",
+    impactScore: 16,
+    projectType: "personal",
+    difficulty: 4,
+    isNew: true,
+    isTrending: true,
+    createdAt: "2025-12-15",
+    completedAt: "2025-09-01"
+  },
 ];

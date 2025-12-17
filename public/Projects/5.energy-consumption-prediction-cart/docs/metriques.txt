@@ -1,0 +1,25 @@
+=== MÉTRIQUES DU MODÈLE CART ===
+
+Performance sur l'ensemble d'entraînement:
+  R² = 0.4351
+  MAE = 15.74 Wh
+  RMSE = 21.67 Wh
+
+Performance sur l'ensemble de test:
+  R² = 0.3391
+  MAE = 15.61 Wh
+  RMSE = 21.62 Wh
+
+Dimensions des données:
+  Données initiales: 19735 observations
+  Après nettoyage: 17597 observations
+  Train: 14077 observations
+  Test: 3520 observations
+  Variables: 11
+
+Top 5 variables les plus importantes:
+  1. RH_mean: 0.025
+  2. day_of_week: 0.032
+  3. T_mean: 0.103
+  4. lights: 0.112
+  5. hour: 0.723

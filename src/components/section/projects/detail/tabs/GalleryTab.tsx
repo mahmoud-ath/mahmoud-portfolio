@@ -216,7 +216,7 @@ const GalleryTab: React.FC<GalleryTabProps> = ({ images, title }) => {
           </motion.div>
         )}
       </div>
-{/* Enhanced Lightbox Modal */}
+{/* Enhanced Lightbox Modal with Fixed Container */}
 <AnimatePresence>
   {lightboxOpen && (
     <motion.div
@@ -235,7 +235,7 @@ const GalleryTab: React.FC<GalleryTabProps> = ({ images, title }) => {
         exit={{ scale: 0.8, opacity: 0, y: 20 }}
         transition={{ type: "spring", damping: 25, stiffness: 200 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative max-w-7xl w-full max-h-[85vh] flex flex-col"
+        className="relative flex flex-col w-full max-w-5xl"
       >
         {/* Header Bar */}
         <motion.div 
@@ -247,86 +247,91 @@ const GalleryTab: React.FC<GalleryTabProps> = ({ images, title }) => {
           <div className="flex items-center space-x-3">
             <div className="w-3 h-3 rounded-full bg-emerald-400/80 shadow-lg shadow-emerald-400/20"></div>
             <span className="text-white/90 font-medium text-sm">
-              {title} - Image {selectedImageIndex + 1}
+              {title} - Image {selectedImageIndex + 1} of {images.length}
             </span>
           </div>
           
-          <div className="flex items-center space-x-2">
-           
-
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 90, backgroundColor: "rgba(239,68,68,0.2)" }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setLightboxOpen(false)}
-                className="text-white/80 hover:text-red-400 transition-all duration-500 p-2 rounded-lg hover:bg-red-500/20 backdrop-blur-sm group"
-              title="Close"
-            >
-              <X size={20} className="group-hover:rotate-90 transition-transform duration-300" />
-            </motion.button>
-          </div>
+          <motion.button
+            whileHover={{ scale: 1.1, rotate: 90, backgroundColor: "rgba(239,68,68,0.2)" }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setLightboxOpen(false)}
+            className="text-white/80 hover:text-red-400 transition-all duration-500 p-2 rounded-lg hover:bg-red-500/20 backdrop-blur-sm group"
+            title="Close (ESC)"
+          >
+            <X size={20} className="group-hover:rotate-90 transition-transform duration-300" />
+          </motion.button>
         </motion.div>
 
-        {/* Main Image Container */}
-        <div className="relative bg-black/50 rounded-b-2xl overflow-hidden flex-1 flex items-center justify-center min-h-0">
-          <motion.img
+        {/* Fixed Size Image Container - 800x500px */}
+        <div className="relative bg-black/50 rounded-b-2xl overflow-hidden flex items-center justify-center w-full h-96 sm:h-[500px]">
+          {/* Image with fixed container */}
+          <motion.div
             key={selectedImageIndex}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.3 }}
-            src={images[selectedImageIndex]}
-            alt={`${title} screenshot ${selectedImageIndex + 1}`}
-            className="max-w-full max-h-full object-contain rounded-b-2xl shadow-2xl"
-          />
-
-          {/* Navigation Buttons - Enhanced */}
-          <motion.button
-            whileHover={{ scale: 1.15, x: -5 }}
-            whileTap={{ scale: 0.85 }}
-            onClick={prevImage}
-            className="absolute left-6 top-1/2 -translate-y-1/2 text-white/90 hover:text-white bg-black/60 hover:bg-black/80 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 shadow-2xl group"
-            title="Previous image"
+            className="w-full h-full flex items-center justify-center"
           >
-            <ChevronLeft size={32} className="group-hover:-translate-x-0.5 transition-transform" />
-          </motion.button>
+            <img
+              src={images[selectedImageIndex]}
+              alt={`${title} screenshot ${selectedImageIndex + 1}`}
+              className="max-w-full max-h-full object-contain shadow-2xl"
+            />
+          </motion.div>
 
-          <motion.button
-            whileHover={{ scale: 1.15, x: 5 }}
-            whileTap={{ scale: 0.85 }}
-            onClick={nextImage}
-            className="absolute right-6 top-1/2 -translate-y-1/2 text-white/90 hover:text-white bg-black/60 hover:bg-black/80 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 shadow-2xl group"
-            title="Next image"
-          >
-            <ChevronRight size={32} className="group-hover:translate-x-0.5 transition-transform" />
-          </motion.button>
+          {/* Navigation Buttons */}
+          {images.length > 1 && (
+            <>
+              <motion.button
+                whileHover={{ scale: 1.15, x: -5 }}
+                whileTap={{ scale: 0.85 }}
+                onClick={prevImage}
+                className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 text-white/90 hover:text-white bg-black/60 hover:bg-black/80 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 shadow-2xl group z-10"
+                title="Previous image (← Arrow)"
+              >
+                <ChevronLeft size={24} className="sm:w-8 sm:h-8 group-hover:-translate-x-0.5 transition-transform" />
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.15, x: 5 }}
+                whileTap={{ scale: 0.85 }}
+                onClick={nextImage}
+                className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 text-white/90 hover:text-white bg-black/60 hover:bg-black/80 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 shadow-2xl group z-10"
+                title="Next image (→ Arrow)"
+              >
+                <ChevronRight size={24} className="sm:w-8 sm:h-8 group-hover:translate-x-0.5 transition-transform" />
+              </motion.button>
+            </>
+          )}
 
           {/* Progress Indicators */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center space-x-4">
+          <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 z-20">
             {/* Image Counter */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-black/70 backdrop-blur-xl text-white/90 px-4 py-2.5 rounded-full text-sm font-medium border border-white/10 shadow-2xl"
+              className="bg-black/70 backdrop-blur-xl text-white/90 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium border border-white/10 shadow-2xl"
             >
               <span className="text-emerald-400 font-semibold">{selectedImageIndex + 1}</span>
-              <span className="mx-1.5 text-white/60">of</span>
+              <span className="mx-1 sm:mx-1.5 text-white/60">/</span>
               <span className="text-white/90">{images.length}</span>
             </motion.div>
 
-            {/* Dots Indicator */}
+            {/* Dots Indicator - Scrollable on mobile */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="flex items-center space-x-2 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/5"
+              className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-white/5 max-w-xs overflow-x-auto scrollbar-hide"
             >
               {images.map((_, index) => (
-                <button
+                <motion.button
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  whileHover={{ scale: 1.3 }}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 flex-shrink-0 ${
                     index === selectedImageIndex
                       ? 'bg-emerald-400 scale-125 shadow-lg shadow-emerald-400/30'
                       : 'bg-white/30 hover:bg-white/50'
@@ -337,25 +342,23 @@ const GalleryTab: React.FC<GalleryTabProps> = ({ images, title }) => {
           </div>
         </div>
 
-        {/* Keyboard Shortcuts Hint */}
+        {/* Footer Info Bar */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-white/50 text-xs flex items-center space-x-6"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="flex items-center justify-center gap-4 px-6 py-3 bg-black/60 backdrop-blur-xl rounded-b-2xl border-t border-white/10"
         >
-          <span className="flex items-center space-x-1">
-            <kbd className="px-1.5 py-1 bg-white/10 rounded text-xs">←</kbd>
-            <span>Previous</span>
-          </span>
-          <span className="flex items-center space-x-1">
-            <kbd className="px-1.5 py-1 bg-white/10 rounded text-xs">→</kbd>
+          <div className="text-white/70 text-xs sm:text-sm flex items-center gap-2">
+            <kbd className="px-2 py-1 bg-white/10 rounded text-xs font-mono">←</kbd>
+            <span>Prev</span>
+            <span className="text-white/30 mx-1">•</span>
+            <kbd className="px-2 py-1 bg-white/10 rounded text-xs font-mono">→</kbd>
             <span>Next</span>
-          </span>
-          <span className="flex items-center space-x-1">
-            <kbd className="px-1.5 py-1 bg-white/10 rounded text-xs">ESC</kbd>
+            <span className="text-white/30 mx-1">•</span>
+            <kbd className="px-2 py-1 bg-white/10 rounded text-xs font-mono">ESC</kbd>
             <span>Close</span>
-          </span>
+          </div>
         </motion.div>
       </motion.div>
 

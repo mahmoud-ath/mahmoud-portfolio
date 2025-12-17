@@ -23,7 +23,7 @@ export const PROJECT_CATEGORIES = {
     color: 'bg-green-500'
   },
   'mobile': {
-    label: 'Mobile Development',
+    label: 'Mobile Dev',
     icon: 'smartphone',
     description: 'iOS and Android applications',
     color: 'bg-orange-500'

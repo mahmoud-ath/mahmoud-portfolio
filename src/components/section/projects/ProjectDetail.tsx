@@ -58,7 +58,7 @@ const scrollToTop = () => {
   return (
     <div className="bg-themeLight dark:bg-slate-950 min-h-screen pb-8 sm:pb-12 transition-colors duration-500">
       <div className="pt-16 sm:pt-20 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto pt-12">
           {/* Header with Breadcrumb */}
           <ProjectHeader project={project} />
         </div>

@@ -14,7 +14,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabChange })
     { id: 'overview' as TabType, icon: BarChart3, label: 'Overview', color: 'bg-blue-500' },
     { id: 'gallery' as TabType, icon: Image, label: 'Gallery', color: 'bg-emerald-500' },
     { id: 'videos' as TabType, icon: Play, label: 'Videos', color: 'bg-red-500' },
-    { id: 'docs' as TabType, icon: FileText, label: 'Docs', color: 'bg-violet-500' },
+    // { id: 'docs' as TabType, icon: FileText, label: 'Docs', color: 'bg-violet-500' },
   ];
 
   return (
