@@ -94,7 +94,7 @@ const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({ onProjectSelect, 
               >
                 All ({projects.length})
               </button>
-              {['web-dev', 'machine-learning', 'data-analyst', 'mobile'].map((category) => {
+              {['web-dev', 'machine-learning', 'data-analyst', ].map((category) => {
                 const count = projects.filter(p => p.category === category).length;
                 return (
                   <button

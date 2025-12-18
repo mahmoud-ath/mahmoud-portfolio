@@ -5,12 +5,16 @@ import { getFeaturedProjects } from '../../lib/utils/projectUtils';
 import { ArrowRight, Github, ExternalLink } from 'lucide-react';
 import SectionHeader from '../layout/SectionHeader';
 
+//  to shoow a project in the home page must be feautured
+
 interface ProjectsProps {
   onViewAllClick?: () => void;
 }
 
 const Projects: React.FC<ProjectsProps> = ({ onViewAllClick }) => {
-  const featuredProjects = getFeaturedProjects(projectsData).slice(0, 3);
+  const featuredProjects = getFeaturedProjects(projectsData)
+  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  .slice(0, 6);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const handleViewAll = () => {

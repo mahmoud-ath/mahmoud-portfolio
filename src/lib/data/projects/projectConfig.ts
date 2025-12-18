@@ -22,12 +22,7 @@ export const PROJECT_CATEGORIES = {
     description: 'Data analysis and visualization',
     color: 'bg-green-500'
   },
-  'mobile': {
-    label: 'Mobile Dev',
-    icon: 'smartphone',
-    description: 'iOS and Android applications',
-    color: 'bg-orange-500'
-  }
+  
 } as const;
 
 export const PROJECT_TIERS = {
@@ -41,7 +36,9 @@ export const PROJECT_TYPES = {
   'case-study': { label: 'Case Study', icon: 'award' },
   'client': { label: 'Client Work', icon: 'briefcase' },
   'personal': { label: 'Personal Project', icon: 'user' },
-  'school': { label: 'School Project', icon: 'book' }
+  'Academic': { label: 'Academic Project', icon: 'book' },
+  'Hackathon': { label: 'Hackathon Project', icon: 'trophy' },
+
 } as const;
 
 export const DIFFICULTY_LEVELS = {

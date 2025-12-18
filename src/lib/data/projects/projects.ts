@@ -1,6 +1,7 @@
 /**
  * Projects Data Export
  * Centralized export of projects data as TypeScript
+ * to shoow a project in the home page must be feautured 
  */
 
 import { Project } from '../../types/Project_Section';
@@ -14,22 +15,60 @@ export const projectsData: Project[] = [
     title: "Centralized Data Management System for Cloud Marketing Hub",
     description: "Designed and developed a comprehensive centralized data management system for Cloud Marketing Hub, reducing average task time by 65% and improving cross-team coordination. Automated analysis and reporting of over 500,000 monthly marketing emails, cutting manual data handling by 80%. Implemented secure role-based access control (RBAC) and two-factor authentication (2FA) via Telegram, strengthening data governance for 400+ employees.",
     category: "web-dev",
-    tags: ["Python", "Django", "PostgreSQL", "REST API", "Redis", "Next.js", "Security", "RBAC", "2FA"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+    tags: ["Python", "Django", "PostgreSQL", "REST API", "Redis", "Next.js", "Security", "RBAC", "2FA","git", "github","tailwindcss", "Vs code"],
+    image: "/Projects/1.cmh-data-management-system/images/CMH.png",
     images: [
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1460925895917-adf4e565db57?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&h=600&fit=crop"
+      "/Projects/1.cmh-data-management-system/images/Diapositive1.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive10.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive13.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive14.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive15.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive16.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive17.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive18.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive19.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive20.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive21.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive22.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive23.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive24.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive25.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive26.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive27.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive28.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive29.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive30.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive31.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive32.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive33.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive34.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive35.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive36.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive37.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive38.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive39.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive40.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive41.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive42.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive43.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive44.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive45.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive46.JPG",   
+       "/Projects/1.cmh-data-management-system/images/Diapositive47.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive48.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive49.JPG",
+      "/Projects/1.cmh-data-management-system/images/Diapositive50.JPG",
+
     ],
     featured: true,
     links: {
       github: "https://github.com/Farouk-elouassif/email-management-system-wmn",
-      demo: "https://cmh-demo.com"
+      demo: ""
     },
     videos: [
-      "https://www.youtube.com/"
+      "https://youtu.be/_8Ul3Uf40yE?si=gqlS478NT0wjl39_"
     ],
-    documentation: "/Projects/1.cmh-data-management-system/docs/cmh-docs.pdf",
+    documentation: "/Projects/1.cmh-data-management-system/docs/",
     tier: "flagship",
     impactScore: 20,
     projectType: "client",
@@ -47,30 +86,39 @@ export const projectsData: Project[] = [
     title: "SmartMaint - Predictive Maintenance System",
     description: "An AI-powered predictive maintenance system that detects machine anomalies using Random Forest algorithms and IoT sensor data. Achieved 92% accuracy in predicting equipment failures with an interactive web interface. Developed a predictive maintenance system with real-time monitoring capabilities to prevent costly equipment downtime.",
     category: "machine-learning",
-    tags: ["Python", "scikit-learn", "Random Forest", "Flask", "Streamlit", "IoT", "Machine Learning"],
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
+    tags: ["Python", "scikit-learn", "Random Forest","Streamlit", "IoT", "Machine Learning","Toml", "pandas", "numpy",  "git", ],
+    image: "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive1.JPG",
     images: [
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1535599810169-1a30bd58a373?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1531746790731-6c087a29a605?w=800&h=600&fit=crop"
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive1.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive10.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive2.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive3.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive4.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive5.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive6.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive7.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive8.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive9.JPG",
+      "/Projects/2.smartmaint-predictive-maintenance/images/Diapositive11.JPG",
+
     ],
     featured: true,
     links: {
       github: "https://github.com/Anas-Ty/Predictive-maintenance",
-      demo: "https://smartmaint-demo.com"
+      demo: ""
     },
     videos: [
-      "https://www.youtube.com/watch"
+      "https://www.youtube.com/"
     ],
     documentation: "/Projects/2.smartmaint-predictive-maintenance/smartmaint-docs.pdf",
     tier: "major",
-    impactScore: 18,
-    projectType: "school",
+    impactScore: 17,
+    projectType: "Hackathon",
     difficulty: 4,
     isNew: false,
     isTrending: true,
-    createdAt: "2025-01-01",
-    completedAt: "2025-03-15"
+    createdAt: "2025-05-01",
+    completedAt: "2025-06-15"
   },
 
   // morocco-road-accidents-analysis
@@ -96,7 +144,7 @@ export const projectsData: Project[] = [
     featured: true,
     links: {
       github: "https://github.com/mahmoud-ath/Accident-Visualization-Morocco",
-      demo: "https://morocco-accidents-demo.com"
+      demo: ""
     },
     videos: [
       "https://www.youtube.com/watch?v=Xr4WSfYdM20"
@@ -104,12 +152,12 @@ export const projectsData: Project[] = [
     documentation: "/Projects/3.morocco-road-accidents-analysis/docs/morocco-accidents-docs.pdf",
     tier: "major",
     impactScore: 16,
-    projectType: "school",
+    projectType: "Academic",
     difficulty: 3,
     isNew: false,
     isTrending: true,
-    createdAt: "2025-01-01",
-    completedAt: "2025-04-15"
+    createdAt: "2024-12-01",
+    completedAt: "2025-01-15"
   },
 
   //tech-horizon-magazine
@@ -138,7 +186,7 @@ export const projectsData: Project[] = [
     featured: true,
     links: {
       github: "https://github.com/mahmoud-ath/Horizon-tech-v1",
-      demo: "https://tech-horizon-demo.com"
+      demo: ""
     },
     videos: [
       "https://www.youtube.com/watch?v=32DZywbZPOY"
@@ -146,12 +194,12 @@ export const projectsData: Project[] = [
     documentation: "/Projects/4.tech-horizon-magazine/docs/tech-horizon-docs.pdf",
     tier: "major",
     impactScore: 15,
-    projectType: "school",
+    projectType: "Academic",
     difficulty: 3,
     isNew: false,
     isTrending: false,
     createdAt: "2024-11-01",
-    completedAt: "2025-01-15"
+    completedAt: "2025-01-20"
   },
 
   //energy-consumption-prediction-cart
@@ -185,12 +233,12 @@ export const projectsData: Project[] = [
     documentation: "/Projects/5.energy-consumption-prediction-cart/docs/RAPPORT_CART_Prediction_de_Consommation_energetique.pdf",  // LaTeX report mentioned
     tier: "standard",
     impactScore: 22,
-    projectType: "school", // Master AISD project
+    projectType: "Academic", // Master AISD project
     difficulty: 5,
     isNew: true, // 2025 project
     isTrending: true,
-    createdAt: "2025-01-15",
-    completedAt: "2025-02-28"
+    createdAt: "2025-10-02",
+    completedAt: "2025-11-03"
   },
   
   // markus-pub-website-officiel
@@ -221,8 +269,8 @@ export const projectsData: Project[] = [
     difficulty: 4,
     isNew: true,
     isTrending: true,
-    createdAt: "2025-04-01",
-    completedAt: "2025-04-20"
+    createdAt: "2025-06-15",
+    completedAt: "2025-08-15"
   },
   
   // whatsapp-chat-analyzer
@@ -241,7 +289,7 @@ export const projectsData: Project[] = [
     featured: true,
     links: {
       github: "https://github.com/mahmoud-ath/whatsapp-chat-analyzer",
-      demo: "http://localhost:8501" // Local demo - consider deploying to Streamlit Cloud for a live URL
+      demo: "https://whatsapp-chat-analyzer-2.streamlit.app/" // Local demo - consider deploying to Streamlit Cloud for a live URL
     },
     videos: [],
     documentation: "",
@@ -251,8 +299,8 @@ export const projectsData: Project[] = [
     difficulty: 3,
     isNew: true, // Set to true if recently created
     isTrending: true,
-    createdAt: "2025-03-01", // Update with actual date
-    completedAt: "2025-03-15" // Update with actual date
+    createdAt: "2025-07-01", // Update with actual date
+    completedAt: "2025-07-15" // Update with actual date
   },
 
   // titanic-survivor-prediction
@@ -279,8 +327,6 @@ export const projectsData: Project[] = [
       "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0011.jpg",
       "/Projects/8.titanic-survivor-prediction/images/Report Titanic Survivor Prediction_page-0012.jpg",
       
-
-
     ],
     featured: true,
     links: {
@@ -295,8 +341,8 @@ export const projectsData: Project[] = [
     difficulty: 4,
     isNew: false,
     isTrending: false,
-    createdAt: "2024-01-01", // Estimated - update with actual date
-    completedAt: "2024-02-15" // Estimated - update with actual date
+    createdAt: "2024-12-22", // Estimated - update with actual date
+    completedAt: "2025-02-15" // Estimated - update with actual date
   },
 
   // watchly-ai
@@ -314,7 +360,11 @@ export const projectsData: Project[] = [
       "tmdb-api",
       "responsive-design",
       "seo-friendly",
-      "local-storage"
+      "local-storage",
+      "framer motion",
+      "nextjs",
+      "system-design",
+      
     ],
     image: "/Projects/9.watchly-ai/images/overview-1.png",
     images: [
@@ -343,7 +393,7 @@ export const projectsData: Project[] = [
     difficulty: 4,
     isNew: true,
     isTrending: true,
-    createdAt: "2025-12-15",
-    completedAt: "2025-09-01"
+    createdAt: "2025-09-01",
+    completedAt: "2025-12-01"
   },
 ];

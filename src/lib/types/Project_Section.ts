@@ -4,8 +4,8 @@
  */
 
 export type ProjectTier = 'flagship' | 'major' | 'standard' | 'experimental';
-export type ProjectCategory = 'web-dev' | 'machine-learning' | 'data-analyst' | 'mobile';
-export type ProjectType = 'case-study' | 'client' | 'personal' | 'school';
+export type ProjectCategory = 'web-dev' | 'machine-learning' | 'data-analyst';
+export type ProjectType = 'case-study' | 'client' | 'personal' | 'Academic'| 'Hackathon';
 export type DifficultyLevel = 1 | 2 | 3 | 4 | 5;
 export type ViewMode = 'grid' | 'list';
 export type SortOption = 'date-newest' | 'date-oldest' | 'name-asc' | 'name-desc' | 'impact-high' | 'impact-low';
