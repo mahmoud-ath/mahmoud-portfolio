@@ -8,6 +8,7 @@ export const getColoredIcon = (iconName: string): string => {
     'java': 'https://api.iconify.design/devicon/java.svg',
     'c++': 'https://api.iconify.design/devicon/cplusplus.svg',
     'c#': 'https://api.iconify.design/devicon/csharp.svg',
+    'c': 'https://api.iconify.design/devicon/c.svg',
     
     // Frontend
     'react': 'https://api.iconify.design/devicon/react.svg',
@@ -18,6 +19,7 @@ export const getColoredIcon = (iconName: string): string => {
     'css': 'https://api.iconify.design/devicon/css3.svg',
     'sass': 'https://api.iconify.design/devicon/sass.svg',
     'tailwind css': 'https://api.iconify.design/devicon/tailwindcss.svg',
+    'framer motion': 'https://api.iconify.design/tabler/brand-framer-motion.svg',
     
     // Backend
     'node.js': 'https://api.iconify.design/devicon/nodejs.svg',
@@ -25,6 +27,7 @@ export const getColoredIcon = (iconName: string): string => {
     'django': '/Skills/logos/django.svg',
     'flask': 'https://api.iconify.design/simple-icons/flask.svg',
     'spring': 'https://api.iconify.design/devicon/spring.svg',
+    'FastAPI': 'https://api.iconify.design/devicon/fastapi.svg',
     
     // Databases
     'postgresql': 'https://api.iconify.design/devicon/postgresql.svg',
