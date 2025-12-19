@@ -1,0 +1,103 @@
+{
+  "intents": [
+    {
+      "id": "greet",
+      "name": "Greeting",
+      "keywords": ["hello", "hi", "hey", "greetings", "good morning", "good afternoon", "good evening"],
+      "response": "Hello! I'm Mahmoud's portfolio assistant, and I'm excited to help you today! Whether you're exploring my work, interested in collaboration, or just want to learn more about me—I'm here to assist. What brings you here?",
+      "priority": 10,
+      "category": "about",
+      "icon": "chat"
+    },
+    {
+      "id": "collaboration",
+      "name": "Collaboration & Hiring",
+      "keywords": ["hire", "collaborate", "work together", "collaboration", "opportunity", "freelance", "contract", "client", "assistant", "help with project", "need help", "looking for", "developer", "developer needed"],
+      "response": "That's wonderful! I'd love to discuss potential collaboration opportunities. Whether you need an AI/ML specialist, full-stack developer, or data analyst, I'm interested in learning more about your project.\n\nPlease reach out to me directly:\n\n[mail] Email: elgharib.mahmoud2@gmail.com\n[linkedin] LinkedIn: linkedin.com/in/mahmoud-el-gharib\n[phone] Phone: +212 636-167511\n\nI'm based in Chefchaouen, Morocco and open to remote opportunities worldwide. Let's discuss how I can help bring your vision to life!",
+      "priority": 9,
+      "category": "contact",
+      "icon": "collaboration"
+    },
+    {
+      "id": "about_me",
+      "name": "About Me",
+      "keywords": ["who are you", "tell me about", "about yourself", "profile", "background", "who is mahmoud", "introduce yourself"],
+      "response": "I'm Mahmoud EL GHARIB, an AI & Data Science Specialist with a passion for solving complex problems through intelligent solutions. Currently pursuing a Master's in Artificial Intelligence and Data Sciences at FST Tangier, with hands-on experience in full-stack development, machine learning, and data analysis.\n\nWhat drives me: Building systems that make a real difference. From automating business processes (500K+ monthly emails) to predicting equipment failures with 92% accuracy, I love working on projects that deliver tangible impact.\n\nI'm also a team leader at Rowad Cultural Club, managing events with 200+ participants and 60% engagement improvement.\n\nWould you like to explore my skills, projects, or discuss a potential collaboration?",
+      "priority": 9,
+      "category": "about",
+      "icon": "user"
+    },
+    {
+      "id": "skills",
+      "name": "Skills",
+      "keywords": ["skills", "expertise", "technologies", "tech stack", "programming", "what can you do", "proficiency", "know", "capable of", "languages"],
+      "response": "I'm proficient in a diverse tech stack:\n\n[code] Advanced: Python, C, React, Next.js, Tailwind CSS, Django, PostgreSQL, Machine Learning, Pandas, NumPy, Scikit-learn, Git, Linux\n[lightbulb] Intermediate: JavaScript, TypeScript, C++, FastAPI, Redis, MySQL, Docker, Framer Motion\n[settings] Emerging: Adobe Suite (Photoshop, Illustrator), Figma, Canva, Video Editing Tools\n[zap] Data & AI: Machine Learning, Deep Learning, Data Mining, NLP, Computer Vision, Big Data Analytics\n[database] Specializations: Full-Stack Web Development, AI/ML Systems, Data Analysis, Real-time Applications\n\nRecently worked on projects processing 500K+ monthly emails, predictive maintenance with 92% accuracy, and analyzing 50K+ accident records. What type of project are you interested in?",
+      "priority": 8,
+      "category": "skills",
+      "icon": "code"
+    },
+    {
+      "id": "projects",
+      "name": "Projects",
+      "keywords": ["projects", "portfolio", "work", "what have you built", "showcase", "examples", "case studies", "built"],
+      "response": "I'm proud of the projects I've delivered:\n\n[arrow] CMH Data Management System (April-June 2025) - Centralized system processing 500K+ monthly emails, 65% task reduction, RBAC + 2FA security for 400+ employees\n[arrow] SmartMaint - Predictive Maintenance with 92% accuracy using Random Forest & IoT sensors, reducing downtime by 40%\n[arrow] Morocco Road Accidents Analysis - Interactive dashboard analyzing 50K+ records with geospatial visualizations for safety insights\n[arrow] Tech Horizon Magazine - Full-stack Laravel application with multi-role system and real-time analytics\n[arrow] Energy Consumption Prediction - CART regression model for peak demand forecasting\n[arrow] Watchly AI - Your Movie Discovery Companion\n\nEach reflects my commitment to quality and real-world impact. Interested in details about any project or want to discuss something similar?",
+      "priority": 8,
+      "category": "projects",
+      "icon": "briefcase"
+    },
+    {
+      "id": "experience",
+      "name": "Experience",
+      "keywords": ["experience", "work", "internship", "education", "degree", "background", "history", "career", "worked", "trained"],
+      "response": "My journey combines academic excellence with real-world industry experience:\n\n[award] Currently: Master's in AI & Data Sciences (2025-2027) - FST Tangier, in-progress\n[briefcase] Recent Internship: Cloud Marketing Hub (April-June 2025) - Built centralized data management system for 400+ employees\n[zap] Team Leader: Rowad Cultural Club FST Tangier (Since 2024) - Led 30+ members, organized 200+ participant events, 60% engagement growth\n[checkmark] Committee Member: Enactus FSTT (2021-2023) - Content creation for social projects\n[checkmark] Bachelor's: Data Analytics (2024-2025) - FST Tangier\n[checkmark] DEUST: Mathematics, Computer Science, Physics, Chemistry (2021-2024) - FST Tangier\n\nKey Achievements:\n[checkmark] Automated 500K+ monthly emails with 80% manual work reduction\n[checkmark] Built predictive ML system with 92% accuracy\n[checkmark] Led geospatial analysis of 50K+ accident records\n\nI'm continuously learning and staying updated with emerging technologies. Explore my full timeline in the Experience section.",
+      "priority": 7,
+      "category": "experience",
+      "icon": "award"
+    },
+    {
+      "id": "contact",
+      "name": "Contact",
+      "keywords": ["contact", "reach out", "email", "message", "how to contact", "phone", "social", "linkedin", "github", "connect", "get in touch"],
+      "response": "I'd love to hear from you! Here are all the ways to connect:\n\n[mail] Email: elgharib.mahmoud2@gmail.com\n[linkedin] LinkedIn: linkedin.com/in/mahmoud-el-gharib\n[github] GitHub: github.com/mahmoud-ath\n[twitter] Twitter: @mahmoud_gharib\n[phone] Phone: +212 636-167511\n[mappin] Location: Chefchaouen, Morocco\n\nLanguages: Arabic (Native), French (Fluent), English (Fluent)\n\nWhether you have a project idea, want to collaborate, or just want to chat about tech and AI—I'm always open to connecting with like-minded professionals and innovators!",
+      "priority": 7,
+      "category": "contact",
+      "icon": "mail"
+    },
+    {
+      "id": "cv_download",
+      "name": "Download CV",
+      "keywords": ["download cv", "resume", "cv", "pdf", "my resume", "get my cv", "curriculum vitae"],
+      "response": "You can download my CV directly from the header of this website using the \"Curriculum Vitae\" button. My CV includes detailed information about my experience, technical skills, projects, certifications, and education.\n\nIt's a great way to get a comprehensive overview of my background and qualifications!",
+      "priority": 9,
+      "category": "cv",
+      "icon": "filetext"
+    },
+    {
+      "id": "help",
+      "name": "Help",
+      "keywords": ["help", "what can you do", "commands", "options", "menu", "features", "how to use", "assist"],
+      "response": "I'm here to help! I can provide information about:\n\n[lightbulb] My Background - Learn about who I am and my journey\n[zap] Skills & Expertise - Explore my technical capabilities\n[briefcase] Projects - Discover the work I'm proud of\n[award] Experience & Education - View my professional background\n[collaboration] Collaboration - Discuss potential projects or opportunities\n[phone] Contact Information - Find the best way to reach me\n[filetext] CV - Download my complete resume\n\nJust ask me anything naturally, and I'll do my best to help. What would you like to know?",
+      "priority": 6,
+      "category": "about",
+      "icon": "help"
+    },
+    {
+      "id": "location",
+      "name": "Location",
+      "keywords": ["where", "location", "based", "country", "city", "live", "from"],
+      "response": "I'm based in Chefchaouen, Morocco—a beautiful city in the north region. However, I'm fully equipped for remote work and collaborate with teams and clients worldwide. Distance is no barrier to great work!\n\nInterested in working together? Let's connect!",
+      "priority": 5,
+      "category": "about",
+      "icon": "mappin"
+    },
+    {
+      "id": "farewell",
+      "name": "Goodbye",
+      "keywords": ["bye", "goodbye", "see you", "later", "thanks", "thank you", "farewell", "exit"],
+      "response": "Thank you for chatting with me! I hope you found the information helpful. Feel free to reach out anytime—whether you have more questions, want to collaborate, or just want to discuss tech. Best of luck!",
+      "priority": 5,
+      "category": "about",
+      "icon": "chat"
+    }
+  ]
+}

@@ -66,6 +66,15 @@ The site is **fully responsive**, supports **dark/light mode**, includes **smoot
 - ✅ **LocalStorage Persistence** - Dark mode preference saved
 - ✅ **Dynamic Imports** - Code splitting for performance
 
+### 🤖 AI Assistant Chatbot
+- ✅ **Intelligent Q&A System** - Hybrid rule-based + document search
+- ✅ **Project Detection** - Auto-recognizes portfolio projects with direct links
+- ✅ **Social Intelligence** - Contextual responses (client detection, collaboration offers)
+- ✅ **Icon-Rich Responses** - 22+ Lucide icons for visual communication
+- ✅ **Quick Actions** - Brain (Skills), Code (Projects), Briefcase (About), Document (CV)
+- ✅ **Compact Responsive Design** - Optimized window (320px width, 500px max height)
+- ✅ **Multi-Stage Processing** - Project detection → contextual → intent → document → fallback
+
 ---
 
 ## 🛠️ Technology Stack
@@ -83,7 +92,7 @@ The site is **fully responsive**, supports **dark/light mode**, includes **smoot
 |---------|---------|---------|
 | **Framer Motion** | 12.23.24 | Advanced animations and transitions |
 | **GSAP** | 3.13.0 | Timeline-based animations |
-| **Lucide React** | 0.554.0 | Icon library (24x24 icons) |
+| **Lucide React** | 0.554.0 | Icon library with 22+ icons for UI and chatbot |
 
 ### UI Components & Utilities
 | Package | Version | Purpose |
@@ -211,6 +220,26 @@ mahmoud-portfolio-v1/
 │   │       ├── Card.tsx
 │   │       ├── Badge.tsx
 │   │       └── Tabs.tsx
+│   │
+│   ├── chatbot/                      # 🤖 AI Assistant Chatbot
+│   │   ├── components/
+│   │   │   ├── ChatWindow.tsx        # Main chat interface (320px, 500px max-height)
+│   │   │   ├── ChatMessage.tsx       # Message display with project redirect button
+│   │   │   ├── IconResponse.tsx      # Parse and render messages with Lucide icons
+│   │   │   ├── QuickActions.tsx      # 4 quick action buttons with Lucide icons
+│   │   │   └── ChatInput.tsx         # Single-line chat input
+│   │   │
+│   │   ├── utils/
+│   │   │   ├── messageProcessor.ts   # 4-stage message routing with project detection
+│   │   │   ├── intentMatcher.ts      # Intent matching and confidence scoring
+│   │   │   ├── documentSearch.ts     # Document knowledge base search
+│   │   │   └── iconMapping.ts        # Centralized 22+ Lucide icon configuration
+│   │   │
+│   │   ├── data/
+│   │   │   ├── intents.json          # 12 intents with icon markers and portfolio data
+│   │   │   └── documentContent.ts    # 7 knowledge base sections with real portfolio data
+│   │   │
+│   │   └── types.ts                  # Chatbot TypeScript interfaces
 │   │
 │   ├── contexts/                     # React Context API
 │   │   └── DarkModeContext.tsx       # Global dark mode state
@@ -744,6 +773,211 @@ The portfolio includes accessibility features:
 - JavaScript compression
 - Efficient animations
 - Optimized bundle size
+
+---
+
+## 🤖 AI Assistant Chatbot
+
+### Overview
+
+The portfolio features an intelligent AI assistant chatbot that provides interactive Q&A about your portfolio, projects, skills, and experience. The chatbot combines rule-based intent matching with semantic document search for comprehensive answers.
+
+### Key Features
+
+#### 🎯 Smart Detection
+- **Project Recognition** - Automatically detects when users ask about specific projects (CMH, SmartMaint, Morocco, Tech Horizon, Energy, Watchly)
+- **Context Awareness** - Provides contextual responses based on question type (client inquiry, collaboration offer, technical question)
+- **Social Intelligence** - Detects client-related keywords and generates collaboration-focused responses
+
+#### 🎨 User Experience
+- **Icon-Rich Responses** - 22+ Lucide icons for visual communication (mail, code, database, award, checkmark, arrow, etc.)
+- **Quick Actions** - 4 persistent action buttons:
+  - 🧠 **Brain** - Ask about skills and expertise
+  - 💻 **Code** - Explore projects and technologies
+  - 💼 **Briefcase** - Learn about professional background
+  - 📄 **Document** - Download CV/Resume
+- **Compact Design** - Responsive window (320px width, 500px max height) fits on any screen
+- **Smooth Animations** - Framer Motion transitions for message appearances
+
+#### 🔧 Intelligent Processing
+
+The chatbot uses a **4-stage message processing pipeline**:
+
+1. **Project Detection** - Checks for project keywords and generates project-specific snippets with redirect buttons
+2. **Contextual Responses** - Detects client inquiries and collaboration offers
+3. **Intent Matching** - Matches user input against 12 predefined intents (greet, skills, projects, experience, etc.)
+4. **Document Search** - Searches 7 knowledge base sections for relevant information
+5. **Fallback Response** - Provides helpful guidance if no match found
+
+### Chatbot Architecture
+
+#### Knowledge Base Sections
+
+The chatbot has access to 7 portfolio sections:
+
+| Section | Content | Keywords |
+|---------|---------|----------|
+| **CMH Data Management** | Lead ML project (50K+ records, 500K+ emails, 92% accuracy) | data, management, records, emails, accuracy |
+| **SmartMaint** | Predictive maintenance ML system | predictive, maintenance, algorithms, performance |
+| **Morocco Road Accidents** | Analytics & visualization project | analysis, accidents, road, safety |
+| **Skills Overview** | Technical skills by category | python, javascript, react, machine learning |
+| **Education** | Master's & Bachelor's degrees, certifications | education, degree, certification, training |
+| **Experience & Leadership** | Work history, team leadership, projects | experience, leadership, team, management |
+| **Languages & Interests** | Language proficiency, technical interests | languages, interests, community |
+
+#### Intent System
+
+The chatbot recognizes 12 intents:
+
+```json
+{
+  "greet": "Initial greeting responses",
+  "collaboration": "Collaboration and partnership inquiries",
+  "about_me": "Questions about professional background",
+  "skills": "Technical skills and expertise",
+  "projects": "Project portfolio and case studies",
+  "experience": "Work experience and achievements",
+  "contact": "Contact information and social links",
+  "cv_download": "Resume/CV download requests",
+  "help": "Help and chatbot functionality",
+  "location": "Location and availability information",
+  "farewell": "Goodbye responses",
+  "greeting_follow": "Follow-up interactions"
+}
+```
+
+#### Icon Mapping System
+
+All responses use Lucide icons configured in `iconMapping.ts`:
+
+```typescript
+export const iconMapping = {
+  mail: { icon: Mail, color: 'text-blue-500' },
+  code: { icon: Code2, color: 'text-purple-500' },
+  database: { icon: Database, color: 'text-green-500' },
+  award: { icon: Award, color: 'text-yellow-500' },
+  checkmark: { icon: CheckCircle, color: 'text-green-500' },
+  arrow: { icon: ArrowRight, color: 'text-red-500' },
+  // ... 16+ more icons
+};
+```
+
+### Project Redirect System
+
+When users ask about specific projects, the chatbot:
+1. Detects the project mention
+2. Provides a brief snippet with key metrics
+3. Shows a "View Project" button with ArrowRight icon
+4. Redirects to detailed project page on click
+
+**Example:**
+```
+User: "Tell me about CMH"
+Bot: "The CMH Data Management System is a comprehensive ML solution... 
+     [50K+ records] [500K+ emails] [92% accuracy] 
+     [View Project →]"
+```
+
+### Message Processing Flow
+
+```
+User Message
+    ↓
+[Step 0] Project Detection
+    ├─→ Found: Return project snippet with redirect button
+    └─→ Not found: Continue
+    ↓
+[Step 1] Contextual Response Detection
+    ├─→ Client inquiry: Generate collaboration response
+    └─→ Not matched: Continue
+    ↓
+[Step 2] Intent Matching
+    ├─→ Matched: Return intent response with icons
+    └─→ No match: Continue
+    ↓
+[Step 3] Document Search
+    ├─→ Found: Return relevant document section
+    └─→ Not found: Continue
+    ↓
+[Step 4] Fallback Response
+    └─→ Return helpful guidance and quick action suggestions
+```
+
+### Components
+
+```typescript
+// Main chat interface (compact, responsive)
+<ChatWindow />
+
+// Individual message display with icon rendering
+<ChatMessage />
+
+// Parse and render responses with inline Lucide icons
+<IconResponse content="..." />
+
+// Always-visible quick action buttons
+<QuickActions />
+
+// Single-line user input
+<ChatInput />
+```
+
+### Customization
+
+#### Add New Intent
+
+Edit `src/chatbot/data/intents.json`:
+```json
+{
+  "custom_intent": {
+    "keywords": ["keyword1", "keyword2"],
+    "response": "Response with [mail] icon markers",
+    "icon": "brain"
+  }
+}
+```
+
+#### Add New Project Detection
+
+Edit `src/chatbot/utils/messageProcessor.ts`:
+```typescript
+const projectMap = {
+  'your-project': { slug: 'your-slug', name: 'Your Project Name' },
+  // Add new project
+};
+```
+
+#### Update Knowledge Base
+
+Edit `src/chatbot/data/documentContent.ts`:
+```typescript
+export const documentContent = [
+  {
+    section: 'Your Section',
+    content: '...',
+    keywords: ['keyword1', 'keyword2'],
+  },
+  // Add new section
+];
+```
+
+### Chatbot Configuration
+
+The chatbot behavior can be customized in `src/chatbot/utils/messageProcessor.ts`:
+
+```typescript
+// Confidence thresholds for intent matching
+const INTENT_THRESHOLD = 0.5;
+
+// Number of keywords to match for document search
+const MIN_KEYWORD_MATCHES = 2;
+
+// Project detection keywords
+const PROJECT_KEYWORDS = {
+  'cmh': { slug: 'cmh', ...},
+  'smartmaint': { slug: 'smartmaint', ...},
+};
+```
 
 ---
 

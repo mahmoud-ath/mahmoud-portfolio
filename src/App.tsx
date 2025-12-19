@@ -8,6 +8,7 @@ import Projects from './components/section/Projects';
 import Testimonials from './components/section/Testimonials';
 import Contact from './components/section/Contact';
 import CustomCursor from './components/effect-animation/CustomCursor';
+import ChatbotContainer from './components/chatbot/ChatbotContainer';
 // import BottomNav from './components/layout/BottomNav';
 import ProjectsPage from './components/section/projects/ProjectsPage';
 import ProjectDetail from './components/section/projects/ProjectDetail';
@@ -80,6 +81,7 @@ const App: React.FC = () => {
         <CustomCursor />
         <Header />
         <SideElements />
+        <ChatbotContainer />
         {/* <BottomNav /> */}
 
         <main>{renderPage()}</main>

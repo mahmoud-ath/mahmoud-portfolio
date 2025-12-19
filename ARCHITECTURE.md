@@ -13,13 +13,14 @@
 1. [System Architecture Overview](#system-architecture-overview)
 2. [Directory Structure](#directory-structure)
 3. [Component Hierarchy](#component-hierarchy)
-4. [Data Flow Architecture](#data-flow-architecture)
-5. [Routing Architecture](#routing-architecture)
-6. [State Management](#state-management)
-7. [Styling Architecture](#styling-architecture)
-8. [Performance Architecture](#performance-architecture)
-9. [Build & Deployment](#build--deployment)
-10. [Design Patterns](#design-patterns)
+4. [Chatbot System Architecture](#chatbot-system-architecture)
+5. [Data Flow Architecture](#data-flow-architecture)
+6. [Routing Architecture](#routing-architecture)
+7. [State Management](#state-management)
+8. [Styling Architecture](#styling-architecture)
+9. [Performance Architecture](#performance-architecture)
+10. [Build & Deployment](#build--deployment)
+11. [Design Patterns](#design-patterns)
 
 ---
 
@@ -295,6 +296,95 @@ components/
     ├── Tabs.tsx                 # Tab component
     ├── Modal.tsx                # Modal/dialog component
     └── Input.tsx                # Form input component
+
+└── chatbot/                     # 🤖 AI Assistant Chatbot
+    ├── components/
+    │   ├── ChatWindow.tsx       # Main chat container
+    │   │   ├── Message management state
+    │   │   ├── Input handling
+    │   │   ├── Message processing pipeline
+    │   │   └── Auto-scroll behavior
+    │   │
+    │   ├── ChatMessage.tsx      # Message display
+    │   │   ├── User message rendering
+    │   │   ├── Bot message rendering
+    │   │   ├── Project redirect button
+    │   │   └── ArrowRight icon for projects
+    │   │
+    │   ├── IconResponse.tsx     # Icon parsing & rendering
+    │   │   ├── Content parsing (line-by-line)
+    │   │   ├── Icon pattern detection [iconName]
+    │   │   ├── Lucide icon rendering
+    │   │   └── Deduplication logic
+    │   │
+    │   ├── QuickActions.tsx     # Quick action buttons
+    │   │   ├── Brain (Skills query)
+    │   │   ├── Code2 (Projects query)
+    │   │   ├── Briefcase (About query)
+    │   │   └── FileText (CV query)
+    │   │
+    │   ├── ChatInput.tsx        # User input field
+    │   │   ├── Single-line input
+    │   │   ├── onChange handler
+    │   │   └── onSubmit handler
+    │   │
+    │   └── types.ts             # Chatbot TypeScript interfaces
+    │       ├── Message interface
+    │       ├── ProcessedMessage interface
+    │       ├── Intent interface
+    │       └── DocumentSection interface
+    │
+    ├── utils/
+    │   ├── messageProcessor.ts  # 4-stage message routing
+    │   │   ├── projectDetection() - Step 0
+    │   │   ├── contextualResponses() - Step 1
+    │   │   ├── intentMatching() - Step 2
+    │   │   ├── documentSearch() - Step 3
+    │   │   ├── fallbackResponse() - Step 4
+    │   │   ├── projectMap configuration
+    │   │   └── confidence scoring
+    │   │
+    │   ├── intentMatcher.ts     # Intent matching logic
+    │   │   ├── loadIntents()
+    │   │   ├── matchIntent()
+    │   │   ├── calculateConfidence()
+    │   │   └── getMatchedIntent()
+    │   │
+    │   ├── documentSearch.ts    # Knowledge base search
+    │   │   ├── loadDocuments()
+    │   │   ├── searchDocuments()
+    │   │   ├── calculateRelevance()
+    │   │   └── getTopMatch()
+    │   │
+    │   └── iconMapping.ts       # 22+ Lucide icon config
+    │       ├── Icon definitions (22+ icons)
+    │       ├── Color assignments
+    │       ├── getIcon()
+    │       └── getIconWithColor()
+    │
+    └── data/
+        ├── intents.json         # 12 intents with metadata
+        │   ├── greet
+        │   ├── collaboration
+        │   ├── about_me
+        │   ├── skills
+        │   ├── projects
+        │   ├── experience
+        │   ├── contact
+        │   ├── cv_download
+        │   ├── help
+        │   ├── location
+        │   ├── farewell
+        │   └── greeting_follow
+        │
+        └── documentContent.ts   # 7 knowledge base sections
+            ├── CMH Data Management
+            ├── SmartMaint Predictive Maintenance
+            ├── Morocco Road Accidents Analysis
+            ├── Skills Overview
+            ├── Education & Certifications
+            ├── Experience & Leadership
+            └── Languages & Interests
 ```
 
 #### 2. Contexts Directory (`src/contexts/`)
@@ -709,6 +799,365 @@ GalleryTab
 ├── framer-motion (animations)
 └── Image dimension calculations
 ```
+
+---
+
+## 🤖 Chatbot System Architecture
+
+### Overview
+
+The chatbot is an intelligent Q&A system integrated into the portfolio that provides interactive assistance to visitors. It uses a **hybrid approach combining rule-based intent matching with semantic document search** to deliver comprehensive responses.
+
+### System Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    ChatWindow (Container)                    │
+│  ├── State: messages[], inputValue, isLoading               │
+│  ├── Effect: Auto-scroll to latest message                  │
+│  └── Styles: w-80, max-h-500px, responsive                 │
+└─────────────────────────────────────────────────────────────┘
+         │
+         ├─────────────────────────────────────────┐
+         │                                         │
+         ▼                                         ▼
+┌──────────────────────────────┐    ┌──────────────────────────┐
+│   Message List (ChatMessage) │    │   Input Section          │
+│                              │    │                          │
+│  ├─ User Message            │    ├─ ChatInput              │
+│  │  └─ Plain text           │    │  └─ onChange handler    │
+│  │                          │    │  └─ onSubmit handler    │
+│  └─ Bot Message            │    │                          │
+│     ├─ IconResponse         │    └─ QuickActions          │
+│     │  └─ Lucide icons      │       ├─ Brain (Skills)     │
+│     └─ Project redirect btn │       ├─ Code (Projects)    │
+│        └─ ArrowRight icon   │       ├─ Briefcase (About)  │
+│                              │       └─ File (CV)         │
+└──────────────────────────────┘    └──────────────────────────┘
+         │                                    │
+         └────────────────┬───────────────────┘
+                          │
+                          ▼
+         ┌─────────────────────────────────────┐
+         │   messageProcessor (Processing)     │
+         │                                     │
+         │  4-Stage Message Routing:           │
+         │  1. projectDetection()              │
+         │  2. contextualResponses()           │
+         │  3. intentMatching()                │
+         │  4. documentSearch()                │
+         │  5. fallbackResponse()              │
+         │                                     │
+         │  Returns:                           │
+         │  - response: string                 │
+         │  - source: 'project'|...           │
+         │  - intent?: string                 │
+         │  - projectSlug?: string            │
+         └─────────────────────────────────────┘
+```
+
+### Message Processing Pipeline
+
+#### Stage 0: Project Detection
+
+**Purpose**: Recognize when users ask about specific projects and provide direct redirects
+
+```typescript
+// Project mapping
+const projectMap = {
+  'cmh': { slug: 'cmh', name: 'CMH Data Management System' },
+  'smartmaint': { slug: 'smartmaint', name: 'SmartMaint Predictive Maintenance' },
+  'morocco': { slug: 'morocco', name: 'Morocco Road Accidents Analysis' },
+  'tech-horizon': { slug: 'tech-horizon', name: 'Tech Horizon Magazine' },
+  'energy': { slug: 'energy', name: 'Energy Consumption Prediction' },
+  'watchly': { slug: 'watchly', name: 'Watchly AI' },
+};
+
+// When project detected:
+// 1. Generate snippet with key metrics
+// 2. Create message with source: 'project'
+// 3. ChatMessage renders redirect button
+// 4. Button click navigates to /#/projects/[slug]
+```
+
+#### Stage 1: Contextual Response Detection
+
+**Purpose**: Detect client inquiries and collaboration offers
+
+```typescript
+// Client detection keywords
+if (message.includes('client') || message.includes('freelance')) {
+  return clientCollaborationResponse;
+}
+
+// Collaboration keywords
+if (message.includes('hire') || message.includes('work together')) {
+  return collaborationOfferResponse;
+}
+```
+
+#### Stage 2: Intent Matching
+
+**Purpose**: Match user input against predefined intents
+
+**Intents** (12 total):
+- `greet` - Initial greeting
+- `collaboration` - Partnership inquiries
+- `about_me` - Professional background
+- `skills` - Technical expertise
+- `projects` - Project portfolio
+- `experience` - Work history
+- `contact` - Contact information
+- `cv_download` - Resume requests
+- `help` - Chatbot help
+- `location` - Location/availability
+- `farewell` - Goodbye
+- `greeting_follow` - Follow-ups
+
+**Intent Structure** (from `intents.json`):
+```typescript
+interface Intent {
+  keywords: string[];           // Keywords to match against
+  response: string;             // Response with [iconName] markers
+  icon: string;                 // Associated Lucide icon
+  confidence?: number;          // Match confidence (0-1)
+}
+```
+
+#### Stage 3: Document Search
+
+**Purpose**: Search knowledge base for relevant information
+
+**Knowledge Base Sections** (7 total):
+
+```typescript
+interface DocumentSection {
+  section: string;              // Section name
+  content: string;              // Full text content
+  keywords: string[];           // Search keywords
+}
+```
+
+| Section | Content | Size |
+|---------|---------|------|
+| CMH Data Management | 50K+ records, 500K+ emails, 92% accuracy | ~2500 chars |
+| SmartMaint | Predictive maintenance, ML algorithms | ~2000 chars |
+| Morocco Accidents | Analytics, road safety, visualization | ~1800 chars |
+| Skills Overview | Programming languages, frameworks, tools | ~2200 chars |
+| Education | Master's AI2SD, Bachelor's Data Analytics | ~1500 chars |
+| Experience & Leadership | Team leadership, project management | ~2400 chars |
+| Languages & Interests | Language proficiency, tech interests | ~1200 chars |
+
+**Search Algorithm**:
+```
+1. Split message into keywords
+2. For each document section:
+   a. Count keyword matches
+   b. Calculate relevance score
+3. Return highest matching section
+4. If score > MIN_KEYWORD_MATCHES (2):
+   → Use document section as response
+```
+
+#### Stage 4: Fallback Response
+
+**Purpose**: Provide helpful guidance when no match found
+
+Returns generic response with suggestions to use quick actions.
+
+### Component Structure
+
+```
+ChatWindow (Container & Logic)
+├── State: messages[], inputValue, isLoading
+├── Effect: Handle auto-scroll
+├── Handler: onSendMessage()
+│   └── calls messageProcessor()
+│
+├── ChatMessage (Message Display)
+│   ├── If source === 'project':
+│   │   ├── Display text
+│   │   └── Show redirect button
+│   │
+│   └── If source === 'intent'|'document'|'fallback':
+│       └── Use IconResponse
+│
+├── IconResponse (Icon Rendering)
+│   ├── Split content by newlines
+│   ├── Detect [iconName] pattern per line
+│   ├── Get icon from iconMapping
+│   ├── Render: <Icon /> + text
+│   └── Prevent duplication with line-by-line parsing
+│
+├── ChatInput (User Input)
+│   └── Single-line input
+│
+└── QuickActions (Persistent Buttons)
+    ├── Brain - Ask about skills
+    ├── Code2 - Explore projects
+    ├── Briefcase - About you
+    └── FileText - Download CV
+```
+
+### Icon Mapping System
+
+**File**: `src/chatbot/utils/iconMapping.ts`
+
+```typescript
+export const iconMapping = {
+  mail: { icon: Mail, color: 'text-blue-500' },
+  code: { icon: Code2, color: 'text-purple-500' },
+  database: { icon: Database, color: 'text-green-500' },
+  award: { icon: Award, color: 'text-yellow-500' },
+  checkmark: { icon: CheckCircle, color: 'text-green-500' },
+  arrow: { icon: ArrowRight, color: 'text-red-500' },
+  brain: { icon: Brain, color: 'text-blue-500' },
+  linkedin: { icon: Linkedin, color: 'text-blue-600' },
+  github: { icon: Github, color: 'text-gray-700' },
+  briefcase: { icon: Briefcase, color: 'text-orange-500' },
+  // ... 12+ more icons
+};
+
+// Usage in responses:
+// "You can reach me at [mail] or connect on [linkedin]"
+```
+
+### Data Types
+
+```typescript
+// Message type (updated)
+interface Message {
+  id: string;
+  type: 'user' | 'bot';
+  content: string;
+  timestamp: Date;
+  source?: 'intent' | 'document' | 'fallback' | 'project';
+  intentId?: string;
+  projectSlug?: string;
+}
+
+// Message processor return
+interface ProcessedMessage {
+  response: string;
+  source: 'intent' | 'document' | 'fallback' | 'project';
+  intentId?: string;
+  projectSlug?: string;
+}
+
+// Intent structure
+interface Intent {
+  keywords: string[];
+  response: string;
+  icon: string;
+  confidence?: number;
+}
+
+// Document section
+interface DocumentSection {
+  section: string;
+  content: string;
+  keywords: string[];
+}
+```
+
+### Data Flow Example
+
+**User asks: "Tell me about CMH"**
+
+```
+1. ChatWindow receives message
+2. Calls messageProcessor(message)
+   │
+   ├─ Step 0: projectDetection()
+   │  └─ Finds "CMH" in projectMap
+   │  └─ Returns: {
+   │      response: "CMH Data Management System snippet...",
+   │      source: 'project',
+   │      projectSlug: 'cmh'
+   │    }
+   │
+   └─ DONE (no further stages)
+
+3. ChatMessage component receives message
+   └─ source === 'project' → render redirect button
+   └─ User clicks → navigate to /#/projects/cmh
+
+4. ProjectDetail page opens with CMH project
+```
+
+**User asks: "What are your skills?"**
+
+```
+1. ChatWindow receives message
+2. Calls messageProcessor(message)
+   │
+   ├─ Step 0: projectDetection()
+   │  └─ No project found → Continue
+   │
+   ├─ Step 1: contextualResponses()
+   │  └─ No client inquiry → Continue
+   │
+   ├─ Step 2: intentMatching()
+   │  └─ Matches 'skills' intent
+   │  └─ Returns: {
+   │      response: "I specialize in Python [code] ML [brain]...",
+   │      source: 'intent',
+   │      intentId: 'skills'
+   │    }
+   │
+   └─ DONE
+
+3. ChatMessage component receives message
+   └─ Uses IconResponse component
+   └─ IconResponse parses and renders inline icons
+```
+
+### Processing Configuration
+
+Thresholds and settings in `messageProcessor.ts`:
+
+```typescript
+// Intent matching confidence threshold
+const INTENT_THRESHOLD = 0.5;
+
+// Minimum keyword matches for document search
+const MIN_KEYWORD_MATCHES = 2;
+
+// Project keywords mapping
+const PROJECT_KEYWORDS = {
+  cmh: 'cmh-data-management-system',
+  smartmaint: 'smartmaint-predictive-maintenance',
+  // ...
+};
+
+// Confidence calculation
+const confidence = matchedKeywords.length / intent.keywords.length;
+```
+
+### Features
+
+**Multi-Source Responses**
+- Projects → Redirect button
+- Intents → Icon-rich formatted responses
+- Documents → Knowledge base content
+- Fallback → Helpful suggestions
+
+**Social Intelligence**
+- Client inquiry detection
+- Collaboration offer detection
+- Context-aware responses
+
+**Professional UI**
+- 22+ Lucide icons (no emoji)
+- Compact responsive design
+- Smooth animations
+- Quick action buttons (always visible)
+
+**Project Recognition**
+- 6 projects mapped
+- Auto-detection with keywords
+- Snippet + redirect system
+- Project detail page integration
 
 ---
 
