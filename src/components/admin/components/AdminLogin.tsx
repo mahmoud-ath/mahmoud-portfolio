@@ -25,7 +25,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
       await new Promise(resolve => setTimeout(resolve, 500));
 
       // Simple password check (in production, use a proper backend authentication)
-      if (password === 'Admin123!') {
+      if (password === 'Welcome_Back') {
         localStorage.setItem('admin_auth_token', 'admin_authenticated_2025');
         onLogin(true);
       } else {
@@ -97,7 +97,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
           {/* Info */}
           <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>Demo Password:</strong> Admin123!
+              <strong>Welcome_Back</strong> 
             </p>
           </div>
 

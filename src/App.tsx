@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Header from './components/layout/Header';
 import Hero from './components/section/Hero';
 import SideElements from './components/layout/SideElements';
@@ -99,6 +100,9 @@ const App: React.FC = () => {
         <div className="fixed inset-0 bg-themeLight z-[100] pointer-events-none opacity-0 transition-opacity duration-1000 dark:bg-themeDark" id="loader">
           {/* Loader logic would go here if needed, but we'll keep it simple */}
         </div>
+        
+        {/* Vercel Analytics */}
+        <Analytics />
       </div>
     </DarkModeProvider>
   );

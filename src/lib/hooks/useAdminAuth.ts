@@ -6,7 +6,7 @@
 
 import { useEffect, useState } from 'react';
 
-const ADMIN_PASSWORD = 'Admin123!'; // Change this to your desired password
+const ADMIN_PASSWORD = 'Welcome_Back'; // Change this to your desired password
 const AUTH_TOKEN_KEY = 'admin_auth_token';
 const AUTH_TOKEN = 'admin_authenticated_2025'; // Simple token
 
