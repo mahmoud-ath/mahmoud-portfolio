@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { projectsData } from '../../lib/data/projects/projects';
+import { getAllProjects } from '../../lib/api/projectsAPI';
 import { getFeaturedProjects } from '../../lib/utils/projectUtils';
+import { Project } from '../../lib/types/Project_Section';
 import { ArrowRight, Github, ExternalLink } from 'lucide-react';
 import SectionHeader from '../layout/SectionHeader';
 
@@ -12,9 +13,32 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ onViewAllClick }) => {
-  const featuredProjects = getFeaturedProjects(projectsData)
-  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-  .slice(0, 6);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load projects on component mount
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        setLoading(true);
+        const projectsData = await getAllProjects();
+        setProjects(projectsData);
+        setError(null);
+      } catch (err) {
+        console.error('Failed to load projects:', err);
+        setError('Failed to load projects.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProjects();
+  }, []);
+
+  const featuredProjects = getFeaturedProjects(projects)
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 6);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const handleViewAll = () => {
@@ -62,16 +86,40 @@ const scrollToTop = () => {
         {/* Section Header */}
         <SectionHeader title="Featured Projects" />
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-center text-gray-600 text-lg max-w-2xl mx-auto mb-16"
-        >
-          Carefully crafted projects demonstrating web development, machine learning, and data science expertise
-        </motion.p>
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-16">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-themeRed mx-auto mb-4"></div>
+            <p className="text-gray-600 dark:text-gray-400">Loading featured projects...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && !loading && (
+          <div className="text-center py-16">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-themeRed text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {/* Content - Only show when not loading and no error */}
+        {!loading && !error && (
+          <>
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-center text-gray-600 text-lg max-w-2xl mx-auto mb-16"
+            >
+              Carefully crafted projects demonstrating web development, machine learning, and data science expertise
+            </motion.p>
 
         {/* Projects Grid */}
         <motion.div
@@ -215,10 +263,12 @@ const scrollToTop = () => {
             whileTap={{ scale: 0.95 }}
             className="px-8 py-3.5 border border-gray-300 text-gray-900 font-semibold rounded-lg hover:border-themeRed hover:text-themeRed hover:bg-themeRed/5 transition-all duration-300 flex items-center gap-2 dark:text-white"
           >
-            <span>View All {projectsData.length} Projects</span>
+            <span>View All {projects.length} Projects</span>
             <ArrowRight className="w-4 h-4" />
           </motion.button>
         </motion.div>
+        </>
+        )}
       </div>
     </section>
   );

@@ -12,11 +12,14 @@ import ChatbotContainer from './components/chatbot/ChatbotContainer';
 // import BottomNav from './components/layout/BottomNav';
 import ProjectsPage from './components/section/projects/ProjectsPage';
 import ProjectDetail from './components/section/projects/ProjectDetail';
+import AdminPage from './components/admin/pages/AdminPage';
 import { SITE_CONFIG } from './config';
 import { DarkModeProvider } from './contexts/DarkModeContext';
 
+type PageType = 'home' | 'projects' | 'admin' | { type: 'project'; slug: string };
+
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<'home' | 'projects' | { type: 'project'; slug: string }>('home');
+  const [currentPage, setCurrentPage] = useState<PageType>('home');
 
   // Parse hash and update page
   const parseHashAndUpdatePage = () => {
@@ -29,6 +32,8 @@ const App: React.FC = () => {
       setCurrentPage('projects');
     } else if (pathParts[0] === 'projects' && pathParts[1]) {
       setCurrentPage({ type: 'project', slug: pathParts[1] });
+    } else if (pathParts[0] === 'admin') {
+      setCurrentPage('admin');
     } else {
       setCurrentPage('home');
     }
@@ -42,6 +47,10 @@ const App: React.FC = () => {
   }, []);
 
   const renderPage = () => {
+    if (currentPage === 'admin') {
+      return <AdminPage />;
+    }
+
     if (currentPage === 'projects') {
       return <ProjectsPage />;
     }
@@ -79,9 +88,9 @@ const App: React.FC = () => {
     <DarkModeProvider>
       <div className="bg-themeLight min-h-screen font-sans text-themeDark selection:bg-themeRed/30 selection:text-themeDark dark:bg-themeDark dark:text-themeLight">
         <CustomCursor />
-        <Header />
-        <SideElements />
-        <ChatbotContainer />
+        {currentPage !== 'admin' && <Header />}
+        {currentPage !== 'admin' && <SideElements />}
+        {currentPage !== 'admin' && <ChatbotContainer />}
         {/* <BottomNav /> */}
 
         <main>{renderPage()}</main>

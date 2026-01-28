@@ -70,7 +70,7 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (slug: string) => void
 
         {/* Category Badge */}
         <div className="absolute bottom-4 left-4">
-          <span className={`px-4 py-1.5 text-white text-xs font-semibold rounded-full backdrop-blur-sm transition-all duration-300`}>
+          <span className={`px-4 py-1.5 text-white text-xs font-semibold rounded-full  bg-slate-950 transition-all duration-300`}>
             {category.label}
           </span>
         </div>
