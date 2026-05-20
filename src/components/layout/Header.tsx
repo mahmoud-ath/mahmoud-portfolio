@@ -97,8 +97,12 @@ const Header: React.FC = () => {
                       const element = document.getElementById(item.id);
                       element?.scrollIntoView({ behavior: 'smooth' });
                     }, 100);
+                  } else if (currentPage === 'home' && item.id === 'projects' && activeSection === 'projects') {
+                    // Already at projects section, click again to go to dashboard
+                    e.preventDefault();
+                    window.location.hash = '#projects';
                   }
-                  // If on home page, just let the default anchor link behavior work
+                  // If on home page and not at projects, let default anchor link behavior work
                 }}
                 className="relative"
                 onMouseEnter={() => setHoveredItem(item.id)}
