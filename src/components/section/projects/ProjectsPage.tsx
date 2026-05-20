@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProjectsDashboard from './ProjectsDashboard';
 import ProjectDetail from './ProjectDetail';
 
@@ -8,6 +8,10 @@ interface ProjectsPageProps {
 }
 
 const ProjectsPage: React.FC<ProjectsPageProps> = ({ view = 'dashboard', onViewChange }) => {
+  // Scroll to top when navigating to dashboard
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   const handleProjectSelect = (slug: string) => {
     if (onViewChange) {
       onViewChange({ type: 'detail', slug });
