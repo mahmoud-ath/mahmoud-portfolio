@@ -1,10 +1,10 @@
 /**
- * Bun API Server for Admin Project Management
- * Handles project CRUD operations and file uploads
+ * Consolidated Bun API Server
+ * Handles project CRUD operations, file uploads, batch updates, and health checks
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { dirname, join, extname } from 'path';
+import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -238,6 +238,36 @@ const server = Bun.serve({
         }
       }
 
+      // Route: PUT /api/projects/batch - Batch update projects
+      if (req.method === 'PUT' && path === '/api/projects/batch') {
+        const updates = await req.json();
+        const projectsToBatch = readProjectsFromFile();
+
+        for (const [id, updateData] of Object.entries(updates)) {
+          const index = projectsToBatch.findIndex(p => p.id === id);
+          if (index !== -1) {
+            projectsToBatch[index] = {
+              ...projectsToBatch[index],
+              ...updateData,
+              id: projectsToBatch[index].id,
+            };
+          }
+        }
+
+        if (writeProjectsToFile(projectsToBatch)) {
+          console.log(`✅ Batch updated ${Object.keys(updates).length} projects`);
+          return new Response(
+            JSON.stringify({ success: true, data: projectsToBatch, message: 'Projects batch updated successfully' }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        } else {
+          return new Response(
+            JSON.stringify({ error: 'Failed to batch update projects' }),
+            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      }
+
       // Route: PUT /api/projects/:id - Update existing project
       if (req.method === 'PUT' && path.startsWith('/api/projects/')) {
         const idMatch = path.match(/\/api\/projects\/(.+)/);
@@ -390,6 +420,48 @@ const server = Bun.serve({
             }
           );
         }
+      }
+
+      // Route: POST /api/create-project-folders - Create folder structure for a project
+      if (req.method === 'POST' && path === '/api/create-project-folders') {
+        const { projectId, slug } = await req.json();
+
+        if (!projectId || !slug) {
+          return new Response(
+            JSON.stringify({ error: 'Project ID and slug are required' }),
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        try {
+          const projectPath = createProjectDirectories(projectId, slug);
+          const projectFolder = generateProjectFolderName(projectId, slug);
+
+          console.log(`✅ Created project directories: ${projectFolder}`);
+
+          return new Response(
+            JSON.stringify({
+              success: true,
+              projectPath: `/Projects/${projectFolder}`,
+              message: 'Project directories created successfully'
+            }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        } catch (error) {
+          console.error('Directory creation error:', error);
+          return new Response(
+            JSON.stringify({ error: 'Failed to create project directories' }),
+            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      }
+
+      // Route: GET /api/health - Health check
+      if (req.method === 'GET' && path === '/api/health') {
+        return new Response(
+          JSON.stringify({ status: 'ok', server: 'Bun API Server', uptime: process.uptime() }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
 
       // 404 for unknown routes
