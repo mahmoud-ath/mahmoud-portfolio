@@ -135,7 +135,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
               whileTap={{ scale: 0.95 }}
               onClick={handleSendMessage}
               disabled={!input.trim() || isLoading}
-              className="px-3 py-1.5 bg-themeRed text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-semibold flex items-center gap-1"
+              className="px-3 py-1.5 bg-themeRed text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-semibold flex items-center gap-1"
             >
               <Send size={16} />
             </motion.button>

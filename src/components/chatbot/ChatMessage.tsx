@@ -45,7 +45,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleProjectRedirect}
-                  className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 bg-themeRed text-white rounded-lg hover:bg-red-700 transition-all duration-300 text-xs font-semibold"
+                  className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 bg-themeRed text-white rounded-lg hover:bg-green-700 transition-all duration-300 text-xs font-semibold"
                 >
                   View Full Project
                   <ArrowRight size={14} />

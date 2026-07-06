@@ -15,7 +15,7 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ project }) => {
     <div className="mb-12">
       {/* Breadcrumb */}
       <div className="mb-6 pt-0">
-        <button onClick={handleBackClick} className="text-themeRed dark:text-themeRed hover:text-red-700 dark:hover:text-red-400 font-medium flex items-center gap-2 transition-colors duration-500 cursor-pointer">
+        <button onClick={handleBackClick} className="text-themeRed dark:text-themeRed hover:text-green-700 dark:hover:text-green-400 font-medium flex items-center gap-2 transition-colors duration-500 cursor-pointer">
           <ArrowLeft size={18} />
           Back to Projects
         </button>

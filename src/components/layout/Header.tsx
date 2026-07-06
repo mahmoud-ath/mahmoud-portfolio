@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Home, Briefcase, Zap, Users, Award, FileText, Moon, Sun,BrainCircuit } from 'lucide-react';
+import { Menu, X, Home, Briefcase, Zap, Users, Award, FileText, Moon, Sun, BrainCircuit, Palette } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 
@@ -8,14 +8,14 @@ const Header: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'home' | 'projects'>('home');
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { isDarkMode, darkModeStyle, toggleDarkMode, cycleDarkStyle } = useDarkMode();
 
   const navItems = [
     { id: 'home', icon: <Home size={20} />, label: 'Home', href: '#home' },
     { id: 'skills', icon: <BrainCircuit size={20} />, label: 'Skills', href: '#skills' },
     { id: 'experience', icon: <Briefcase size={20} />, label: 'Experience', href: '#experience' },
     { id: 'projects', icon: <Zap size={20} />, label: 'Projects', href: '#projects' },
-    { id: 'reviews', icon: <Users size={20} />, label: 'Testimonials', href: '#reviews' },
+
     { id: 'contact', icon: <FileText size={20} />, label: 'Contact', href: '#contact' },
   ];
 
@@ -148,6 +148,34 @@ const Header: React.FC = () => {
 
           {/* CV Button & Mobile Menu */}
           <div className="flex items-center gap-2 md:gap-4">
+            {/* Dark Mode Toggle */}
+            <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-full p-0.5 border border-slate-200 dark:border-slate-700">
+              <button
+                onClick={toggleDarkMode}
+                className={`p-2 rounded-full transition-all duration-300 ${
+                  isDarkMode ? 'text-slate-400' : 'bg-themeRed text-white shadow-sm'
+                }`}
+                title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {isDarkMode ? <Moon size={16} /> : <Sun size={16} />}
+              </button>
+              {isDarkMode && (
+                <button
+                  onClick={cycleDarkStyle}
+                  className={`p-2 rounded-full transition-all duration-300 ${
+                    darkModeStyle === 'original' ? 'bg-themeRed text-white shadow-sm' : 'text-slate-400'
+                  }`}
+                  title={
+                    darkModeStyle === 'github'
+                      ? 'Switch to original dark'
+                      : 'Switch to GitHub dark'
+                  }
+                >
+                  <Palette size={16} />
+                </button>
+              )}
+            </div>
+
             <motion.a
               href="/CV/Resume.pdf"
               target="_blank"
@@ -263,8 +291,38 @@ const Header: React.FC = () => {
                 <FileText size={24} />
                 Curriculum Vitae
               </motion.a>
-
-        
+              {/* Mobile Dark Mode Controls */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="w-full max-w-xs flex items-center justify-center gap-3 mt-4"
+              >
+                <button
+                  onClick={() => { toggleDarkMode(); setIsOpen(false); }}
+                  className={`flex-1 px-4 py-3 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
+                    isDarkMode
+                      ? 'bg-white/10 text-white'
+                      : 'bg-themeRed text-white shadow-lg'
+                  }`}
+                >
+                  {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
+                  {isDarkMode ? 'Dark' : 'Light'}
+                </button>
+                {isDarkMode && (
+                  <button
+                    onClick={() => { cycleDarkStyle(); setIsOpen(false); }}
+                    className={`flex-1 px-4 py-3 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
+                      darkModeStyle === 'original'
+                        ? 'bg-themeRed text-white shadow-lg'
+                        : 'bg-white/10 text-white'
+                    }`}
+                  >
+                    <Palette size={20} />
+                    {darkModeStyle === 'github' ? 'GitHub' : 'Original'}
+                  </button>
+                )}
+              </motion.div>        
             </div>
           </motion.div>
         )}

@@ -7,14 +7,13 @@ import ProjectFilters from './dashboard/ProjectFilters';
 import ProjectGrid from './dashboard/ProjectGrid';
 import ProjectList from './dashboard/ProjectList';
 import AnalyticsTab from './dashboard/AnalyticsTab';
-import { Home } from 'lucide-react';
+import { BarChart3, ArrowLeft } from 'lucide-react';
 
 interface ProjectsDashboardProps {
   onProjectSelect: (slug: string) => void;
-  onBackToHome?: () => void;
 }
 
-const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({ onProjectSelect, onBackToHome }) => {
+const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({ onProjectSelect }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,40 +43,42 @@ const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({ onProjectSelect, 
     filters,
     filteredProjects,
     updateSearchQuery,
-    toggleFeaturedOnly,
-    toggleNewOnly,
     setSortBy,
     setViewMode,
-    resetFilters
   } = useProjectFilter(projects);
 
-  // Filter by selected category
-  const categoryFilteredProjects = selectedCategory
-    ? filteredProjects.filter(p => p.category === selectedCategory)
-    : filteredProjects;
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  // Calculate active filters count
-  const activeFiltersCount = [
-    filters.searchQuery ? 1 : 0,
-    filters.showFeaturedOnly ? 1 : 0,
-    filters.showNewOnly ? 1 : 0
-  ].reduce((a, b) => a + b, 0);
+  // Collect unique tags with counts (tags appearing in 2+ projects)
+  const tagCounts = React.useMemo(() => {
+    const counts = new Map<string, number>();
+    projects.forEach(p =>
+      p.tags.forEach(t => counts.set(t, (counts.get(t) || 0) + 1))
+    );
+    return counts;
+  }, [projects]);
+
+  // Filter by selected category and tag
+  const categoryFilteredProjects = React.useMemo(() => {
+    let result = selectedCategory
+      ? filteredProjects.filter(p => p.category === selectedCategory)
+      : filteredProjects;
+
+    if (selectedTag) {
+      result = result.filter(p => p.tags.includes(selectedTag));
+    }
+
+    return result;
+  }, [filteredProjects, selectedCategory, selectedTag]);
 
   const getCategoryCount = (category: string): number => {
     return projects.filter(p => p.category === category).length;
   };
 
-  // Handle back to home navigation
-  const handleBackToHome = () => {
-    if (onBackToHome) {
-      onBackToHome();
-    } else {
-      window.location.hash = '#home';
-    }
-  };
+
 
   return (
-    <div className="bg-themeLight dark:bg-slate-950 min-h-screen pt-10 transition-colors duration-500" style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
+    <div className="bg-themeLight dark:bg-slate-950 min-h-screen transition-colors duration-500">
       {/* Loading State */}
       {loading && (
         <div className="min-h-screen flex items-center justify-center">
@@ -97,7 +98,7 @@ const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({ onProjectSelect, 
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="px-4 sm:px-6 py-2 sm:py-3 bg-themeRed text-white font-semibold rounded-xl sm:rounded-2xl text-sm sm:text-base hover:bg-red-700 transition-colors duration-500"
+              className="px-4 sm:px-6 py-2 sm:py-3 bg-themeRed text-white font-semibold rounded-xl sm:rounded-2xl text-sm sm:text-base hover:bg-green-700 transition-colors duration-500"
             >
               Try Again
             </button>
@@ -105,80 +106,55 @@ const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({ onProjectSelect, 
         </div>
       )}
 
-      {/* Main Content - Only show when not loading and no error */}
+      {/* Main Content */}
       {!loading && !error && (
-        <>
-          {/* Main Content */}
-          <main className="py-8 md:py-10 lg:py-14 w-full px-4 sm:px-6 lg:px-6 xl:px-14">
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-6 sm:mb-8">
-          {/* Navigation Section - Left Side */}
-          <div className="lg:w-64 flex-shrink-0">
-            <div className="mb-8">
-              <h3 className="text-sm font-bold text-gray-800 mb-4 uppercase tracking-wider dark:text-white">
-                Navigation
-              </h3>
-
-              <button
-                onClick={handleBackToHome}
-                className="w-full bg-themeRed border-2 border-gray-800 rounded-lg p-4 shadow-[3px_3px_0_0_rgba(0,0,0,1)] transition-all duration-300 hover:shadow-[1px_1px_0_0_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 text-white font-bold group"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-white/80 font-bold uppercase tracking-wider">Home</span>
-                  <Home className="w-4 h-4 text-white group-hover:scale-110 transition-transform duration-300" />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-white">← Back to Portfolio</p>
-                  <p className="text-xs text-white/70 mt-1">Return to main sections</p>
-                </div>
-              </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-8">
+          {/* Top Row: Title + Description (left) | Buttons (right) */}
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
+            {/* Title + Description */}
+            <div className="flex-1">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100">
+                {activeTab === 'analytics' ? 'Project Analytics' : 'Project Portfolio'}
+              </h1>
+              <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 mt-2 max-w-2xl">
+                {activeTab === 'analytics'
+                  ? 'Statistical overview of all projects, metrics, and performance indicators.'
+                  : `Explore ${projects.length} projects across various domains and technologies.`
+                }
+              </p>
             </div>
-          </div>
 
-          {/* Main Header Content - Right Side */}
-          <div className="flex-1 max-w-7xl">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 transition-colors duration-300">
-              Project Portfolio
-            </h1>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 transition-colors duration-300 mb-6">
-              Explore a curated collection of {projects.length} projects showcasing expertise across
-              various domains and technologies.
-            </p>
-            
-            {/* Tab Navigation Buttons */}
-            <div className="flex bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-1 transition-colors duration-300 w-fit">
+            {/* Buttons */}
+            <div className="flex-shrink-0">
               <button
-                onClick={() => setActiveTab('projects')}
-                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-                  activeTab === 'projects'
-                    ? 'bg-themeRed text-white shadow-sm'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50'
-                }`}
-              >
-                Projects
-              </button>
-              <button
-                onClick={() => setActiveTab('analytics')}
-                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                onClick={() => setActiveTab(activeTab === 'analytics' ? 'projects' : 'analytics')}
+                className={`px-8 py-5 rounded-2xl text-lg font-bold transition-all duration-300 flex items-center gap-3 ${
                   activeTab === 'analytics'
-                    ? 'bg-themeRed text-white shadow-sm'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                    ? 'bg-themeRed text-white shadow-md'
+                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:text-themeRed dark:hover:text-themeRed hover:border-themeRed dark:hover:border-themeRed'
                 }`}
               >
-                Analytics
+                {activeTab === 'analytics' ? (
+                  <><ArrowLeft className="w-5 h-5" /> Projects</>
+                ) : (
+                  <><BarChart3 className="w-5 h-5" /> Analytics</>
+                )}
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Projects Tab Content */}
-        {activeTab === 'projects' && (
-          <div className="space-y-6">
-            {/* Enhanced Filter Bar - Categories + Search + Controls */}
-            <div className="max-w-7xl">
-              <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 shadow-sm transition-colors duration-300">
-                {/* Top Row - Search and View Controls */}
-                <div className="flex flex-col lg:flex-row gap-4 mb-4">
+          {/* Analytics Tab */}
+          {activeTab === 'analytics' && (
+            <AnalyticsTab projects={projects} />
+          )}
+
+          {/* Projects Tab */}
+          {activeTab === 'projects' && (
+            <div className="space-y-6">
+              {/* Filter Bar */}
+              <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4">
+                {/* Search & Controls */}
+                <div className="flex flex-col lg:flex-row gap-4">
                   <div className="flex-1">
                     <ProjectFilters
                       searchQuery={filters.searchQuery}
@@ -187,77 +163,93 @@ const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({ onProjectSelect, 
                       onViewModeChange={(mode) => setViewMode(mode as any)}
                       sortBy={filters.sortBy}
                       onSortChange={setSortBy}
-                      showFeaturedOnly={filters.showFeaturedOnly}
-                      onFeaturedToggle={toggleFeaturedOnly}
-                      showNewOnly={filters.showNewOnly}
-                      onNewToggle={toggleNewOnly}
-                      onResetFilters={resetFilters}
-                      activeFiltersCount={activeFiltersCount}
                     />
                   </div>
                 </div>
 
-                {/* Bottom Row - Category Filter Tabs */}
-                <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">
-                      Categories:
+                {/* Category Chips */}
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mr-1">
+                      Filter:
                     </span>
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => setSelectedCategory(null)}
-                        className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-300 whitespace-nowrap ${
-                          selectedCategory === null
-                            ? 'bg-themeRed text-white shadow-sm'
-                            : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-                        }`}
-                      >
-                        All ({projects.length})
-                      </button>
-                      {Object.entries(PROJECT_CATEGORIES).map(([key, category]) => {
-                        const count = getCategoryCount(key);
-                        const isSelected = selectedCategory === key;
+                    <button
+                      onClick={() => { setSelectedCategory(null); setSelectedTag(null); }}
+                      className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 ${
+                        selectedCategory === null && selectedTag === null
+                          ? 'bg-themeRed text-white'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                      }`}
+                    >
+                      All ({projects.length})
+                    </button>
+                    {Object.entries(PROJECT_CATEGORIES).map(([key, category]) => {
+                      const count = getCategoryCount(key);
+                      const isSelected = selectedCategory === key;
+                      return (
+                        <button
+                          key={key}
+                          onClick={() => setSelectedCategory(isSelected ? null : key)}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 ${
+                            isSelected
+                              ? 'bg-themeRed text-white'
+                              : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                          }`}
+                        >
+                          {category.label} ({count})
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Tag Chips */}
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mr-1">
+                      Tags:
+                    </span>
+                    {Array.from(tagCounts.entries())
+                      .filter(([, count]) => count >= 2)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([tag, count]) => {
+                        const isSelected = selectedTag === tag;
                         return (
                           <button
-                            key={key}
-                            onClick={() => setSelectedCategory(isSelected ? null : key)}
-                            className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-300 whitespace-nowrap ${
+                            key={tag}
+                            onClick={() => setSelectedTag(isSelected ? null : tag)}
+                            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 ${
                               isSelected
-                                ? 'bg-themeRed text-white shadow-sm'
+                                ? 'bg-themeRed text-white'
                                 : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                             }`}
                           >
-                            {category.label} ({count})
+                            {tag} ({count})
                           </button>
                         );
                       })}
-                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Results Header */}
-            <div className="max-w-7xl">
-              {categoryFilteredProjects.length > 0 && (
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
-                      Showing <span className="font-semibold text-gray-900 dark:text-gray-100">{categoryFilteredProjects.length}</span> of{' '}
-                      <span className="font-semibold text-gray-900 dark:text-gray-100">{projects.length}</span> projects
-                      {selectedCategory && (
-                        <span className="ml-2 px-2 py-0.5 bg-themeRed/10 text-themeRed text-xs rounded-full">
-                          {selectedCategory.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                        </span>
-                      )}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
+              {/* Results Count */}
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Showing <span className="font-semibold text-gray-900 dark:text-gray-100">{categoryFilteredProjects.length}</span>
+                  {selectedCategory && (
+                    <span className="ml-2 px-2 py-0.5 bg-themeRed/10 text-themeRed text-xs rounded-lg">
+                      {Object.entries(PROJECT_CATEGORIES).find(([k]) => k === selectedCategory)?.[1]?.label || selectedCategory}
+                    </span>
+                  )}
+                  {selectedTag && (
+                    <span className="ml-1 px-2 py-0.5 bg-themeRed/10 text-themeRed text-xs rounded-lg">
+                      #{selectedTag}
+                    </span>
+                  )}
+                </p>
+              </div>
 
-            {/* Projects View */}
-            <div className="max-w-7xl">
+              {/* Projects Grid / List */}
               {filters.viewMode === 'grid' ? (
                 <ProjectGrid
                   projects={categoryFilteredProjects}
@@ -271,25 +263,14 @@ const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({ onProjectSelect, 
               )}
 
               {categoryFilteredProjects.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-16 sm:py-20">
-                  <div className="text-center px-4">
-                    <p className="mb-2 text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">No projects found</p>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 transition-colors duration-300">Try adjusting your filters to see more projects</p>
-                  </div>
+                <div className="flex flex-col items-center justify-center py-20">
+                  <p className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">No projects found</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Try adjusting your filters to see more projects</p>
                 </div>
               )}
             </div>
-          </div>
-        )}
-
-        {/* Analytics Tab Content */}
-        {activeTab === 'analytics' && (
-          <div className="max-w-7xl">
-            <AnalyticsTab projects={projects} />
-          </div>
-        )}
-          </main>
-        </>
+          )}
+        </div>
       )}
     </div>
   );

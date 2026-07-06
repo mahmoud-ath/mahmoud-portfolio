@@ -17,14 +17,6 @@ export interface Experience {
   skills?: string[];
 }
 
-export interface Testimonial {
-  id: string;
-  name: string;
-  source: string;
-  text: string;
-  theme: 'light' | 'dark';
-}
-
 export interface Certification {
   id: string;
   title: string;

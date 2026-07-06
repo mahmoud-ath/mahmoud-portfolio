@@ -1,13 +1,10 @@
 
+@import "tailwindcss";
 @import "tw-animate-css";
 
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -45,6 +42,31 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* App Theme */
+  --color-themeLight: #F8F6F6;
+  --color-themeYellow: #F5D061;
+  --color-themeDark: #2A363B;
+  --color-themeRed: #3fb950;
+
+  /* Fonts */
+  --font-sans: 'Quicksand', 'sans-serif';
+  --font-heading: 'Montserrat', 'sans-serif';
+
+  /* GitHub Dark Theme */
+  --color-github-canvas: #0d1117;
+  --color-github-bg: #161b22;
+  --color-github-overlay: #1c2128;
+  --color-github-input: #21262d;
+  --color-github-border: #30363d;
+  --color-github-fg: #e6edf3;
+  --color-github-fg-muted: #8b949e;
+  --color-github-fg-subtle: #6e7681;
+  --color-github-blue: #58a6ff;
+  --color-github-green: #3fb950;
+  --color-github-yellow: #d29922;
+  --color-github-red: #f85149;
+  --color-github-purple: #bc8cff;
 }
 
 :root {
@@ -83,6 +105,89 @@
 }
 
 .dark {
+  /* ── GitHub Dark Theme (default dark mode) ───────────────── */
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --card: #161b22;
+  --card-foreground: #e6edf3;
+  --popover: #161b22;
+  --popover-foreground: #e6edf3;
+  --primary: #e6edf3;
+  --primary-foreground: #0d1117;
+  --secondary: #21262d;
+  --secondary-foreground: #e6edf3;
+  --muted: #21262d;
+  --muted-foreground: #8b949e;
+  --accent: #21262d;
+  --accent-foreground: #e6edf3;
+  --destructive: #f85149;
+  --border: #30363d;
+  --input: #21262d;
+  --ring: #58a6ff;
+  --chart-1: #58a6ff;
+  --chart-2: #3fb950;
+  --chart-3: #d29922;
+  --chart-4: #bc8cff;
+  --chart-5: #f85149;
+  --sidebar: #161b22;
+  --sidebar-foreground: #e6edf3;
+  --sidebar-primary: #58a6ff;
+  --sidebar-primary-foreground: #0d1117;
+  --sidebar-accent: #21262d;
+  --sidebar-accent-foreground: #e6edf3;
+  --sidebar-border: #30363d;
+  --sidebar-ring: #58a6ff;
+
+  /* Override Tailwind's gray palette for dark mode */
+  --color-gray-50: #f0f6fc;
+  --color-gray-100: #e6edf3;
+  --color-gray-200: #d1d9e0;
+  --color-gray-300: #8b949e;
+  --color-gray-400: #6e7681;
+  --color-gray-500: #484f58;
+  --color-gray-600: #30363d;
+  --color-gray-700: #21262d;
+  --color-gray-800: #161b22;
+  --color-gray-900: #0d1117;
+  --color-gray-950: #0d1117;
+
+  /* Override Tailwind's slate palette for dark mode */
+  --color-slate-50: #f0f6fc;
+  --color-slate-100: #e6edf3;
+  --color-slate-200: #d1d9e0;
+  --color-slate-300: #8b949e;
+  --color-slate-400: #6e7681;
+  --color-slate-500: #484f58;
+  --color-slate-600: #30363d;
+  --color-slate-700: #21262d;
+  --color-slate-800: #161b22;
+  --color-slate-900: #0d1117;
+  --color-slate-950: #0d1117;
+
+  /* Override neutral palette for dark mode */
+  --color-neutral-50: #f0f6fc;
+  --color-neutral-100: #e6edf3;
+  --color-neutral-200: #d1d9e0;
+  --color-neutral-300: #8b949e;
+  --color-neutral-400: #6e7681;
+  --color-neutral-500: #484f58;
+  --color-neutral-600: #30363d;
+  --color-neutral-700: #21262d;
+  --color-neutral-800: #161b22;
+  --color-neutral-900: #0d1117;
+  --color-neutral-950: #0d1117;
+
+  /* White override for dark mode */
+  --color-white: #e6edf3;
+
+  /* App theme overrides for dark mode */
+  --color-themeDark: #0d1117;
+  --color-themeLight: #0d1117;
+}
+
+/* ── Original Dark Theme (alternative) ──────────────────── */
+/* Toggle by adding/removing `.theme-original` alongside `.dark` */
+.dark.theme-original {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -114,6 +219,44 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Restore default Tailwind dark palettes */
+  --color-gray-50: oklch(0.985 0 0);
+  --color-gray-100: oklch(0.97 0 0);
+  --color-gray-200: oklch(0.922 0 0);
+  --color-gray-300: oklch(0.87 0 0);
+  --color-gray-400: oklch(0.708 0 0);
+  --color-gray-500: oklch(0.556 0 0);
+  --color-gray-600: oklch(0.439 0 0);
+  --color-gray-700: oklch(0.371 0 0);
+  --color-gray-800: oklch(0.269 0 0);
+  --color-gray-900: oklch(0.205 0 0);
+  --color-gray-950: oklch(0.145 0 0);
+  --color-slate-50: oklch(0.985 0 0);
+  --color-slate-100: oklch(0.97 0 0);
+  --color-slate-200: oklch(0.922 0 0);
+  --color-slate-300: oklch(0.87 0 0);
+  --color-slate-400: oklch(0.708 0 0);
+  --color-slate-500: oklch(0.556 0 0);
+  --color-slate-600: oklch(0.439 0 0);
+  --color-slate-700: oklch(0.371 0 0);
+  --color-slate-800: oklch(0.269 0 0);
+  --color-slate-900: oklch(0.205 0 0);
+  --color-slate-950: oklch(0.145 0 0);
+  --color-neutral-50: oklch(0.985 0 0);
+  --color-neutral-100: oklch(0.97 0 0);
+  --color-neutral-200: oklch(0.922 0 0);
+  --color-neutral-300: oklch(0.87 0 0);
+  --color-neutral-400: oklch(0.708 0 0);
+  --color-neutral-500: oklch(0.556 0 0);
+  --color-neutral-600: oklch(0.439 0 0);
+  --color-neutral-700: oklch(0.371 0 0);
+  --color-neutral-800: oklch(0.269 0 0);
+  --color-neutral-900: oklch(0.205 0 0);
+  --color-neutral-950: oklch(0.145 0 0);
+  --color-white: oklch(1 0 0);
+  --color-themeDark: #0f172a;
+  --color-themeLight: #F8F6F6;
 }
 
 @layer base {

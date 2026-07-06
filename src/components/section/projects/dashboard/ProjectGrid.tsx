@@ -1,8 +1,7 @@
 import React from 'react';
 import { Project } from '../../../../lib/types/Project_Section';
 import { PROJECT_CATEGORIES } from '../../../../lib/data/projects/projectConfig';
-import { formatDate, getProjectStatus,  } from '../../../../lib/utils/projectUtils';
-import { ExternalLink, Github, Zap,Sparkles } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 interface ProjectGridProps {
   projects: Project[];
@@ -36,10 +35,10 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (slug: string) => void
   return (
     <div
       onClick={handleCardClick}
-      className="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden hover:border-themeRed dark:hover:border-themeRed hover:shadow-2xl dark:hover:shadow-lg dark:hover:shadow-themeRed/20 transition-all duration-500 cursor-pointer h-full flex flex-col"
+      className="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-themeRed dark:hover:border-themeRed hover:shadow-2xl dark:hover:shadow-lg dark:hover:shadow-themeRed/20 transition-all duration-500 cursor-pointer h-full flex flex-col rounded-2xl overflow-hidden"
     >
       {/* Image Container */}
-      <div className="relative h-56 bg-gray-100 dark:bg-gray-700 overflow-hidden">
+      <div className="relative h-36 bg-gray-100 dark:bg-gray-700 overflow-hidden">
         <img
           src={project.image}
           alt={project.title}
@@ -77,59 +76,19 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (slug: string) => void
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-6 flex flex-col">
+      <div className="flex-1 p-4 flex flex-col">
         {/* Title */}
-        <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-3 line-clamp-2 group-hover:text-themeRed dark:group-hover:text-themeRed transition-colors duration-500">
+        <h3 className="font-bold text-base text-gray-900 dark:text-gray-100 mb-1 line-clamp-2 group-hover:text-themeRed dark:group-hover:text-themeRed transition-colors duration-500">
           {project.title}
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 flex-1 transition-colors duration-300">
-          {project.description}
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 transition-colors duration-300">
+          {project.description.length > 100 ? project.description.slice(0, 100) + '...' : project.description}
         </p>
 
-        {/* Meta Info */}
-        <div className="space-y-4 mb-6 pt-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          {/* Date */}
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-gray-600 dark:text-gray-400 transition-colors duration-300">
-              {getProjectStatus(project.completedAt)}
-            </span>
-            <span className="text-gray-500 dark:text-gray-500 transition-colors duration-300">{formatDate(project.createdAt)}</span>
-          </div>
-
-          {/* Impact Score */}
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Impact Score</span>
-            <div className="flex items-center gap-2">
-              <div className="h-1.5 w-20 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden transition-colors duration-300">
-                <div
-                  className="h-full bg-themeRed dark:bg-themeRed transition-all duration-500"
-                  style={{ width: `${(project.impactScore / 20) * 100}%` }}
-                ></div>
-              </div>
-              <span className="font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">{project.impactScore}/20</span>
-            </div>
-          </div>
-
-          {/* Difficulty */}
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Difficulty</span>
-            <div className="flex gap-1">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div
-                  key={i}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors duration-500 ${
-                    i < project.difficulty ? 'bg-themeRed dark:bg-themeRed' : 'bg-gray-300 dark:bg-gray-600'
-                  }`}
-                ></div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-1.5 mt-auto">
           {project.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
@@ -140,43 +99,6 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (slug: string) => void
           ))}
           {project.tags.length > 3 && (
             <span className="px-3 py-1 text-gray-600 dark:text-gray-400 text-xs font-medium transition-colors duration-300">+{project.tags.length - 3}</span>
-          )}
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex gap-3 mt-auto"  >
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onSelect(project.slug);
-            }}
-            className="flex-1 px-4 py-2.5 bg-themeRed dark:bg-themeRed text-white text-sm font-semibold rounded-2xl hover:bg-red-700 dark:hover:bg-red-700 active:bg-red-800 dark:active:bg-red-800 transition-all duration-500 hover:shadow-lg hover:shadow-themeRed/30"
-          >
-            View Details
-          </button>
-          {project.links?.demo && (
-            <a
-              href={project.links.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="p-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-2xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-500 hover:shadow-md"
-              title="View Live Demo"
-            >
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          )}
-          {project.links?.github && (
-            <a
-              href={project.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="p-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-2xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-500 hover:shadow-md"
-              title="View on GitHub"
-            >
-              <Github className="w-4 h-4" />
-            </a>
           )}
         </div>
       </div>

@@ -19,10 +19,10 @@ const ProjectListItem: React.FC<{ project: Project; onSelect: (slug: string) => 
   return (
     <div
       onClick={() => onSelect(project.slug)}
-      className="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 hover:border-themeRed dark:hover:border-themeRed hover:shadow-lg dark:hover:shadow-lg dark:hover:shadow-themeRed/20 transition-all duration-500 cursor-pointer flex items-center gap-6"
+      className="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 hover:border-themeRed dark:hover:border-themeRed hover:shadow-lg dark:hover:shadow-lg dark:hover:shadow-themeRed/20 transition-all duration-500 cursor-pointer flex items-center gap-3"
     >
       {/* Image Thumbnail */}
-      <div className="flex-shrink-0 w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-2xl overflow-hidden transition-colors duration-300">
+      <div className="flex-shrink-0 w-16 h-16 bg-gray-100 dark:bg-gray-700 overflow-hidden transition-colors duration-300">
         <img
           src={project.image}
           alt={project.title}
@@ -36,11 +36,11 @@ const ProjectListItem: React.FC<{ project: Project; onSelect: (slug: string) => 
         {/* Title and Badges */}
         <div className="flex items-start justify-between gap-3 mb-2">
           <div>
-            <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 group-hover:text-themeRed dark:group-hover:text-themeRed transition-colors line-clamp-1 duration-500">
+            <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100 group-hover:text-themeRed dark:group-hover:text-themeRed transition-colors duration-500">
               {project.title}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-1 mt-1 transition-colors duration-300">
-              {project.description}
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 transition-colors duration-300">
+              {project.description.length > 100 ? project.description.slice(0, 100) + '...' : project.description}
             </p>
           </div>
           <div className="flex gap-2 flex-shrink-0">
@@ -58,7 +58,7 @@ const ProjectListItem: React.FC<{ project: Project; onSelect: (slug: string) => 
         </div>
 
         {/* Meta Info */}
-        <div className="flex flex-wrap items-center gap-4 text-xs">
+        <div className="flex flex-wrap items-center gap-2 text-xs mt-1">
           {/* Category */}
           <div className="flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${category.color}`}></span>
@@ -90,7 +90,7 @@ const ProjectListItem: React.FC<{ project: Project; onSelect: (slug: string) => 
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mt-3">
+        <div className="flex flex-wrap gap-1 mt-1.5">
           {project.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
@@ -112,7 +112,7 @@ const ProjectListItem: React.FC<{ project: Project; onSelect: (slug: string) => 
             e.stopPropagation();
             onSelect(project.slug);
           }}
-          className="px-4 py-2 bg-themeRed dark:bg-themeRed text-white text-sm font-semibold rounded-2xl hover:bg-red-700 dark:hover:bg-red-700 active:bg-red-800 dark:active:bg-red-800 transition-all duration-500 hover:shadow-lg hover:shadow-themeRed/30 whitespace-nowrap"
+          className="px-4 py-2 bg-themeRed dark:bg-themeRed text-white text-sm font-semibold rounded-2xl hover:bg-green-700 dark:hover:bg-green-700 active:bg-green-800 dark:active:bg-green-800 transition-all duration-500 hover:shadow-lg hover:shadow-themeRed/30 whitespace-nowrap"
         >
           View
         </button>

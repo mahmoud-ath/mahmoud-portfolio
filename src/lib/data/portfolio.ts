@@ -1,24 +1,3 @@
-import { Testimonial } from '../types/types';
-
-
-// Testimonials (You can add more as you receive them)
-export const testimonialsData: Testimonial[] = [
-  {
-    id: '1',
-    name: 'Project Supervisor',
-    source: 'Cloud Marketing Hub',
-    text: 'Mahmoud demonstrated exceptional problem-solving skills and delivered a robust centralized data management system that significantly improved our operational efficiency.',
-    theme: 'light'
-  },
-  {
-    id: '2',
-    name: 'Team Member',
-    source: 'Rowad Cultural Club',
-    text: 'As a team leader, Mahmoud showed great leadership qualities and successfully coordinated complex events with excellent communication and organization.',
-    theme: 'dark'
-  }
-];
-
 // Languages
 export const languagesData = [
   { language: 'Arabic', proficiency: 'Native' },

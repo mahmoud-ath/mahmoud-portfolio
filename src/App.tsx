@@ -6,7 +6,6 @@ import SideElements from './components/layout/SideElements';
 import Skills from './components/section/Skills';
 import Experience from './components/section/experience/ExperienceTabs';
 import Projects from './components/section/Projects';
-import Testimonials from './components/section/Testimonials';
 import Contact from './components/section/Contact';
 import CustomCursor from './components/effect-animation/CustomCursor';
 import ChatbotContainer from './components/chatbot/ChatbotContainer';
@@ -79,7 +78,6 @@ const App: React.FC = () => {
         <Skills />
         <Experience />
         <Projects /> 
-        <Testimonials />
         <Contact />
       </>
     );

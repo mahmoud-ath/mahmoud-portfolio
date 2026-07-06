@@ -68,7 +68,7 @@ const SimilarProjects: React.FC<SimilarProjectsProps> = ({
                   e.stopPropagation();
                   onProjectSelect(project.slug);
                 }}
-                className="w-full px-4 py-2 bg-themeRed hover:bg-red-700 dark:hover:bg-red-600 text-white font-semibold rounded-2xl transition-colors duration-500 flex items-center justify-center gap-2 group"
+                className="w-full px-4 py-2 bg-themeRed hover:bg-green-700 dark:hover:bg-green-600 text-white font-semibold rounded-2xl transition-colors duration-500 flex items-center justify-center gap-2 group"
               >
                 View Project
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

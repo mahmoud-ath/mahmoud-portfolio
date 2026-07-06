@@ -31,12 +31,7 @@ const BottomNav: React.FC = () => {
       label: 'Projects',
       href: '#my-work',
     },
-    {
-      id: 'reviews',
-      icon: <Users size={20} />,
-      label: 'Testimonials',
-      href: '#reviews',
-    },
+
     {
       id: 'certifications',
       icon: <Award size={20} />,

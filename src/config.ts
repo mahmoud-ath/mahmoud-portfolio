@@ -29,7 +29,7 @@ export const SITE_CONFIG = {
     { label: 'Experience', href: '#experience' },
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
-    { label: 'Testimonials', href: '#testimonials' },
+
     { label: 'Contact', href: '#contact' }
   ]
 };

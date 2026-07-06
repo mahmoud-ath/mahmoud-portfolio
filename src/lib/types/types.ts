@@ -1,13 +1,4 @@
 
-export interface Testimonial {
-  id: string;
-  name: string;
-  source: string;
-  text: string;
-  theme: 'light' | 'dark';
-}
-
-
 export interface Leadership {
   id: string;
   title: string;

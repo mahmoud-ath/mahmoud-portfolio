@@ -17,7 +17,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ onClick, isOpen, unreadCount = 
       className={`fixed bottom-6 right-6 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center font-bold text-white transition-all duration-300 z-40 ${
         isOpen
           ? 'bg-red-700 dark:bg-red-800'
-          : 'bg-themeRed dark:bg-themeRed hover:bg-red-700 dark:hover:bg-red-700'
+          : 'bg-themeRed dark:bg-themeRed hover:bg-green-700 dark:hover:bg-green-700'
       }`}
       title="Open chat assistant"
     >
