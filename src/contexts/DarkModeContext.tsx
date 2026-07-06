@@ -13,14 +13,14 @@ const DarkModeContext = createContext<DarkModeContextType | undefined>(undefined
 
 export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [darkModeStyle, setDarkModeStyle] = useState<DarkModeStyle>('github');
+  const [darkModeStyle, setDarkModeStyle] = useState<DarkModeStyle>('original');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme-mode');
     const savedStyle = localStorage.getItem('dark-mode-style') as DarkModeStyle | null;
     const shouldBeDark = savedTheme ? savedTheme === 'dark' : true;
-    const style = savedStyle || 'github';
+    const style = savedStyle || 'original';
     setIsDarkMode(shouldBeDark);
     setDarkModeStyle(style);
     applyTheme(shouldBeDark, style);
