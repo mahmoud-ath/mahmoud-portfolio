@@ -121,7 +121,7 @@ const Projects: React.FC<ProjectsProps> = ({ onViewAllClick }) => {
                 <ArrowRight className="w-4 h-4" />
               </motion.button>
             </motion.div>
-          </>
+                                                                                </>
         )}
       </div>
     </section>

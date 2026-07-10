@@ -6,6 +6,10 @@ import SideElements from './components/layout/SideElements';
 import Skills from './components/section/Skills';
 import Experience from './components/section/experience/ExperienceTabs';
 import Projects from './components/section/Projects';
+import Services from './components/section/Services';
+import Blog from './components/section/Blog';
+import BlogPage from './components/section/blog/BlogPage';
+import BlogDetail from './components/section/blog/BlogDetail';
 import Contact from './components/section/Contact';
 import CustomCursor from './components/effect-animation/CustomCursor';
 import ChatbotContainer from './components/chatbot/ChatbotContainer';
@@ -16,15 +20,16 @@ import AdminPage from './components/admin/pages/AdminPage';
 import { SITE_CONFIG } from './config';
 import { DarkModeProvider } from './contexts/DarkModeContext';
 
-type PageType = 'home' | 'projects' | 'admin' | { type: 'project'; slug: string };
+type PageType = 'home' | 'projects' | 'blog' | 'admin' | { type: 'project'; slug: string } | { type: 'blog'; slug: string };
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
 
   // Parse hash and update page
   const parseHashAndUpdatePage = () => {
-    const hash = window.location.hash.slice(1);
-    const pathParts = hash.split('/').filter(Boolean);
+    const rawHash = window.location.hash.slice(1);
+    const hasLeadingSlash = rawHash.startsWith('/');
+    const pathParts = rawHash.split('/').filter(Boolean);
 
     if (pathParts.length === 0) {
       setCurrentPage('home');
@@ -34,6 +39,10 @@ const App: React.FC = () => {
       setCurrentPage({ type: 'project', slug: pathParts[1] });
     } else if (pathParts[0] === 'admin') {
       setCurrentPage('admin');
+    } else if (pathParts[0] === 'blog' && pathParts.length === 1 && hasLeadingSlash) {
+      setCurrentPage('blog');
+    } else if (pathParts[0] === 'blog' && pathParts[1]) {
+      setCurrentPage({ type: 'blog', slug: pathParts[1] });
     } else {
       setCurrentPage('home');
     }
@@ -55,6 +64,10 @@ const App: React.FC = () => {
       return <ProjectsPage />;
     }
 
+    if (currentPage === 'blog') {
+      return <BlogPage />;
+    }
+
     if (typeof currentPage === 'object' && currentPage.type === 'project') {
       return (
         <ProjectDetail
@@ -71,13 +84,27 @@ const App: React.FC = () => {
       );
     }
 
+    if (typeof currentPage === 'object' && currentPage.type === 'blog') {
+      return (
+        <BlogDetail
+          slug={currentPage.slug}
+          onBack={() => {
+            window.location.hash = '#/blog';
+          }}
+        />
+      );
+    }
+
     // Home page
     return (
       <>
         <Hero />
+       
         <Skills />
         <Experience />
         <Projects /> 
+         <Services />
+        <Blog />
         <Contact />
       </>
     );

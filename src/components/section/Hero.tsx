@@ -1,230 +1,329 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import DecryptedText from '../effect-animation/DecryptedText';
-import BlobCursor from '../effect-animation/BlobCursor';
+    import React, { useEffect, useRef, useState, useCallback } from "react";
+    import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+    import TrueFocus from "@/components/TrueFocus";
+    import { useDarkMode } from "../../contexts/DarkModeContext";
 
-const Hero: React.FC = () => {
-  return (
-    <BlobCursor
-      blobType="circle"
-      fillColor="#efbf44ff"
-      trailCount={3}
-      sizes={[250, 500, 300]}
-      innerSizes={[100, 180, 120]}
-      innerColor="rgba(255,255,255,0.8)"
-      opacities={[0.6, 0.6, 0.6]}
-      shadowColor="rgba(0,0,0,0.75)"
-      shadowBlur={5}
-      shadowOffsetX={10}
-      shadowOffsetY={10}
-      filterStdDeviation={30}
-      useFilter={true}
-      fastDuration={0.1}
-      slowDuration={0.5}
-      zIndex={20}
-    >
-      <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-24 relative overflow-hidden pt-20 md:pt-0">
-        {/* Background layer for dark mode */}
-        <div className="absolute inset-0 bg-white dark:bg-slate-950 pointer-events-none" style={{ zIndex: -1 }}></div>
-        
-        <div className="container max-w-6xl relative z-10">
-          {/* Mobile Layout - Stacked */}
-          <div className="md:hidden flex flex-col items-center text-center space-y-8">
-  {/* Mobile Profile Image with Enhanced Border */}
-  <motion.div 
-    initial={{ opacity: 0, scale: 0.9 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ delay: 0.1 }}
-    className="relative w-40 h-40"
-  >
-    {/* Enhanced Border Effect - Similar to Desktop */}
-    <div className="absolute inset-0 border-2 border-themeRed rounded-full translate-x-2 translate-y-2 z-0 transition-transform duration-300"></div>
-    <img 
-      src="/General/mahmoud-profile.jpg" 
-      alt="Mahmoud EL GHARIB" 
-      className="w-full h-full object-cover rounded-full relative z-10 transition-all duration-300 shadow-lg"
-    />
-  </motion.div>
+    // ── Theme ───────────────────────────────────────────────────
+    const ACCENT = "rgba(63,185,80,";
+    const ACCENT_HEX = "#3fb950";
+    const EASE = [0.22, 1, 0.36, 1] as const;
 
-  {/* Mobile Content */}
-  <div className="space-y-6">
-    <motion.p 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2 }}
-      className="text-themeRed font-mono text-base font-semibold"
-    >
-      Hi, I'm
-    </motion.p>
-    
-    <motion.h1 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3 }}
-      className="text-4xl font-heading font-black text-slate-900 dark:text-white leading-tight"
-    >
-      Mahmoud
-      <br />
-      EL GHARIB
-    </motion.h1>
-    
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4 }}
-      className="min-h-[60px] flex items-center justify-center"
-    >
-      <DecryptedText
-        texts={["AI & Data Science", "Full-Stack Developer", "ML Enthusiast"]}
-        speed={80}
-        switchInterval={2500}
-        animationDuration={1200}
-        maxIterations={12}
-        sequential={true}
-        revealDirection="start"
-        useOriginalCharsOnly={false}
-        className="text-lg font-heading font-bold text-themeRed text-center"
-        encryptedClassName="text-themeRed/70"
-      />
-    </motion.div>
-    
-    <motion.p 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.5 }}
-      className="text-slate-700 dark:text-slate-300 text-base leading-relaxed px-2"
-    >
-      Master's in AI & Data Science passionate about designing intelligent solutions and data-driven applications.
-    </motion.p>
-    
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 }}
-      className="flex gap-4 justify-center pt-2"
-    >
-      <motion.a 
-        href="#contact"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-8 py-3 bg-themeRed text-white font-bold rounded-full text-base hover:bg-themeRed/90 transition-colors duration-300 shadow-lg"
-      >
-        Contact Me
-      </motion.a>
-      
-      <motion.a 
-        href="#projects"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-8 py-3 border-2 border-themeRed text-themeRed font-bold rounded-full text-base hover:bg-themeRed hover:text-white transition-colors duration-300"
-      >
-        View Work
-      </motion.a>
-    </motion.div>
-  </div>
-</div>
+    // ── Portrait images for the auto-rotating carousel ─────────
+    const PORTRAITS = [
+      "/General/mahmoud-profile.jpg",
+      "/General/me2.jpeg",
+      "/General/ME 3.jpeg",
+    ];
 
-          {/* Desktop Layout - Side by Side */}
-          <div className="hidden md:flex flex-col justify-center items-start relative">
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-themeRed font-mono mb-4 text-lg"
-            >
-              Hi, I'm
-            </motion.p>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-black text-slate-900 dark:text-white mb-2"
-            >
-              Mahmoud EL GHARIB.
-            </motion.h1>
-            
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-heading font-bold text-slate-600 dark:text-slate-300 mb-6 md:mb-8"          
-            >
-              <DecryptedText
-                texts={["AI & Data Science Specialist", "Full-Stack Developer", "Machine Learning Enthusiast"]}
-                speed={99}
-                switchInterval={3000}
-                animationDuration={1500}
-                maxIterations={15}
-                sequential={true}
-                revealDirection="start"
-                useOriginalCharsOnly={false}
-                className="text-themeRed"
-                encryptedClassName="text-themeRed"
-              />
-            </motion.h2>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="max-w-xl text-slate-700 dark:text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed mb-8 md:mb-10"
-            >
-              I'm a Master's student in Artificial Intelligence and Data Science, passionate about designing intelligent solutions. With expertise in full-stack development (React, Next.js, Django) and machine learning, I create data-driven applications addressing real-world challenges.
-            </motion.p>
-            
-            <motion.a 
-              href="#contact"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="px-6 sm:px-8 py-3 md:py-4 border-2 border-themeRed text-themeRed font-bold rounded-md text-sm sm:text-base hover:bg-themeRed hover:text-white transition-colors duration-300"
-            >
-              Contact me!
-            </motion.a>
+    // ── Wireframe ring behind portrait ─────────────────────────
+    function WireframeRing({ isDark }: { isDark: boolean }) {
+      const sub = isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.04)";
+      const dim = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.08)";
+      return (
+        <svg
+          className="absolute z-0 pointer-events-none"
+          viewBox="0 0 400 400"
+          style={{
+            width: "clamp(300px, 42vw, 460px)",
+            height: "clamp(300px, 42vw, 460px)",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+          aria-hidden="true"
+        >
+          <motion.circle
+            cx="200" cy="200" r="185"
+            fill="none" stroke={`${ACCENT}0.05)`}
+            strokeWidth="0.5" strokeDasharray="4 12"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: "center" }}
+          />
+          <motion.circle
+            cx="200" cy="200" r="165"
+            fill="none" stroke={sub}
+            strokeWidth="0.3" strokeDasharray="2 8"
+            animate={{ rotate: -360 }}
+            transition={{ duration: 65, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: "center" }}
+          />
+          <line x1="195" y1="200" x2="205" y2="200" stroke={dim} strokeWidth="0.5" />
+          <line x1="200" y1="195" x2="200" y2="205" stroke={dim} strokeWidth="0.5" />
+        </svg>
+      );
+    }
+
+    // ── Scan-line overlay ──────────────────────────────────────
+    function ScanLine() {
+      return (
+        <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden rounded-sm" aria-hidden="true">
+          <motion.div
+            className="absolute left-0 right-0 h-[1px]"
+            style={{ background: `linear-gradient(90deg, transparent, ${ACCENT}0.12), transparent)` }}
+            initial={{ top: "-2%" }}
+            animate={{ top: "102%" }}
+            transition={{ duration: 3, repeat: Infinity, repeatDelay: 16, ease: "linear" }}
+          />
+        </div>
+      );
+    }
+
+
+    // ── Grain overlay ───────────────────────────────────────────
+    function GrainOverlay() {
+      const canvasRef = useRef<HTMLCanvasElement>(null);
+      useEffect(() => {
+        const c = canvasRef.current;
+        if (!c) return;
+        const ctx = c.getContext("2d");
+        if (!ctx) return;
+        c.width = 256;
+        c.height = 256;
+        ctx.fillStyle = "#0f172a";
+        ctx.fillRect(0, 0, 256, 256);
+        for (let i = 0; i < 5000; i++) {
+          const x = Math.random() * 256;
+          const y = Math.random() * 256;
+          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.05})`;
+          ctx.fillRect(x, y, 1, 1);
+        }
+      }, []);
+      return (
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-[0.15] mix-blend-overlay"
+          style={{ imageRendering: "pixelated" }}
+          aria-hidden="true"
+        />
+      );
+    }
+
+    // ── CAD corner (reusable) ───────────────────────────────────
+    const CORNERS = [
+      "M 6,2 L 2,2 L 2,6",
+      "M 94,2 L 98,2 L 98,6",
+      "M 6,98 L 2,98 L 2,94",
+      "M 94,98 L 98,98 L 98,94",
+    ];
+
+    function CadCorners({ active, isDark }: { active: boolean; isDark: boolean }) {
+      const dim = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.12)";
+      return (
+        <svg className="absolute inset-0 w-full h-full z-[3] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {CORNERS.map((d, i) => (
+            <motion.path
+              key={i}
+              d={d}
+              fill="none"
+              strokeWidth="1"
+              strokeLinecap="square"
+              animate={{ stroke: active ? `${ACCENT}0.6)` : dim }}
+              transition={{ duration: 0.4, ease: EASE }}
+            />
+          ))}
+        </svg>
+      );
+    }
+
+    // ── Main hero ───────────────────────────────────────────────
+    export default function Hero() {
+      const { isDarkMode } = useDarkMode();
+      const [imageHovered, setImageHovered] = useState(false);
+      const [currentImage, setCurrentImage] = useState(0);
+
+      // Auto-rotate carousel (paused on hover)
+      useEffect(() => {
+        if (imageHovered) return;
+        const timer = setInterval(() => {
+          setCurrentImage((prev) => (prev + 1) % PORTRAITS.length);
+        }, 4000);
+        return () => clearInterval(timer);
+      }, [imageHovered]);
+
+      const tiltX = useMotionValue(0);
+      const tiltY = useMotionValue(0);
+      const smoothTiltX = useSpring(tiltX, { stiffness: 70, damping: 24 });
+      const smoothTiltY = useSpring(tiltY, { stiffness: 70, damping: 24 });
+
+      const handleMouse = useCallback((e: React.MouseEvent) => {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const dx = (e.clientX - cx) / cx;
+        const dy = (e.clientY - cy) / cy;
+        tiltX.set(dy * 1.2);
+        tiltY.set(dx * 1.2);
+      }, [tiltX, tiltY]);
+
+      return (
+        <section
+          id="home"
+          className="relative min-h-screen flex items-center overflow-hidden bg-white dark:bg-slate-950 select-none"
+          onMouseMove={handleMouse}
+        >
+          {/* ── Background layers ── */}
+          <div className="absolute inset-0 bg-white dark:bg-slate-950 z-0" />
+
+          <svg className="absolute inset-0 w-full h-full z-[1] pointer-events-none" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <pattern id="arch-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+                <circle cx="24" cy="24" r="0.5" fill="rgba(255,255,255,0.03)" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#arch-grid)" />
+          </svg>
+
+
+          <GrainOverlay />
+
+
+          {/* ── Page indicator ── */}
+          <div className="absolute top-8 right-10 z-20 hidden md:flex items-center gap-3 pointer-events-none">
+            <div className="w-6 h-px bg-white/[0.06]" />
+            <span className="text-[9px] font-mono text-white/[0.08]">01</span>
           </div>
 
-          {/* Desktop Image - Hidden on mobile */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7 }}
-            className="hidden md:block absolute right-4 lg:right-6 xl:right-12 top-1/2 -translate-y-1/2 w-40 md:w-56 lg:w-72"
-          >
-            {/* Image Border Effect */}
-            <div className="absolute inset-0 border-2 border-themeRed rounded-lg translate-x-2 md:translate-x-3 translate-y-2 md:translate-y-3 z-0 transition-transform duration-300 hover:translate-x-1 hover:translate-y-1"></div>
-            {/* Image Overlay */}
-            <div className="absolute inset-0 hover:bg-transparent z-10 rounded-lg transition-colors duration-300 cursor-pointer"></div>
-            <img 
-              src="/General/mahmoud-profile.jpg" 
-              alt="Mahmoud EL GHARIB" 
-              className="w-full h-full aspect-square object-cover rounded-lg relative z-0 hover:grayscale-0 transition-all duration-300"
-            />
-          </motion.div>
-        </div>
+          {/* ── Main content ── */}
+          <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 lg:px-16 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 lg:gap-24 pt-24 md:pt-0">
 
-        {/* Scroll Indicator for Mobile */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="absolute bottom-2.5 left-1/2 transform -translate-x-1/2 md:hidden"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-themeRed rounded-full flex justify-center"
-          >
+            {/* ── Left: Name + Tagline + CTA ── */}
+            <div className="flex-1 flex flex-col items-start justify-center max-w-xl">
+              <motion.p
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: EASE }}
+                className="text-sm md:text-base uppercase tracking-[0.3em] text-slate-500 dark:text-white/35 mb-6"
+              >
+                hello I'm
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: EASE }}
+                className="text-sm md:text-base uppercase tracking-[0.3em] text-slate-500 dark:text-white/35 mb-6"
+              >
+                Mahmoud EL GHARIB
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: EASE }}
+                className="w-full"
+              >
+                <TrueFocus
+                  sentence="Build. Solve. Improve."
+                  separator=" "
+                  blurAmount={5}
+                  borderColor={ACCENT_HEX}
+                  glowColor={`${ACCENT}0.15)`}
+                  animationDuration={0.6}
+                  pauseBetweenAnimations={2.5}
+                />
+              </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.7, ease: EASE }}
+                className="mt-5 text-[clamp(0.85rem,1.8vw,1.1rem)] text-zinc-600 dark:text-zinc-500 font-light leading-relaxed text-left"
+              >
+                Building intelligent software through{" "}
+                <span className="text-slate-800 dark:text-white/80">AI</span> and modern engineering.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.7, ease: EASE }}
+                className="mt-8"
+              >
+                <a
+                  href="#projects"
+                  className="group relative inline-flex items-center gap-3 px-0 py-3 text-sm font-medium tracking-wide text-slate-500 dark:text-white/60 hover:text-slate-800 dark:hover:text-white transition-colors duration-300"
+                >
+                  <span className="absolute bottom-0 left-0 right-0 h-px bg-slate-300 dark:bg-white/10 group-hover:bg-themeRed/50 transition-colors duration-300" />
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-themeRed group-hover:w-full transition-all duration-500 ease-out" />
+                  View Projects
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="group-hover:translate-x-1 transition-transform duration-300">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </a>
+              </motion.div>
+            </div>
+
+            {/* ── Right: Portrait carousel ── */}
             <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1 h-3 bg-themeRed rounded-full mt-2"
-            />
-          </motion.div>
-        </motion.div>
-      </section>
-    </BlobCursor>
-  );
-};
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.85, duration: 0.9, ease: EASE }}
+              className="flex-shrink-0 relative"
+              style={{ rotateX: smoothTiltX, rotateY: smoothTiltY, transformPerspective: 800 }}
+            >
+              <WireframeRing isDark={isDarkMode} />
 
-export default Hero;
+              <div className="relative" style={{ width: "clamp(220px, 26vw, 320px)" }}>
+                <div
+                  className="relative overflow-hidden rounded-sm"
+                  onMouseEnter={() => setImageHovered(true)}
+                  onMouseLeave={() => setImageHovered(false)}
+                >
+                  {/* Crossfade carousel */}
+                  <div className="relative" style={{ aspectRatio: "3/4" }}>
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={currentImage}
+                        src={PORTRAITS[currentImage]}
+                        alt={`Mahmoud EL GHARIB — ${currentImage + 1}`}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        draggable={false}
+                        initial={{ opacity: 0, scale: 1.05 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.7, ease: EASE }}
+                      />
+                    </AnimatePresence>
+                  </div>
+
+                  <ScanLine />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10 pointer-events-none" />
+
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none"
+                    animate={{
+                      boxShadow: imageHovered
+                        ? `inset 0 0 0 1px ${ACCENT}0.3)`
+                        : isDarkMode ? "inset 0 0 0 1px rgba(255,255,255,0.05)" : "inset 0 0 0 1px rgba(0,0,0,0.06)",
+                    }}
+                    transition={{ duration: 0.4, ease: EASE }}
+                  />
+                </div>
+
+                {/* Navigation dots */}
+                <div className="flex justify-center gap-2 mt-3">
+                  {PORTRAITS.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentImage(i)}
+                      className="rounded-full transition-all duration-500"
+                      style={{
+                        width: i === currentImage ? 18 : 5,
+                        height: 5,
+                        backgroundColor:
+                          i === currentImage
+                            ? ACCENT_HEX
+                            : isDarkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)",
+                      }}
+                      aria-label={`Photo ${i + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <CadCorners active={imageHovered} isDark={isDarkMode} />
+              </div>
+            </motion.div>
+          </div>
+
+        </section>
+      );
+    }

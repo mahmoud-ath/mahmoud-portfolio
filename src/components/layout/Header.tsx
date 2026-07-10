@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Home, Briefcase, Zap, Users, Award, FileText, Moon, Sun, BrainCircuit, Palette } from 'lucide-react';
+import { Menu, X, Home, Briefcase, Zap, Users, Award, FileText, Moon, Sun, BrainCircuit, Palette, Code2, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 
@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'projects'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'projects' | 'blog'>('home');
   const { isDarkMode, darkModeStyle, toggleDarkMode, cycleDarkStyle } = useDarkMode();
 
   const navItems = [
@@ -15,7 +15,8 @@ const Header: React.FC = () => {
     { id: 'skills', icon: <BrainCircuit size={20} />, label: 'Skills', href: '#skills' },
     { id: 'experience', icon: <Briefcase size={20} />, label: 'Experience', href: '#experience' },
     { id: 'projects', icon: <Zap size={20} />, label: 'Projects', href: '#projects' },
-
+    { id: 'services', icon: <Code2 size={20} />, label: 'Services', href: '#services' },
+    { id: 'blog', icon: <BookOpen size={20} />, label: 'Blog', href: '#blog' },
     { id: 'contact', icon: <FileText size={20} />, label: 'Contact', href: '#contact' },
   ];
 
@@ -28,6 +29,8 @@ const Header: React.FC = () => {
         setCurrentPage('home');
       } else if (pathParts[0] === 'projects') {
         setCurrentPage('projects');
+      } else if (pathParts[0] === 'blog') {
+        setCurrentPage('blog');
       } else {
         setCurrentPage('home');
       }
@@ -100,7 +103,11 @@ const Header: React.FC = () => {
                   } else if (currentPage === 'home' && item.id === 'projects' && activeSection === 'projects') {
                     // Already at projects section, click again to go to dashboard
                     e.preventDefault();
-                    window.location.hash = '#projects';
+                    window.location.hash = '#/projects';
+                  } else if (currentPage === 'home' && item.id === 'blog' && activeSection === 'blog') {
+                    // Already at blog section, click again to go to dashboard
+                    e.preventDefault();
+                    window.location.hash = '#/blog';
                   }
                   // If on home page and not at projects, let default anchor link behavior work
                 }}
@@ -228,6 +235,9 @@ const Header: React.FC = () => {
                     if (item.id === 'projects') {
                       e.preventDefault();
                       window.location.hash = '#projects';
+                    } else if (item.id === 'blog') {
+                      e.preventDefault();
+                      window.location.hash = '#blog';
                     } else if (item.id === 'contact') {
                       e.preventDefault();
                       if (currentPage === 'projects') {
