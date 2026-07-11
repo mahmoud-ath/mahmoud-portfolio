@@ -1,156 +1,152 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Home, Briefcase, Zap, Users, Award, FileText, Moon, Sun, BrainCircuit, Palette, Code2, BookOpen } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { X, Home, Briefcase, Code2, BookOpen, FileText, Moon, Sun, Palette, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDarkMode } from '../../contexts/DarkModeContext';
+
+const ACCENT = "#3fb950";
+const NAV_ITEMS = [
+  { id: 'home',     icon: <Home size={15} />,      label: 'Home',     href: '#home' },
+  { id: 'projects', icon: <Briefcase size={15} />, label: 'Projects', href: '#projects' },
+  { id: 'services', icon: <Code2 size={15} />,     label: 'Services', href: '#services' },
+  { id: 'blog',     icon: <BookOpen size={15} />,   label: 'Blog', href: '#blog' },
+  { id: 'contact',  icon: <FileText size={15} />,   label: 'Contact',  href: '#contact' },
+];
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const [currentPage, setCurrentPage] = useState<'home' | 'projects' | 'blog'>('home');
   const { isDarkMode, darkModeStyle, toggleDarkMode, cycleDarkStyle } = useDarkMode();
 
-  const navItems = [
-    { id: 'home', icon: <Home size={20} />, label: 'Home', href: '#home' },
-    { id: 'skills', icon: <BrainCircuit size={20} />, label: 'Skills', href: '#skills' },
-    { id: 'experience', icon: <Briefcase size={20} />, label: 'Experience', href: '#experience' },
-    { id: 'projects', icon: <Zap size={20} />, label: 'Projects', href: '#projects' },
-    { id: 'services', icon: <Code2 size={20} />, label: 'Services', href: '#services' },
-    { id: 'blog', icon: <BookOpen size={20} />, label: 'Blog', href: '#blog' },
-    { id: 'contact', icon: <FileText size={20} />, label: 'Contact', href: '#contact' },
-  ];
-
+  // ── Scroll detection ──
   useEffect(() => {
-    const parseHashAndUpdatePage = () => {
-      const hash = window.location.hash.slice(1);
-      const pathParts = hash.split('/').filter(Boolean);
-
-      if (pathParts.length === 0 || pathParts[0] === 'home') {
-        setCurrentPage('home');
-      } else if (pathParts[0] === 'projects') {
-        setCurrentPage('projects');
-      } else if (pathParts[0] === 'blog') {
-        setCurrentPage('blog');
-      } else {
-        setCurrentPage('home');
-      }
-    };
-
-    parseHashAndUpdatePage();
-    window.addEventListener('hashchange', parseHashAndUpdatePage);
-    return () => window.removeEventListener('hashchange', parseHashAndUpdatePage);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Update active section based on scroll in home page
+  // ── Hash routing ──
+  useEffect(() => {
+    const parse = () => {
+      const raw = window.location.hash.slice(1);
+      const hasSlash = raw.startsWith('/');
+      const parts = raw.split('/').filter(Boolean);
+      if (parts.length === 0 || parts[0] === 'home') setCurrentPage('home');
+      else if (parts[0] === 'projects') setCurrentPage('projects');
+      else if (parts[0] === 'blog' && hasSlash && parts.length === 1) setCurrentPage('blog');
+      else setCurrentPage('home');
+    };
+    parse();
+    window.addEventListener('hashchange', parse);
+    return () => window.removeEventListener('hashchange', parse);
+  }, []);
+
+  // ── Scroll-based active section ──
   useEffect(() => {
     if (currentPage !== 'home') return;
-
-    const handleScroll = () => {
-      const sections = navItems.map(item => {
-        const element = document.getElementById(item.id);
-        return { id: item.id, element };
-      });
-
-      for (const section of sections) {
-        if (section.element) {
-          const rect = section.element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section.id);
-            break;
-          }
-        }
+    const onScroll = () => {
+      for (const { id } of NAV_ITEMS) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        if (r.top <= 120 && r.bottom >= 120) { setActiveSection(id); break; }
       }
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, [currentPage]);
+
+  // ── Navigation handler ──
+  const handleNavClick = useCallback((e: React.MouseEvent, id: string) => {
+    if (currentPage !== 'home') {
+      e.preventDefault();
+      window.location.hash = '#home';
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 100);
+      return;
+    }
+    // Double-click → dashboard
+    if ((id === 'projects' || id === 'blog') && activeSection === id) {
+      e.preventDefault();
+      window.location.hash = id === 'projects' ? '#/projects' : '#/blog';
+    }
+  }, [currentPage, activeSection]);
+
+  const headerHeight = scrolled ? 'h-14' : 'h-16';
+  const bgOpacity = scrolled ? 'bg-white/90 dark:bg-slate-950/90' : 'bg-transparent';
+  const blurAmount = scrolled ? 'backdrop-blur-md' : '';
 
   return (
     <>
-      {/* Desktop Header */}
+      {/* ── Desktop header ── */}
       <motion.header
-        initial={{ y: -100 }}
+        initial={{ y: -80 }}
         animate={{ y: 0 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-700/50 transition-colors duration-500"
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 ${bgOpacity} ${blurAmount} transition-all duration-500 ${headerHeight}`}
       >
-        <div className="container mx-auto px-4 md:px-6 py-3 md:py-0.25 flex items-center justify-between">
-         {/* Logo with Smooth Scroll */}
-{/* Logo as Link */}
-<motion.a
-  whileHover={{ scale: 1.05 }}
-  href="#home"
-  className="w-10 md:w-12 h-10 md:h-12 rounded-full bg-themeYellow dark:bg-themeRed flex items-center justify-center border-2 border-slate-900 dark:border-white transition-all duration-500 flex-shrink-0 cursor-pointer"
->
-  <span className="font-bold text-slate-900 dark:text-white text-lg md:text-xl">MA</span>
-</motion.a>
+        <div className="max-w-7xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
+          {/* ── Logo ── */}
+          <a href="#home" className="relative flex items-center gap-2 group">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <motion.path d="M 4,2 L 2,2 L 2,6" stroke={ACCENT} strokeWidth="1" strokeLinecap="square"
+                initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6 }} />
+              <motion.path d="M 32,2 L 34,2 L 34,6" stroke={ACCENT} strokeWidth="1" strokeLinecap="square"
+                initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.05 }} />
+              <motion.path d="M 4,34 L 2,34 L 2,30" stroke={ACCENT} strokeWidth="1" strokeLinecap="square"
+                initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.1 }} />
+              <motion.path d="M 32,34 L 34,34 L 34,30" stroke={ACCENT} strokeWidth="1" strokeLinecap="square"
+                initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.15 }} />
+              <text x="18" y="24" textAnchor="middle" fontSize="16" fontWeight="700" fill="currentColor"
+                className="text-slate-900 dark:text-white">M</text>
+            </svg>
+          </a>
 
-          {/* Navigation - Icons only, labels on hover/active - Hidden on mobile */}
-          <nav className="hidden lg:flex items-center gap-2">
-            {navItems.map((item) => (
-              <motion.a
-                key={item.id}
-                href={item.href}
-                onClick={(e) => {
-                  // If on projects dashboard page, redirect to home and scroll to the section
-                  if (currentPage === 'projects') {
-                    e.preventDefault();
-                    window.location.hash = '#home';
-                    setTimeout(() => {
-                      const element = document.getElementById(item.id);
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
-                  } else if (currentPage === 'home' && item.id === 'projects' && activeSection === 'projects') {
-                    // Already at projects section, click again to go to dashboard
-                    e.preventDefault();
-                    window.location.hash = '#/projects';
-                  } else if (currentPage === 'home' && item.id === 'blog' && activeSection === 'blog') {
-                    // Already at blog section, click again to go to dashboard
-                    e.preventDefault();
-                    window.location.hash = '#/blog';
-                  }
-                  // If on home page and not at projects, let default anchor link behavior work
-                }}
-                className="relative"
-                onMouseEnter={() => setHoveredItem(item.id)}
-                onMouseLeave={() => setHoveredItem(null)}
-              >
-                <div className="flex items-center gap-2 p-3 rounded-lg transition-all duration-300 group">
-                  {/* Icon Container */}
-                  <div className={`p-2 rounded-lg transition-colors duration-300 ${
-                    activeSection === item.id 
-                      ? 'bg-themeRed text-white' 
-                      : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-                  }`}>
+          {/* ── Navigation ── */}
+          <nav className="hidden md:flex items-center gap-8 lg:gap-12">
+            {NAV_ITEMS.map((item) => {
+              const isActive = activeSection === item.id;
+              const isHovered = hoveredItem === item.id;
+              return (
+                <motion.a
+                  key={item.id}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.id)}
+                  onMouseEnter={() => setHoveredItem(item.id)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  className="relative flex items-center gap-2 py-1"
+                  animate={{
+                    color: isActive
+                      ? isDarkMode ? '#ffffff' : '#0f172a'
+                      : isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)',
+                  }}
+                  whileHover={{ color: isDarkMode ? '#ffffff' : '#0f172a' }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <motion.span
+                    animate={{
+                      scale: isActive || isHovered ? 1 : 0.85,
+                      opacity: isActive || isHovered ? 1 : 0.5,
+                    }}
+                    transition={{ duration: 0.25 }}
+                  >
                     {item.icon}
-                  </div>
-
-                  {/* Label - Shows on hover and active */}
-                  {(activeSection === item.id || hoveredItem === item.id) && (
+                  </motion.span>
+                  <span className="text-sm font-semibold tracking-wide">{item.label}</span>
+                  {/* Active green dot */}
+                  {isActive && (
                     <motion.span
-                      initial={{ opacity: 0, width: 0, x: -10 }}
-                      animate={{ opacity: 1, width: 'auto', x: 0 }}
-                      exit={{ opacity: 0, width: 0, x: -10 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                      className="font-semibold text-sm text-slate-900 dark:text-white whitespace-nowrap overflow-hidden transition-colors duration-300"
-                    >
-                      {item.label}
-                    </motion.span>
+                      layoutId="dot"
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                      style={{ backgroundColor: ACCENT }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    />
                   )}
-                </div>
-
-                {/* Animated underline - Left to Right */}
-                {(activeSection === item.id || hoveredItem === item.id) && (
-                  <motion.div
-                    initial={{ scaleX: 0, originX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    exit={{ scaleX: 0 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-themeRed"
-                  />
-                )}
-              </motion.a>
-            ))}
+                </motion.a>
+              );
+            })}
           </nav>
 
           {/* CV Button & Mobile Menu */}
@@ -192,7 +188,7 @@ const Header: React.FC = () => {
               className="hidden md:flex px-4 md:px-6 py-2 border-2 border-slate-900 dark:border-white text-slate-900 dark:text-white rounded-full font-bold hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 transition-all duration-300 text-xs md:text-sm items-center gap-2"
             >
               <FileText size={16} />
-              <span className="hidden sm:block">Curriculum Vitae</span>
+              <span className="hidden sm:block">Resume</span>
               <span className="sm:hidden">CV</span>
             </motion.a>
 
@@ -206,134 +202,69 @@ const Header: React.FC = () => {
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* ── Mobile menu ── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'tween', duration: 0.4 }}
-            className="fixed inset-0 bg-slate-900/95 dark:bg-slate-950 backdrop-blur-lg flex flex-col items-center justify-center z-50 transition-colors duration-500"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center"
           >
-            {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-8 right-8 p-2 text-white hover:text-themeYellow transition-colors"
+              className="absolute top-6 right-6 p-2 text-white/40 hover:text-white transition-colors"
             >
-              <X size={32} />
+              <X size={28} />
             </button>
 
-            {/* Mobile Navigation Items */}
-            <div className="flex flex-col items-center gap-8 w-full px-6">
-              {navItems.map((item, index) => (
+            <nav className="flex flex-col items-center gap-8">
+              {NAV_ITEMS.map((item, i) => (
                 <motion.a
                   key={item.id}
-                  href={item.href}
+                  href={`#${item.id}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06, duration: 0.4 }}
                   onClick={(e) => {
                     setIsOpen(false);
-                    if (item.id === 'projects') {
-                      e.preventDefault();
-                      window.location.hash = '#projects';
-                    } else if (item.id === 'blog') {
-                      e.preventDefault();
-                      window.location.hash = '#blog';
-                    } else if (item.id === 'contact') {
-                      e.preventDefault();
-                      if (currentPage === 'projects') {
-                        window.location.hash = '#home';
-                      }
-                      setTimeout(() => {
-                        const contactElement = document.getElementById('contact');
-                        contactElement?.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    } else if (currentPage === 'projects') {
-                      e.preventDefault();
-                      window.location.hash = '#home';
-                      setTimeout(() => {
-                        const element = document.getElementById(item.id);
-                        element?.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }
+                    handleNavClick(e as any, item.id);
                   }}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`w-full max-w-xs flex items-center gap-6 p-4 rounded-2xl transition-all duration-300 ${
-                    activeSection === item.id
-                      ? 'bg-themeRed text-white shadow-lg'
-                      : 'bg-white/10 text-white hover:bg-white/20 hover:text-white'
-                  }`}
+                  className="flex items-center gap-4 text-3xl md:text-4xl font-light tracking-wide text-white/50 hover:text-white transition-colors duration-300"
                 >
-                  {/* Mobile Icon */}
-                  <div className={`p-3 rounded-xl ${
-                    activeSection === item.id ? 'bg-white/20' : 'bg-white/10'
-                  }`}>
-                    {item.icon}
-                  </div>
-                  
-                  {/* Mobile Label */}
-                  <span className="text-2xl font-heading font-bold flex-1">
-                    {item.label}
-                  </span>
-
-                  {/* Active Indicator for Mobile */}
-                  {activeSection === item.id && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="w-3 h-3 bg-white rounded-full"
-                    />
+                  {item.icon && (
+                    <span className="text-white/20">{item.icon}</span>
                   )}
+                  {item.label}
                 </motion.a>
               ))}
-              
-              {/* Mobile CV Button */}
+
               <motion.a
                 href="/CV/Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="w-full max-w-xs px-6 py-4 border-2 border-white text-white rounded-2xl font-bold hover:bg-white hover:text-slate-900 transition-all duration-300 flex items-center justify-center gap-3 mt-4 text-lg"
+                transition={{ delay: 0.3, duration: 0.4 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3.5 border-2 border-gray-300 text-gray-900 font-light tracking-wide hover:border-themeRed hover:text-themeRed hover:bg-themeRed/5 transition-all duration-300 flex items-center gap-2 dark:text-white"
               >
-                <FileText size={24} />
-                Curriculum Vitae
+                <span className="text-3xl md:text-4xl">Resume</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </motion.a>
-              {/* Mobile Dark Mode Controls */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-                className="w-full max-w-xs flex items-center justify-center gap-3 mt-4"
-              >
-                <button
-                  onClick={() => { toggleDarkMode(); setIsOpen(false); }}
-                  className={`flex-1 px-4 py-3 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
-                    isDarkMode
-                      ? 'bg-white/10 text-white'
-                      : 'bg-themeRed text-white shadow-lg'
-                  }`}
-                >
-                  {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
-                  {isDarkMode ? 'Dark' : 'Light'}
-                </button>
-                {isDarkMode && (
-                  <button
-                    onClick={() => { cycleDarkStyle(); setIsOpen(false); }}
-                    className={`flex-1 px-4 py-3 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
-                      darkModeStyle === 'original'
-                        ? 'bg-themeRed text-white shadow-lg'
-                        : 'bg-white/10 text-white'
-                    }`}
-                  >
-                    <Palette size={20} />
-                    {darkModeStyle === 'github' ? 'GitHub' : 'Original'}
-                  </button>
-                )}
-              </motion.div>        
-            </div>
+            </nav>
+
+            {/* Bottom metadata */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="absolute bottom-8 text-[10px] font-mono text-white/10 tracking-wider"
+            >
+              2026
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
