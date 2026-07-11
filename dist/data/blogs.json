@@ -1,0 +1,142 @@
+[
+  {
+    "id": "1",
+    "slug": "building-scalable-ai-pipelines",
+    "title": "Building Scalable AI Pipelines for Production",
+    "excerpt": "A practical guide to designing machine learning pipelines that scale from prototype to production using modern MLOps practices.",
+    "content": [
+      "When I first started building ML pipelines, I thought the hard part was the model. I was wrong. The hard part is everything after the model — the data plumbing, the monitoring, the retraining loop.",
+      "In this post, I'll walk through the architecture I've settled on after building production ML systems for the past three years. We'll cover data validation, feature stores, model versioning, and automated retraining.",
+      "## The Core Pipeline",
+      "Every ML pipeline needs three core stages: ingest, transform, and serve. The key is making each stage independently scalable and observable.",
+      "### Data Ingestion",
+      "Use a message queue (Kafka or Redpanda) to decouple data sources from processing. This handles spikes, backfills, and schema evolution without downstream breakage.",
+      "### Feature Engineering",
+      "A feature store (Feast or Tecton) centralizes feature computation so training and inference use identical logic. No more train-serve skew.",
+      "## MLOps Practices",
+      "- Version everything: data, code, model artifacts",
+      "- Validate data schemas before training",
+      "- Monitor prediction distributions for drift",
+      "- Automate retraining on performance degradation",
+      "The result is a pipeline that runs reliably, scales horizontally, and alerts you before things break."
+    ],
+    "date": "2026-06-15",
+    "readTime": "8 min",
+    "tags": [
+      "AI",
+      "MLOps",
+      "Python"
+    ],
+    "image": "/blog/building-scalable-ai-pipelines.jpg",
+    "featured": true
+  },
+  {
+    "id": "2",
+    "slug": "react-performance-optimization",
+    "title": "React Performance: From 60fps to Butter-Smooth UIs",
+    "excerpt": "Deep dive into React rendering optimization — memoization, virtualization, and when to reach for useMemo vs useCallback.",
+    "content": [
+      "Performance in React isn't about one magic trick. It's about understanding when React re-renders, why, and whether you can skip it.",
+      "## The Three Performance Killers",
+      "### 1. Unnecessary Re-renders",
+      "Every setState call triggers a re-render of that component and all its children. React.memo stops the chain when props haven't changed — but measure first, optimize second.",
+      "### 2. Large Lists",
+      "Virtualization (react-window or tanstack-virtual) renders only the visible rows. For lists over 100 items, this is often a 10x improvement.",
+      "### 3. Heavy Computations",
+      "useMemo caches computation results. useCallback caches function references. Both are most useful when passed as props to memoized children.",
+      "## Profiling First",
+      "Before optimizing, profile with React DevTools. Find the actual bottleneck. Premature optimization is the root of all evil — even in React.",
+      "## Key Takeaways",
+      "- Let React re-render unless it hurts\n- Virtualize long lists\n- Memoize strategically, not defensively"
+    ],
+    "date": "2026-05-28",
+    "readTime": "12 min",
+    "tags": [
+      "React",
+      "Performance",
+      "TypeScript"
+    ],
+    "image": "/blog/react-performance-optimization.jpg",
+    "featured": true
+  },
+  {
+    "id": "3",
+    "slug": "data-engineering-best-practices",
+    "title": "Data Engineering Best Practices in 2026",
+    "excerpt": "Lessons learned building data pipelines that serve millions of requests — from schema design to monitoring and alerting.",
+    "content": [
+      "Data engineering has matured enormously. Here are the practices that have consistently delivered results in my projects.",
+      "## Schema Design",
+      "Always use schema-on-write with explicit validation. Avro and Protobuf beat JSON for production pipelines — they're smaller, faster, and type-safe.",
+      "## Pipeline Monitoring",
+      "Every pipeline needs four metrics: freshness, volume, latency, and error rate. Alert on deviations, not absolute values.",
+      "## The Modern Stack",
+      "- Storage: Iceberg or Delta Lake for ACID transactions on data lakes\n- Processing: Spark for batch, Flink for streaming\n- Orchestration: Dagster or Prefect over Airflow for better developer experience",
+      "## Testing Data",
+      "- Unit-test transformations\n- Integration-test end-to-end flows with sample data\n- Monitor production with data quality checks (Great Expectations)"
+    ],
+    "date": "2026-05-10",
+    "readTime": "10 min",
+    "tags": [
+      "Data",
+      "Engineering",
+      "Architecture"
+    ],
+    "image": "/blog/data-engineering-best-practices.jpg",
+    "featured": true
+  },
+  {
+    "id": "4",
+    "slug": "fullstack-architecture-patterns",
+    "title": "Full-Stack Architecture Patterns That Scale",
+    "excerpt": "Comparing monolithic, microservices, and modular monolith approaches for web applications — with real-world tradeoffs.",
+    "content": [
+      "Architecture decisions are tradeoffs. Here's how I think about the three main patterns for web applications.",
+      "## Monolith",
+      "Simple. Fast to build. One deployment. Works great for teams under 10 people and applications with clear bounded contexts.",
+      "## Microservices",
+      "Independent scaling. Independent deployments. But: network latency, distributed debugging, data consistency headaches. Worth it only when team size or product complexity demands it.",
+      "## Modular Monolith",
+      "The sweet spot. Single deployment with module boundaries enforced at the code level. You get the development speed of a monolith with the discipline of microservices. If you outgrow it, extract modules into services.",
+      "## My Recommendation",
+      "Start with a modular monolith. Use clear package boundaries, shared kernel, and database per module when needed. Extract to services only when proven necessary."
+    ],
+    "date": "2026-04-22",
+    "readTime": "7 min",
+    "tags": [
+      "Architecture",
+      "Full-Stack",
+      "DevOps"
+    ],
+    "image": "/blog/fullstack-architecture-patterns.jpg",
+    "featured": true
+  },
+  {
+    "id": "5",
+    "slug": "framer-motion-guide",
+    "title": "The Developer's Guide to Framer Motion",
+    "excerpt": "Master layout animations, gesture-based interactions, and shared layout animations with Framer Motion in React.",
+    "content": [
+      "Framer Motion makes complex animations simple. Here's what you need to know beyond the basics.",
+      "## Layout Animations",
+      "The killer feature. Add 'layout' prop to any component and Framer Motion automatically animates position and size changes. No measurements, no calculations.",
+      "## Gesture-Based Interactions",
+      "whileHover, whileTap, whileDrag, whileFocus — declarative gesture handlers that compose with any animation.",
+      "## AnimatePresence",
+      "Animate components as they enter and exit the tree. Critical for lists, modals, and page transitions. Always wrap with mode=\"wait\" for sequential animations.",
+      "## Variants",
+      "Define named animation states and orchestrate parent-child timing with staggerChildren. Cleaner than inline animate objects for complex UIs.",
+      "## Performance Tips",
+      "- Use transform operations instead of layout properties\n- Add will-change-transform for GPU acceleration\n- Prefer CSS animations for simple transitions"
+    ],
+    "date": "2026-04-05",
+    "readTime": "9 min",
+    "tags": [
+      "React",
+      "Animation",
+      "Framer Motion"
+    ],
+    "image": "/blog/framer-motion-guide.jpg",
+    "featured": true
+  }
+]

@@ -13,7 +13,6 @@ import BlogDetail from './components/section/blog/BlogDetail';
 import Contact from './components/section/Contact';
 import CustomCursor from './components/effect-animation/CustomCursor';
 import ChatbotContainer from './components/chatbot/ChatbotContainer';
-// import BottomNav from './components/layout/BottomNav';
 import ProjectsPage from './components/section/projects/ProjectsPage';
 import ProjectDetail from './components/section/projects/ProjectDetail';
 import AdminPage from './components/admin/pages/AdminPage';
@@ -117,7 +116,6 @@ const App: React.FC = () => {
         {currentPage !== 'admin' && <Header />}
         {currentPage !== 'admin' && <SideElements />}
         {currentPage !== 'admin' && <ChatbotContainer />}
-        {/* <BottomNav /> */}
 
         <main>{renderPage()}</main>
 

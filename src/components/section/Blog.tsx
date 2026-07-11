@@ -12,7 +12,7 @@ interface BlogProps {
 export default function Blog({ onViewAllClick }: BlogProps) {
   const featuredPosts = [...BLOG_POSTS]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 6);
+    .slice(0, 3);
 
   const handleViewAll = () => {
     if (onViewAllClick) {

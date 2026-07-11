@@ -10,8 +10,9 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Path to projects.json
+// Path to data files
 const projectsPath = join(__dirname, 'public', 'data', 'projects.json');
+const blogsPath = join(__dirname, 'public', 'data', 'blogs.json');
 
 /**
  * Upload Helper Functions
@@ -112,16 +113,43 @@ function readProjectsFromFile() {
  */
 function writeProjectsToFile(projects) {
   try {
-    // Ensure directory exists
     const dir = dirname(projectsPath);
     if (!existsSync(dir)) {
       mkdirSync(dir, { recursive: true });
     }
-    
     writeFileSync(projectsPath, JSON.stringify(projects, null, 2), 'utf-8');
     return true;
   } catch (error) {
     console.error('Error writing projects.json:', error);
+    return false;
+  }
+}
+
+/* ── Blog Helpers ── */
+
+function readBlogsFromFile() {
+  try {
+    if (!existsSync(blogsPath)) {
+      return [];
+    }
+    const data = readFileSync(blogsPath, 'utf-8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error reading blogs.json:', error);
+    return [];
+  }
+}
+
+function writeBlogsToFile(blogs) {
+  try {
+    const dir = dirname(blogsPath);
+    if (!existsSync(dir)) {
+      mkdirSync(dir, { recursive: true });
+    }
+    writeFileSync(blogsPath, JSON.stringify(blogs, null, 2), 'utf-8');
+    return true;
+  } catch (error) {
+    console.error('Error writing blogs.json:', error);
     return false;
   }
 }
@@ -422,6 +450,29 @@ const server = Bun.serve({
         }
       }
 
+      // Route: POST /api/upload/blog - Upload blog image
+      if (req.method === 'POST' && path === '/api/upload/blog') {
+        const formData = await req.formData();
+        const file = formData.get('file');
+        const slug = formData.get('slug') || 'new-post';
+
+        if (!file) {
+          return new Response(JSON.stringify({ error: 'No file provided' }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        }
+
+        const blogDir = join(__dirname, 'public', 'blog');
+        if (!existsSync(blogDir)) mkdirSync(blogDir, { recursive: true });
+
+        const ext = file.name.split('.').pop() || 'jpg';
+        const fileName = `${slug}.${ext}`;
+        const filePath = join(blogDir, fileName);
+        const fileBuffer = Buffer.from(await file.arrayBuffer());
+        writeFileSync(filePath, fileBuffer);
+
+        console.log(`✅ Uploaded blog image: ${fileName}`);
+        return new Response(JSON.stringify({ success: true, filePath: `/blog/${fileName}`, fileName }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+
       // Route: POST /api/create-project-folders - Create folder structure for a project
       if (req.method === 'POST' && path === '/api/create-project-folders') {
         const { projectId, slug } = await req.json();
@@ -456,6 +507,79 @@ const server = Bun.serve({
         }
       }
 
+      /* ── Blog Routes ── */
+
+      // GET /api/blogs or GET /api/blogs/:id
+      if (req.method === 'GET' && path.startsWith('/api/blogs')) {
+        const blogs = readBlogsFromFile();
+        const idMatch = path.match(/\/api\/blogs\/(.+)/);
+        if (idMatch) {
+          const id = idMatch[1];
+          const blog = blogs.find(b => b.id === id);
+          if (!blog) {
+            return new Response(JSON.stringify({ error: 'Blog not found' }), { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+          }
+          return new Response(JSON.stringify(blog), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        }
+        return new Response(JSON.stringify(blogs), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+
+      // POST /api/blogs - Create new blog
+      if (req.method === 'POST' && path === '/api/blogs') {
+        const allBlogs = readBlogsFromFile();
+        const newBlog = await req.json();
+        if (newBlog.id && newBlog.id.toString().trim()) {
+          const idExists = allBlogs.some(b => b.id === newBlog.id.toString());
+          if (idExists) {
+            return new Response(JSON.stringify({ error: `Blog ID ${newBlog.id} already exists` }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+          }
+          newBlog.id = newBlog.id.toString();
+        } else {
+          const maxId = allBlogs.reduce((max, b) => { const n = parseInt(b.id); return isNaN(n) ? max : Math.max(max, n); }, 0);
+          newBlog.id = (maxId + 1).toString();
+        }
+        newBlog.date = new Date().toISOString().split('T')[0];
+        allBlogs.push(newBlog);
+        if (writeBlogsToFile(allBlogs)) {
+          console.log(`✅ Created blog: ${newBlog.title} (ID: ${newBlog.id})`);
+          return new Response(JSON.stringify(newBlog), { status: 201, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        }
+        return new Response(JSON.stringify({ error: 'Failed to save blog' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+
+      // PUT /api/blogs/:id - Update existing blog
+      if (req.method === 'PUT' && path.startsWith('/api/blogs/')) {
+        const idMatch = path.match(/\/api\/blogs\/(.+)/);
+        if (!idMatch) return new Response(JSON.stringify({ error: 'Blog ID required' }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        const id = idMatch[1];
+        const updates = await req.json();
+        const blogsToUpdate = readBlogsFromFile();
+        const blogIndex = blogsToUpdate.findIndex(b => b.id === id);
+        if (blogIndex === -1) return new Response(JSON.stringify({ error: 'Blog not found' }), { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        blogsToUpdate[blogIndex] = { ...blogsToUpdate[blogIndex], ...updates, id };
+        if (writeBlogsToFile(blogsToUpdate)) {
+          console.log(`✅ Updated blog: ${blogsToUpdate[blogIndex].title}`);
+          return new Response(JSON.stringify(blogsToUpdate[blogIndex]), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        }
+        return new Response(JSON.stringify({ error: 'Failed to update blog' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+
+      // DELETE /api/blogs/:id - Delete blog
+      if (req.method === 'DELETE' && path.startsWith('/api/blogs/')) {
+        const idMatch = path.match(/\/api\/blogs\/(.+)/);
+        if (!idMatch) return new Response(JSON.stringify({ error: 'Blog ID required' }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        const id = idMatch[1];
+        const blogsToDelete = readBlogsFromFile();
+        const blogToDelete = blogsToDelete.find(b => b.id === id);
+        if (!blogToDelete) return new Response(JSON.stringify({ error: 'Blog not found' }), { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        const filtered = blogsToDelete.filter(b => b.id !== id);
+        if (writeBlogsToFile(filtered)) {
+          console.log(`🗑️  Deleted blog: ${blogToDelete.title}`);
+          return new Response(JSON.stringify({ message: 'Blog deleted successfully' }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        }
+        return new Response(JSON.stringify({ error: 'Failed to delete blog' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+
       // Route: GET /api/health - Health check
       if (req.method === 'GET' && path === '/api/health') {
         return new Response(
@@ -488,3 +612,4 @@ const server = Bun.serve({
 
 console.log(`🚀 Bun Admin API Server running on http://localhost:${server.port}`);
 console.log(`📁 Projects file: ${projectsPath}`);
+console.log(`📁 Blogs file: ${blogsPath}`);

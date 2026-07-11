@@ -87,16 +87,19 @@ function ServiceRow({
                     <p className="text-sm text-[#8A8A8A] leading-relaxed max-w-[420px]">
                       {service.desc}
                     </p>
-                    <button
+                    <span
                       onClick={(e) => {
                         e.stopPropagation();
                         const el = document.getElementById('contact');
                         el?.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className="inline-flex items-center gap-1 mt-2.5 text-xs font-medium text-themeRed/80 hover:text-themeRed transition-colors duration-300"
+                      onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); } }}
+                      role="button"
+                      tabIndex={0}
+                      className="inline-flex items-center gap-1 mt-2.5 text-xs font-medium text-themeRed/80 hover:text-themeRed transition-colors duration-300 cursor-pointer"
                     >
                       Hire Me →
-                    </button>
+                    </span>
                   </div>
                 </motion.div>
               )}
