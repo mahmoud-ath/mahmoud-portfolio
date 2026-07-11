@@ -12,6 +12,7 @@ import BlogPage from './components/section/blog/BlogPage';
 import BlogDetail from './components/section/blog/BlogDetail';
 import Contact from './components/section/Contact';
 import CustomCursor from './components/effect-animation/CustomCursor';
+import Preloader from './components/effect-animation/Preloader';
 import ChatbotContainer from './components/chatbot/ChatbotContainer';
 import ProjectsPage from './components/section/projects/ProjectsPage';
 import ProjectDetail from './components/section/projects/ProjectDetail';
@@ -112,6 +113,7 @@ const App: React.FC = () => {
   return (
     <DarkModeProvider>
       <div className="bg-themeLight min-h-screen font-sans text-themeDark selection:bg-themeRed/30 selection:text-themeDark dark:bg-themeDark dark:text-themeLight">
+        <Preloader />
         <CustomCursor />
         {currentPage !== 'admin' && <Header />}
         {currentPage !== 'admin' && <SideElements />}
