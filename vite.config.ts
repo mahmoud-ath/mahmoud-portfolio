@@ -25,12 +25,16 @@ export default defineConfig(({ mode }) => {
       },
       build: {
         target: 'esnext',
-        chunkSizeWarningLimit: 600,
+        cssMinify: 'lightningcss',
+        cssCodeSplit: true,
+        chunkSizeWarningLimit: 300,
         rollupOptions: {
           output: {
             manualChunks: {
-              vendor: ['react', 'react-dom', 'framer-motion'],
-              icons: ['lucide-react'],
+              'react-vendor': ['react', 'react-dom', 'react-dom/client'],
+              'animation': ['framer-motion', 'gsap'],
+              'icons': ['lucide-react'],
+              'radix': ['@radix-ui/react-scroll-area', '@radix-ui/react-separator', '@radix-ui/react-slot', '@radix-ui/react-tabs'],
             },
           },
         },

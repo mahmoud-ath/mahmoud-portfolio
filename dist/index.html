@@ -12,11 +12,19 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.svg" />
     
-    <!-- Google Fonts -->
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    
+    <!-- Google Fonts with font-display: swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Preload LCP hero image -->
+    <link rel="preload" as="image" href="/General/mahmoud-profile.jpg" fetchpriority="high">
     
     <style>
       body {
@@ -37,10 +45,11 @@
     </style>
     
     <link rel="stylesheet" href="/index.css">
-    <script type="module" crossorigin src="/assets/index-BPtRiSSb.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/vendor-y9raCa0I.js">
-    <link rel="modulepreload" crossorigin href="/assets/icons-CuK63v_8.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-DQCX9y6h.css">
+    <script type="module" crossorigin src="/assets/index-BzhGLvp_.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-CXZBankB.js">
+    <link rel="modulepreload" crossorigin href="/assets/animation-CvUhpre4.js">
+    <link rel="modulepreload" crossorigin href="/assets/icons-DRYldv1j.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CFUB3Knr.css">
   </head>
 
   <body>

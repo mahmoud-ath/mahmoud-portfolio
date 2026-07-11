@@ -21,6 +21,10 @@ const TIMING: { phase: Phase; at: number }[] = [
   { phase: 'done',      at: 2800 },
 ];
 
+// Allow instant dismiss on interactive events
+let preloaderDismissed = false;
+const dismissPreloader = () => { preloaderDismissed = true; };
+
 /* ── Dot grid pattern ── */
 const DOTS: { x: number; y: number }[] = [];
 for (let x = 0; x <= 80; x += 8)
@@ -41,6 +45,22 @@ const Preloader = () => {
     const idx = (ph: Phase) => TIMING.find(t => t.phase === ph)!.at;
     return idx(phase) >= idx(p);
   };
+
+  useEffect(() => {
+    // Dismiss preloader early if user interacts
+    const onInteraction = () => {
+      if (!preloaderDismissed && phase !== 'done') {
+        preloaderDismissed = true;
+        setPhase('done');
+      }
+    };
+    window.addEventListener('pointerdown', onInteraction, { once: true });
+    window.addEventListener('keydown', onInteraction, { once: true });
+    return () => {
+      window.removeEventListener('pointerdown', onInteraction);
+      window.removeEventListener('keydown', onInteraction);
+    };
+  }, [phase]);
 
   return (
     <AnimatePresence>

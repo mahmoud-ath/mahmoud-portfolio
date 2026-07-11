@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import Header from './components/layout/Header';
 import Hero from './components/section/Hero';
@@ -8,16 +8,24 @@ import Experience from './components/section/experience/ExperienceTabs';
 import Projects from './components/section/Projects';
 import Services from './components/section/Services';
 import Blog from './components/section/Blog';
-import BlogPage from './components/section/blog/BlogPage';
-import BlogDetail from './components/section/blog/BlogDetail';
 import Contact from './components/section/Contact';
 import CustomCursor from './components/effect-animation/CustomCursor';
 import Preloader from './components/effect-animation/Preloader';
-import ProjectsPage from './components/section/projects/ProjectsPage';
-import ProjectDetail from './components/section/projects/ProjectDetail';
-import AdminPage from './components/admin/pages/AdminPage';
 import { SITE_CONFIG } from './config';
 import { DarkModeProvider } from './contexts/DarkModeContext';
+
+// Lazy-loaded route pages — reduces initial bundle by ~200KB
+const BlogPage = lazy(() => import('./components/section/blog/BlogPage'));
+const BlogDetail = lazy(() => import('./components/section/blog/BlogDetail'));
+const ProjectsPage = lazy(() => import('./components/section/projects/ProjectsPage'));
+const ProjectDetail = lazy(() => import('./components/section/projects/ProjectDetail'));
+const AdminPage = lazy(() => import('./components/admin/pages/AdminPage'));
+
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-[60vh]">
+    <div className="w-6 h-6 border-2 border-themeRed/30 border-t-themeRed rounded-full animate-spin" />
+  </div>
+);
 
 type PageType = 'home' | 'projects' | 'blog' | 'admin' | { type: 'project'; slug: string } | { type: 'blog'; slug: string };
 
@@ -56,45 +64,49 @@ const App: React.FC = () => {
 
   const renderPage = () => {
     if (currentPage === 'admin') {
-      return <AdminPage />;
+      return <Suspense fallback={<PageLoader />}><AdminPage /></Suspense>;
     }
 
     if (currentPage === 'projects') {
-      return <ProjectsPage />;
+      return <Suspense fallback={<PageLoader />}><ProjectsPage /></Suspense>;
     }
 
     if (currentPage === 'blog') {
-      return <BlogPage />;
+      return <Suspense fallback={<PageLoader />}><BlogPage /></Suspense>;
     }
 
     if (typeof currentPage === 'object' && currentPage.type === 'project') {
       return (
-        <ProjectDetail
-          slug={currentPage.slug}
-          onBack={() => {
-            setCurrentPage('projects');
-            window.location.hash = '#/projects';
-          }}
-          onProjectSelect={(slug) => {
-            setCurrentPage({ type: 'project', slug });
-            window.location.hash = `#/projects/${slug}`;
-          }}
-        />
+        <Suspense fallback={<PageLoader />}>
+          <ProjectDetail
+            slug={currentPage.slug}
+            onBack={() => {
+              setCurrentPage('projects');
+              window.location.hash = '#/projects';
+            }}
+            onProjectSelect={(slug) => {
+              setCurrentPage({ type: 'project', slug });
+              window.location.hash = `#/projects/${slug}`;
+            }}
+          />
+        </Suspense>
       );
     }
 
     if (typeof currentPage === 'object' && currentPage.type === 'blog') {
       return (
-        <BlogDetail
-          slug={currentPage.slug}
-          onBack={() => {
-            window.location.hash = '#/blog';
-          }}
-        />
+        <Suspense fallback={<PageLoader />}>
+          <BlogDetail
+            slug={currentPage.slug}
+            onBack={() => {
+              window.location.hash = '#/blog';
+            }}
+          />
+        </Suspense>
       );
     }
 
-    // Home page
+    // Home page — loaded synchronously for instant FCP
     return (
       <>
         <Hero />

@@ -277,6 +277,8 @@
                         alt={`Mahmoud EL GHARIB — ${currentImage + 1}`}
                         className="absolute inset-0 w-full h-full object-cover"
                         draggable={false}
+                        fetchpriority={currentImage === 0 ? 'high' : 'low'}
+                        loading={currentImage === 0 ? 'eager' : 'lazy'}
                         initial={{ opacity: 0, scale: 1.05 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
