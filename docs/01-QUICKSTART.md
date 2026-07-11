@@ -6,28 +6,34 @@
 
 ## Setup
 ```bash
-npm install            # Install dependencies
-cp .env.example .env   # Environment variables (if exists)
+bun install            # Install dependencies
+# Optional: create .env.local for GEMINI_API_KEY (used at build time)
 ```
 
 ## Run (2 Terminals)
 ```bash
 # Terminal 1 — Vite frontend
-npm run dev            # → http://localhost:3004
+bun run dev            # → http://localhost:3004
 
 # Terminal 2 — Bun API server
-npm run dev:server     # → http://localhost:3001
+bun run dev:server     # → http://localhost:3001
 ```
 
-Or one command: `npm run dev:all`
+Or one command: `bun run dev:all`
 
 ## Admin Dashboard
 - URL: `http://localhost:3004/#/admin`
 - Default password: `Admin123!`
-- Change in `src/components/admin/components/AdminLogin.tsx`
+- Manage: **Projects** (CRUD) + **Blogs** (CRUD with image upload)
+- Change password in `src/components/admin/components/AdminLogin.tsx`
 
 ## Build for Production
 ```bash
-npm run build
-npm run preview        # Preview build
+bun run build
+bun run preview        # Preview build
 ```
+
+## Notes
+- The API server **must** be running for admin CRUD to work
+- Blog images upload to `public/blog/{slug}.{ext}`
+- Project media uploads to `public/Projects/{id}.{slug}/`

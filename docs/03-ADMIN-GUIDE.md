@@ -1,17 +1,20 @@
 # Admin Guide
 
 ## Access
-1. Start both servers (`npm run dev:all`)
+1. Start both servers (`bun run dev:all`)
 2. Go to `http://localhost:3004/#/admin`
 3. Enter password: `Admin123!`
 4. Session persisted in `localStorage`
 
 ## Features
-- **CRUD**: Create, Read, Update, Delete projects via web forms
+- **Projects CRUD**: Create, Read, Update, Delete projects
+- **Blog CRUD**: Create, Read, Update, Delete blog posts with image upload
 - **Search**: By title or description
 - **Filter**: By category (web-dev, machine-learning, data-analyst)
 - **Sort**: By date, title, or impact score
-- **Real-time**: Changes saved to `public/data/projects.json` instantly
+- **Real-time**: Changes saved to `public/data/projects.json` / `public/data/blogs.json` instantly
+
+---
 
 ## Project Form Fields
 | Field | Type | Required |
@@ -31,6 +34,20 @@
 | Difficulty | number (1–5) | No |
 | Flags | featured, isNew, isTrending (checkboxes) | No |
 | Dates | createdAt, completedAt | No |
+
+## Blog Form Fields
+| Field | Type | Required |
+|---|---|---|
+| Title | text | Yes |
+| Slug | text (URL-friendly) | Yes |
+| Excerpt | textarea | Yes |
+| Content | textarea (Markdown per line) | Yes |
+| Tags | text (comma-separated) | No |
+| Cover Image | file upload or URL | Yes |
+| Read Time | text | No |
+| Featured | checkbox | No |
+
+Blog images upload to `public/blog/{slug}.{ext}` via `POST /api/upload/blog`.
 
 ## Change Password
 Edit `ADMIN_PASSWORD` in `src/components/admin/components/AdminLogin.tsx`

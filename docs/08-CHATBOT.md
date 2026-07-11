@@ -1,6 +1,8 @@
-# Chatbot System
+# Chatbot System (Archived)
 
-## Architecture
+> ⚠️ **This feature has been archived.** The chatbot is preserved in `src/archive/chatbot/` for reference but is no longer active in the portfolio.
+
+## Former Architecture
 Hybrid approach combining **rule-based intent matching** + **document search fallback**.
 
 ```
@@ -9,7 +11,7 @@ User message → intentMatcher.ts → matched? → return intent response
                                                                  → no match → graceful fallback
 ```
 
-## Files (`src/components/chatbot/`)
+## Archived Files (`src/archive/chatbot/`)
 | File | Purpose |
 |---|---|
 | `ChatbotContainer.tsx` | Main wrapper & orchestrator |
@@ -24,6 +26,8 @@ User message → intentMatcher.ts → matched? → return intent response
 | `utils/intentMatcher.ts` | Keyword-based intent detection |
 | `utils/documentSearch.ts` | Document search with similarity scoring |
 | `utils/messageProcessor.ts` | Message processing pipeline |
+| `components/IconResponse.tsx` | Icon-rich message rendering |
+| `utils/iconMapping.ts` | Icon name → Lucide component mapping |
 
 ## 10 Pre-configured Intents
 greeting, about, skills, projects, experience, contact, cv-download, help, location, farewell
@@ -31,9 +35,5 @@ greeting, about, skills, projects, experience, contact, cv-download, help, locat
 ## 7 Knowledge Base Sections
 CMH Data System, SmartMaint, Road Accidents, Tech Horizon, Energy Prediction, Skills Overview, Education & Certifications
 
-## UI Features
-- Floating bubble (bottom-right) with pulse animation
-- Smooth open/close transitions
-- Unread message badge
-- Single-line input (after UX cleanup)
-- Lucide icons instead of emojis (after UX cleanup)
+## Why Archived
+The chatbot used a simple keyword-matching approach (`string.includes()`) which was not representative of the ML/AI expertise showcased in the portfolio. It's preserved for reference while a more sophisticated solution is planned.

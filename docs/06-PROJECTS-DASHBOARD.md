@@ -5,7 +5,8 @@
 - **Category filters** — web-dev, machine-learning, data-analyst
 - **Search** — by title/description
 - **Sort** — date (newest/oldest), name (asc/desc), impact (high/low)
-- **Analytics sidebar** — total count, featured count, avg impact score, by category/tier
+- **Analytics tab** — total count, featured count, avg impact score, by category/tier, GitHub stats
+- **GitHub integration** — repo stats cards for linked projects
 
 ## Project Hierarchy System
 Each project has a **tier** and **metadata** for sorting:
@@ -19,7 +20,7 @@ Each project has a **tier** and **metadata** for sorting:
 
 **Default sort**: tier → impactScore → date
 
-## Project Interface (src/lib/types/Project_Section.ts)
+## Project Interface (`src/lib/types/Project_Section.ts`)
 Key fields:
 - `id`, `slug` — identity
 - `title`, `description`, `category` — basics
@@ -31,13 +32,12 @@ Key fields:
 - `featured`, `isNew`, `isTrending` — status flags
 - `createdAt`, `completedAt` — dates
 
-## Key Hooks & Services
+## Key Hooks & Utils
 | File | Purpose |
 |---|---|
-| `src/lib/hooks/useProjectFilter.ts` | Filtering & search logic |
+| `src/lib/hooks/useProjectFilter.ts` | Filtering, search & sort logic |
 | `src/lib/hooks/useProjectStats.ts` | Statistics calculation |
-| `src/lib/hooks/useProjectData.ts` | Service-based with memoization |
-| `src/services/projectService.ts` | Singleton data processing with caching |
-| `src/services/categoryRegistry.ts` | Dynamic category management |
-| `src/services/filteringPipeline.ts` | Optimized single-pass filtering |
-| `src/lib/utils/projectUtils.ts` | 15+ utility functions (slug, format, sort) |
+| `src/lib/hooks/useGitHubStats.ts` | GitHub repository stats fetching |
+| `src/lib/utils/projectUtils.ts` | Slug generation, date formatting, featured filtering, similarity |
+| `src/lib/data/projects/projectConfig.ts` | Categories, tiers, types, difficulty config constants |
+| `src/lib/api/projectsAPI.ts` | Client-side API calls (CRUD) with fallback to static JSON |
