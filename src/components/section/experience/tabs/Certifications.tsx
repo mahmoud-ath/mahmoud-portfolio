@@ -131,6 +131,7 @@ const Certifications: React.FC<CertificationsProps> = ({ data, activeId, onItemC
                     <img
                       src={cert.image}
                       alt={cert.name}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
@@ -220,6 +221,7 @@ const Certifications: React.FC<CertificationsProps> = ({ data, activeId, onItemC
                     <img
                       src={image}
                       alt={`${activeCertification.name} credential ${index + 1}`}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:brightness-75 transition-all"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
@@ -367,6 +369,7 @@ const Certifications: React.FC<CertificationsProps> = ({ data, activeId, onItemC
                         <img
                           src={image}
                           alt={`Thumbnail ${index + 1}`}
+                          loading="lazy"
                           className="w-full h-full object-cover"
                         />
                       </motion.button>

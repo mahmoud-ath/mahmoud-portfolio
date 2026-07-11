@@ -10,25 +10,25 @@ const SERVICES = [
     id: "01",
     title: "Intelligent Systems",
     desc: "Engineering AI-powered applications that transform complex data into practical, scalable solutions.",
-    img: "public/services/system.png",
+    img: "/services/system.png",
   },
   {
     id: "02",
     title: "Digital Architecture",
     desc: "Designing robust software architectures that balance performance, maintainability, and scalability.",
-    img: "public/services/Digital Architecture.png",
+    img: "/services/Digital Architecture.png",
   },
   {
     id: "03",
     title: "Interactive Interfaces",
     desc: "Creating modern user experiences with thoughtful interactions, motion, and responsive design systems.",
-    img: "public/services/interface.png",
+    img: "/services/interface.png",
   },
   {
     id: "04",
     title: "Data Intelligence",
     desc: "Leveraging analytics and machine learning to uncover insights and support smarter decision-making.",
-    img: "public/services/data.png",
+    img: "/services/data.png",
   },
 ];
 
@@ -206,6 +206,7 @@ export default function Services() {
           <img
             src={SERVICES[active].img}
             alt={SERVICES[active].title}
+            loading="lazy"
             className="max-w-[90vw] max-h-[90vh] object-contain"
             onClick={(e) => e.stopPropagation()}
           />

@@ -24,7 +24,16 @@ export default defineConfig(({ mode }) => {
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
       },
       build: {
-        target: 'esnext'
+        target: 'esnext',
+        chunkSizeWarningLimit: 600,
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              vendor: ['react', 'react-dom', 'framer-motion'],
+              icons: ['lucide-react'],
+            },
+          },
+        },
       },
       resolve: {
         alias: {

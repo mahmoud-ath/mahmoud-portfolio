@@ -1,6 +1,6 @@
     import React, { useEffect, useRef, useState, useCallback } from "react";
     import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
-    import TrueFocus from "@/components/TrueFocus";
+    import TrueFocus from "@/src/components/effect-animation/TrueFocus";
     import { useDarkMode } from "../../contexts/DarkModeContext";
 
     // ── Theme ───────────────────────────────────────────────────
