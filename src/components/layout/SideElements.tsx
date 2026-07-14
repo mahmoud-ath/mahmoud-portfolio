@@ -1,5 +1,6 @@
 import React from 'react';
 import { Github, Instagram, Linkedin } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 import { SOCIAL_LINKS_DATA } from '../../lib/data/social_links';
 import { useCurrentSection } from '../../lib/hooks/useCurrentSection';
 
@@ -15,9 +16,11 @@ const SideElements: React.FC = () => {
         <a href={SOCIAL_LINKS_DATA.instagram} target="_blank" rel="noreferrer" className="hover:-translate-y-1 transition-transform duration-300 hover:text-themeRed">
           <Instagram size={20} />
         </a>
-        
         <a href={SOCIAL_LINKS_DATA.linkedin} target="_blank" rel="noreferrer" className="hover:-translate-y-1 transition-transform duration-300 hover:text-themeRed">
           <Linkedin size={20} />
+        </a>
+        <a href={SOCIAL_LINKS_DATA.wattsaps} target="_blank" rel="noreferrer" className="hover:-translate-y-1 transition-transform duration-300 hover:text-green-400">
+          <FaWhatsapp size={20} />
         </a>
         <div className={`w-[1px] h-24 mt-2 transition-colors duration-300 ${isDarkBackground ? 'bg-white' : 'bg-themeDark'}`}></div>
       </div>
