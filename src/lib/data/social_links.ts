@@ -6,7 +6,7 @@ export const SOCIAL_LINKS_DATA = {
   instagram: "https://instagram.com/mahmoudelgharib1",
   linkedin: "https://linkedin.com/in/mahmoud-el-gharib",
   email: "elgharib.mahmoud2@gmail.com",
-  wattsaps: "https://wa.me/0777440052"
+  wattsaps: "https://wa.me/+212777440052"
 };
 
 export const SOCIAL_LINKS = [
