@@ -1,6 +1,7 @@
 import React from 'react';
 import { Project } from '../../../../lib/types/Project_Section';
 import { PROJECT_CATEGORIES } from '../../../../lib/data/projects/projectConfig';
+import { stripMarkdown } from '../../../../lib/utils/projectUtils';
 import { Zap } from 'lucide-react';
 
 interface ProjectGridProps {
@@ -83,8 +84,8 @@ const ProjectCard: React.FC<{ project: Project; onSelect: (slug: string) => void
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 transition-colors duration-300">
-          {project.description.length > 100 ? project.description.slice(0, 100) + '...' : project.description}
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 transition-colors duration-300 line-clamp-2">
+          {stripMarkdown(project.description)}
         </p>
 
         {/* Tags */}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { getAllProjects } from '../../../lib/api/projectsAPI';
 import { getProjectBySlug, getProjectDuration, getReadingTime } from '../../../lib/utils/projectUtils';
 import { Project } from '../../../lib/types/Project_Section';
@@ -37,7 +38,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ slug, onBack, onProjectSe
         const projectsData = await getAllProjects();
         setAllProjects(projectsData);
         const foundProject = getProjectBySlug(projectsData, slug);
-        setProject(foundProject);
+        setProject(foundProject || null);
         setError(null);
       } catch (err) {
         console.error('Failed to load project:', err);
@@ -107,6 +108,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ slug, onBack, onProjectSe
   const typeInfo = PROJECT_TYPES[projectType];
   const duration = getProjectDuration(project.createdAt, project.completedAt);
   const readingTime = getReadingTime(project.description);
+  const images = project.images || [];
 
   // Extract YouTube ID for video embedding
   const extractYouTubeId = (url: string): string | null => {
@@ -261,7 +263,9 @@ const scrollToTop = () => {
             {/* Description */}
             <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
               <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">About This Project</h2>
-              <p className="text-gray-700 dark:text-gray-400 leading-relaxed">{project.description}</p>
+              <div className="text-gray-700 dark:text-gray-400 leading-relaxed prose dark:prose-invert max-w-none">
+                <ReactMarkdown>{project.description}</ReactMarkdown>
+              </div>
               <p className="text-xs text-gray-500 mt-3">{readingTime} min read</p>
             </div>
 
@@ -285,7 +289,7 @@ const scrollToTop = () => {
       </div>
 
       {/* Gallery Section */}
-      {project.images && project.images.length > 0 && (
+      {images.length > 0 && (
         <div className="px-4 sm:px-6 py-8 border-t border-gray-200 dark:border-gray-700">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
@@ -293,7 +297,7 @@ const scrollToTop = () => {
               Gallery
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {project.images.map((img, idx) => (
+              {images.map((img, idx) => (
                 <div
                   key={idx}
                   className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden cursor-pointer group"
@@ -313,7 +317,7 @@ const scrollToTop = () => {
       )}
 
       {/* Lightbox */}
-      {lightboxIndex !== null && project.images && (
+      {lightboxIndex !== null && images.length > 0 && (
         <div
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
           onClick={() => setLightboxIndex(null)}
@@ -327,11 +331,11 @@ const scrollToTop = () => {
           </button>
 
           {/* Previous */}
-          {project.images.length > 1 && (
+          {images.length > 1 && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((lightboxIndex - 1 + project.images.length) % project.images.length);
+                setLightboxIndex((lightboxIndex - 1 + images.length) % images.length);
               }}
               className="absolute left-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
             >
@@ -341,18 +345,18 @@ const scrollToTop = () => {
 
           {/* Image */}
           <img
-            src={project.images[lightboxIndex]}
+            src={images[lightboxIndex]}
             alt={`${project.title} ${lightboxIndex + 1}`}
             className="max-w-[90vw] max-h-[90vh] object-contain cursor-zoom-out"
             onClick={(e) => e.stopPropagation()}
           />
 
           {/* Next */}
-          {project.images.length > 1 && (
+          {images.length > 1 && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((lightboxIndex + 1) % project.images.length);
+                setLightboxIndex((lightboxIndex + 1) % images.length);
               }}
               className="absolute right-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
             >
@@ -362,7 +366,7 @@ const scrollToTop = () => {
 
           {/* Counter */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-medium">
-            {lightboxIndex + 1} / {project.images.length}
+            {lightboxIndex + 1} / {images.length}
           </div>
         </div>
       )}

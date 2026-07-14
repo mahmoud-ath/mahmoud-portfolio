@@ -1,7 +1,7 @@
 import React from 'react';
 import { Project } from '../../../../lib/types/Project_Section';
 import { PROJECT_CATEGORIES, DIFFICULTY_LEVELS } from '../../../../lib/data/projects/projectConfig';
-import { formatDate, getProjectStatus } from '../../../../lib/utils/projectUtils';
+import { formatDate, getProjectStatus, stripMarkdown } from '../../../../lib/utils/projectUtils';
 import { ExternalLink, Github } from 'lucide-react';
 
 interface ProjectListProps {
@@ -39,8 +39,8 @@ const ProjectListItem: React.FC<{ project: Project; onSelect: (slug: string) => 
             <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100 group-hover:text-themeRed dark:group-hover:text-themeRed transition-colors duration-500">
               {project.title}
             </h3>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 transition-colors duration-300">
-              {project.description.length > 100 ? project.description.slice(0, 100) + '...' : project.description}
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 transition-colors duration-300 line-clamp-1">
+              {stripMarkdown(project.description)}
             </p>
           </div>
           <div className="flex gap-2 flex-shrink-0">

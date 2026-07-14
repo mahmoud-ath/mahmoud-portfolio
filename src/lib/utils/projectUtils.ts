@@ -185,9 +185,28 @@ export const getProjectsByTier = (projects: Project[], tier: string): Project[] 
 };
 
 /**
- * Get projects by difficulty
- * Returns projects within difficulty range
+ * Strip markdown formatting and return plain text
+ * Used for card previews where raw markdown would look ugly
  */
+export const stripMarkdown = (text: string): string => {
+  return text
+    .replace(/#{1,6}\s+/g, '')           // headings
+    .replace(/\*\*(.+?)\*\*/g, '$1')     // bold
+    .replace(/__(.+?)__/g, '$1')         // bold (alt)
+    .replace(/\*(.+?)\*/g, '$1')         // italic
+    .replace(/_(.+?)_/g, '$1')           // italic (alt)
+    .replace(/`{1,3}[^`]*`{1,3}/g, '')  // inline/block code
+    .replace(/\[(.+?)\]\(.+?\)/g, '$1')  // links -> text
+    .replace(/!\[.*?\]\(.+?\)/g, '')     // images
+    .replace(/^[-*+]\s+/gm, '')          // unordered lists
+    .replace(/^\d+\.\s+/gm, '')          // ordered lists
+    .replace(/>\s+/gm, '')               // blockquotes
+    .replace(/^---+/gm, '')              // horizontal rules
+    .replace(/\n{2,}/g, ' ')             // double newlines -> space
+    .replace(/\n/g, ' ')                 // single newlines -> space
+    .replace(/\s{2,}/g, ' ')             // multiple spaces -> single
+    .trim();
+};
 export const getProjectsByDifficulty = (projects: Project[], minDifficulty: number, maxDifficulty: number): Project[] => {
   return projects.filter(p => p.difficulty >= minDifficulty && p.difficulty <= maxDifficulty);
 };

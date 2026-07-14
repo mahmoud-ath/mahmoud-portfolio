@@ -478,5 +478,44 @@
     "isTrending": false,
     "createdAt": "2025-12-01",
     "completedAt": "2025-12-26"
+  },
+  {
+    "slug": "alghaarib-portfolio-creative-portfolio-with-local-cms",
+    "title": "Alghaarib Portfolio - Creative Portfolio with Local CMS",
+    "description": "## **Overview**\n\n\n\nA modern portfolio platform built for creative professionals to showcase design and video projects through a clean, responsive interface.\n\n\n\n## **Key Features**\n\n\n\n- 🎨 Clean, modern, and responsive design\n\n- 🛠️ Custom local CMS for managing portfolio content\n\n- 🖼️ Image upload and media management\n\n- 🎥 YouTube video embedding with automatic thumbnail extraction\n\n- ⚡ Real-time content updates\n\n- 📱 Optimized for desktop, tablet, and mobile devices\n\n\n\n## **Highlights**\n\n\n\n- Built to simplify portfolio management for creative professionals.\n\n- Enables adding, editing, and organizing projects through an intuitive admin dashboard.\n\n- Delivers a fast, seamless browsing experience with instant content updates.",
+    "category": "web-dev",
+    "tags": [
+      "react",
+      "vite",
+      "cms",
+      "youtube-api",
+      "tailwindcss",
+      "portfolio"
+    ],
+    "image": "/Projects/11.alghaarib-portfolio-creative-portfolio-with-local-cms/images/alghaarib1.png",
+    "images": [
+      "/Projects/11.alghaarib-portfolio-creative-portfolio-with-local-cms/images/alghaarib1.png",
+      "/Projects/11.alghaarib-portfolio-creative-portfolio-with-local-cms/images/alghaarib2.png",
+      "/Projects/11.alghaarib-portfolio-creative-portfolio-with-local-cms/images/alghaarib3.png",
+      "/Projects/11.alghaarib-portfolio-creative-portfolio-with-local-cms/images/alghaarib4.png",
+      "/Projects/11.alghaarib-portfolio-creative-portfolio-with-local-cms/images/alghaarib5.png"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/mahmoud-ath/alghaarib",
+      "demo": "https://alghaarib.vercel.app/",
+      "live": "https://alghaarib.vercel.app/"
+    },
+    "videos": [],
+    "documentation": "",
+    "tier": "standard",
+    "impactScore": 15,
+    "projectType": "personal",
+    "difficulty": 3,
+    "isNew": true,
+    "isTrending": false,
+    "createdAt": "2026-07-14T20:37:07.883Z",
+    "completedAt": "2026-03-13",
+    "id": "11"
   }
 ]
