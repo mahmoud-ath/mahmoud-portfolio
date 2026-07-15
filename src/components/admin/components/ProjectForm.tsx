@@ -202,7 +202,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
     }));
   };
 
-  const validateForm = (): boolean => {
+  const validateForm = (): { valid: boolean; errors: Record<string, string> } => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.title.trim()) newErrors.title = 'Title is required';
@@ -216,12 +216,16 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return { valid: Object.keys(newErrors).length === 0, errors: newErrors };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    const { valid, errors: validationErrors } = validateForm();
+    if (!valid) {
+      console.log('❌ Form validation failed:', validationErrors);
+      return;
+    }
 
     try {
       // Include manual project ID for new projects
@@ -229,6 +233,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         ? { ...formData, id: manualProjectId }
         : formData;
       
+      console.log('📤 Submitting project data, links:', JSON.stringify(projectData.links));
       await onSubmit(projectData);
     } catch (error) {
       console.error('Form submission error:', error);
@@ -449,7 +454,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
             <div className="space-y-2">
               <div className="flex gap-2">
                 <input
-                  type="url"
+                  type="text"
                   name="docs"
                   placeholder="Docs URL"
                   value={formData.links?.docs || ''}
@@ -467,8 +472,14 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
                       if (file) {
                         try {
                           const filePath = await uploadFile(file, 'documentation');
-                          setFormData(prev => ({ ...prev, links: { ...prev.links, docs: filePath } }));
+                          console.log('📄 Document uploaded, path:', filePath);
+                          setFormData(prev => {
+                            const updated = { ...prev, links: { ...prev.links, docs: filePath } };
+                            console.log('📄 Updated formData.links:', updated.links);
+                            return updated;
+                          });
                         } catch (error) {
+                          console.error('Document upload failed:', error);
                           alert('Failed to upload document');
                         }
                       }

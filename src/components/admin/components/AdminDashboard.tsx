@@ -63,12 +63,12 @@ const AdminDashboard: React.FC = () => {
     else loadBlogs();
   }, [state.tab]);
 
-  // Clear success message after 3 seconds
+  // Clear success message after 5 seconds
   useEffect(() => {
     if (state.success) {
       const timer = setTimeout(() => {
         setState(prev => ({ ...prev, success: null }));
-      }, 3000);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [state.success]);
@@ -120,6 +120,7 @@ const AdminDashboard: React.FC = () => {
   /* ── Form Submit ── */
 
   const handleFormSubmit = async (data: any) => {
+    console.log('📥 Admin received form data, links:', JSON.stringify(data.links));
     setState(prev => ({ ...prev, loading: true }));
     try {
       if (state.tab === 'projects') {
@@ -141,9 +142,13 @@ const AdminDashboard: React.FC = () => {
         }
         await loadBlogs();
       }
-      setState(prev => ({ ...prev, formMode: 'hidden', selectedProject: null, selectedBlog: null }));
-    } catch {
-      setState(prev => ({ ...prev, error: 'Failed to save. Please try again.' }));
+      // Brief pause to show success, then return to dashboard
+      setTimeout(() => {
+        setState(prev => ({ ...prev, formMode: 'hidden', selectedProject: null, selectedBlog: null }));
+      }, 800);
+    } catch (err) {
+      console.error('Form submit error:', err);
+      setState(prev => ({ ...prev, error: `Failed to save: ${err instanceof Error ? err.message : 'Unknown error'}` }));
     } finally {
       setState(prev => ({ ...prev, loading: false }));
     }
@@ -215,6 +220,28 @@ const AdminDashboard: React.FC = () => {
           >
             ← Back to Dashboard
           </button>
+
+          {/* Form-level alerts */}
+          {state.error && (
+            <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-3">
+              <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={20} />
+              <div>
+                <p className="font-semibold text-red-800 dark:text-red-200">Error</p>
+                <p className="text-red-700 dark:text-red-300 text-sm">{state.error}</p>
+              </div>
+              <button onClick={() => setState(prev => ({ ...prev, error: null }))} className="ml-auto text-red-500 hover:text-red-700"><X size={18} /></button>
+            </div>
+          )}
+          {state.success && (
+            <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-start gap-3">
+              <AlertCircle className="text-green-500 flex-shrink-0 mt-0.5" size={20} />
+              <div>
+                <p className="font-semibold text-green-800 dark:text-green-200">Success</p>
+                <p className="text-green-700 dark:text-green-300 text-sm">{state.success}</p>
+              </div>
+            </div>
+          )}
+
           {state.tab === 'projects' ? (
             <ProjectForm
               initialData={state.selectedProject || undefined}

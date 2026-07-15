@@ -72,7 +72,6 @@
     "videos": [
       "https://youtu.be/_8Ul3Uf40yE?si=gqlS478NT0wjl39_"
     ],
-    
     "tier": "flagship",
     "impactScore": 20,
     "projectType": "client",
@@ -520,7 +519,7 @@
   {
     "slug": "ant-lion-optimizer-for-permutation-flow-shop-scheduling",
     "title": "Ant Lion Optimizer for Permutation Flow Shop Scheduling",
-    "description": "Here is a polished Markdown description suitable for a portfolio README or project page:\n\n## Overview\n\nA research-driven implementation of the **Ant Lion Optimizer (ALO)** for the **Permutation Flow Shop Scheduling Problem (PFSP)**, one of the most challenging NP-hard optimization problems in manufacturing and production planning.\n\nThe project adapts the original continuous ALO algorithm to permutation-based scheduling using the **Random Keys** representation, allowing it to optimize job sequences while preserving the algorithm's original exploration and exploitation mechanisms. Performance is evaluated on **Taillard benchmark instances** and compared against **Genetic Algorithms** and **Random Search** through rigorous statistical benchmarking.\n\n### Highlights\n\n* 🐜 Faithful implementation of the original **Ant Lion Optimizer (Mirjalili, 2015)**.\n* 🔄 Random Keys encoding for continuous-to-permutation optimization.\n* ⚙️ Efficient makespan computation for Flow Shop Scheduling.\n* 📊 Benchmarking against Genetic Algorithm and Random Search.\n* 📈 Statistical analysis with convergence curves, box plots, Gantt charts, and scalability experiments.\n* 🏭 Evaluation on industry-standard **Taillard** scheduling benchmarks.\n\nThis project demonstrates how a continuous metaheuristic can be successfully adapted to solve complex combinatorial scheduling problems through a minimal yet elegant modification, achieving competitive results while preserving the integrity of the original algorithm.\n",
+    "description": "## Overview\n\nA research-driven implementation of the **Ant Lion Optimizer (ALO)** for the **Permutation Flow Shop Scheduling Problem (PFSP)**, one of the most challenging NP-hard optimization problems in manufacturing and production planning.\n\nThe project adapts the original continuous ALO algorithm to permutation-based scheduling using the **Random Keys** representation, allowing it to optimize job sequences while preserving the algorithm's original exploration and exploitation mechanisms. Performance is evaluated on **Taillard benchmark instances** and compared against **Genetic Algorithms** and **Random Search** through rigorous statistical benchmarking.\n\n### Highlights\n\n* 🐜 Faithful implementation of the original **Ant Lion Optimizer (Mirjalili, 2015)**.\n* 🔄 Random Keys encoding for continuous-to-permutation optimization.\n* ⚙️ Efficient makespan computation for Flow Shop Scheduling.\n* 📊 Benchmarking against Genetic Algorithm and Random Search.\n* 📈 Statistical analysis with convergence curves, box plots, Gantt charts, and scalability experiments.\n* 🏭 Evaluation on industry-standard **Taillard** scheduling benchmarks.\n\nThis project demonstrates how a continuous metaheuristic can be successfully adapted to solve complex combinatorial scheduling problems through a minimal yet elegant modification, achieving competitive results while preserving the integrity of the original algorithm.\n",
     "category": "machine-learning",
     "tags": [
       "Python",
@@ -552,7 +551,7 @@
     "links": {
       "github": "https://github.com/mahmoud-ath/ALO_FLOWSHOP_METHAHEURISTIQUE",
       "demo": "",
-      "docs": "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/docs/Ant%20Lion%20Optimizer%20pour%20le%20Flow%20Shop%20Scheduling.pdf"
+      "docs": "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/docs/AntLionOptimizerpourleFlowShopScheduling.pdf"
     },
     "videos": [],
     "tier": "standard",
@@ -561,7 +560,7 @@
     "difficulty": "4",
     "isNew": false,
     "isTrending": false,
-    "createdAt": "2026-07-15T18:28:00.462Z",
+    "createdAt": "2026-07-15",
     "completedAt": "2026-07-08",
     "id": "12"
   }
