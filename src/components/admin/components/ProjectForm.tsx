@@ -36,9 +36,8 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
     image: initialData?.image || '',
     images: initialData?.images || [],
     featured: initialData?.featured || false,
-    links: initialData?.links || { github: '', demo: '', live: '' },
+    links: initialData?.links || { github: '', demo: '', docs: '' },
     videos: initialData?.videos || [],
-    documentation: initialData?.documentation || '',
     tier: initialData?.tier || 'standard',
     impactScore: initialData?.impactScore || 10,
     projectType: initialData?.projectType || 'personal',
@@ -425,44 +424,6 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
             </div>
             {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image}</p>}
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Documentation URL
-            </label>
-            <div className="space-y-2">
-              <input
-                type="text"
-                name="documentation"
-                value={formData.documentation}
-                onChange={handleChange}
-                placeholder="/Projects/docs.pdf"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-800 dark:text-white"
-              />
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-500">or</span>
-                <label className="cursor-pointer px-3 py-1 bg-purple-500 text-white text-sm rounded hover:bg-purple-600 transition">
-                  📄 Upload Document
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.txt"
-                    className="hidden"
-                    onChange={async (e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        try {
-                          const filePath = await uploadFile(file, 'documentation');
-                          setFormData(prev => ({ ...prev, documentation: filePath }));
-                        } catch (error) {
-                          alert('Failed to upload document');
-                        }
-                      }
-                    }}
-                  />
-                </label>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Links */}
@@ -485,14 +446,37 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
               onChange={handleLinkChange}
               className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-800 dark:text-white"
             />
-            <input
-              type="url"
-              name="live"
-              placeholder="Live URL"
-              value={formData.links?.live || ''}
-              onChange={handleLinkChange}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-800 dark:text-white"
-            />
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  name="docs"
+                  placeholder="Docs URL"
+                  value={formData.links?.docs || ''}
+                  onChange={handleLinkChange}
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-800 dark:text-white"
+                />
+                <label className="cursor-pointer px-3 py-2 bg-purple-500 text-white text-sm rounded-lg hover:bg-purple-600 transition whitespace-nowrap flex items-center gap-1">
+                  📄
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.txt"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        try {
+                          const filePath = await uploadFile(file, 'documentation');
+                          setFormData(prev => ({ ...prev, links: { ...prev.links, docs: filePath } }));
+                        } catch (error) {
+                          alert('Failed to upload document');
+                        }
+                      }
+                    }}
+                  />
+                </label>
+              </div>
+            </div>
           </div>
         </div>
 

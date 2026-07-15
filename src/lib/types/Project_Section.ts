@@ -25,11 +25,10 @@ export interface Project {
   image: string;
   images?: string[];
   videos?: string[]; // YouTube or video URLs
-  documentation?: string; // PDF documentation URL
   links?: {
     github?: string;
     demo?: string;
-    live?: string;
+    docs?: string;
   };
   
   // Hierarchy & Tier

@@ -11,7 +11,7 @@ export const PROJECT_CATEGORIES = {
     color: 'bg-blue-500'
   },
   'machine-learning': {
-    label: 'Machine Learning',
+    label: 'Artificial Intelligence',
     icon: 'brain',
     description: 'AI and machine learning projects',
     color: 'bg-purple-500'

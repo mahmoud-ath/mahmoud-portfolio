@@ -6,7 +6,7 @@ import { Project } from '../../../lib/types/Project_Section';
 import { PROJECT_CATEGORIES, PROJECT_TIERS, PROJECT_TYPES } from '../../../lib/data/projects/projectConfig';
 import ProjectHeader from './detail/ProjectHeader';
 import SimilarProjects from './detail/SimilarProjects';
-import { ExternalLink, Github, Target, Zap, Clock, Image, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Github, Target, Zap, Clock, Image, X, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 
 interface ProjectDetailProps {
   slug: string;
@@ -158,6 +158,17 @@ const scrollToTop = () => {
               >
                 <Github className="w-4 h-4" />
                 View Source
+              </a>
+            )}
+            {project.links?.docs && (
+              <a
+                href={project.links.docs}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 dark:bg-blue-700 text-white font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 rounded-2xl transition-all duration-300"
+              >
+                <BookOpen className="w-4 h-4" />
+                Documentation
               </a>
             )}
           </div>

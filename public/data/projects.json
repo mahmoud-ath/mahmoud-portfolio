@@ -66,12 +66,13 @@
     "featured": true,
     "links": {
       "github": "https://github.com/Farouk-elouassif/email-management-system-wmn",
-      "demo": ""
+      "demo": "",
+      "docs": ""
     },
     "videos": [
       "https://youtu.be/_8Ul3Uf40yE?si=gqlS478NT0wjl39_"
     ],
-    "documentation": "/Projects/1.cmh-data-management-system/docs/",
+    
     "tier": "flagship",
     "impactScore": 20,
     "projectType": "client",
@@ -116,12 +117,12 @@
     "featured": true,
     "links": {
       "github": "https://github.com/Anas-Ty/Predictive-maintenance",
-      "demo": ""
+      "demo": "",
+      "docs": ""
     },
     "videos": [
       "https://www.youtube.com/"
     ],
-    "documentation": "/Projects/2.smartmaint-predictive-maintenance/smartmaint-docs.pdf",
     "tier": "major",
     "impactScore": 17,
     "projectType": "Hackathon",
@@ -158,12 +159,12 @@
     "featured": true,
     "links": {
       "github": "https://github.com/mahmoud-ath/Accident-Visualization-Morocco",
-      "demo": ""
+      "demo": "",
+      "docs": "/Projects/3.morocco-road-accidents-analysis/docs/morocco-accidents-docs.pdf"
     },
     "videos": [
       "https://www.youtube.com/watch?v=Xr4WSfYdM20"
     ],
-    "documentation": "/Projects/3.morocco-road-accidents-analysis/docs/morocco-accidents-docs.pdf",
     "tier": "major",
     "impactScore": 16,
     "projectType": "Academic",
@@ -206,12 +207,12 @@
     "featured": true,
     "links": {
       "github": "https://github.com/mahmoud-ath/Horizon-tech-v1",
-      "demo": ""
+      "demo": "",
+      "docs": "/Projects/4.tech-horizon-magazine/docs/tech-horizon-docs.pdf"
     },
     "videos": [
       "https://www.youtube.com/watch?v=32DZywbZPOY"
     ],
-    "documentation": "/Projects/4.tech-horizon-magazine/docs/tech-horizon-docs.pdf",
     "tier": "major",
     "impactScore": 15,
     "projectType": "Academic",
@@ -255,10 +256,10 @@
     "featured": true,
     "links": {
       "github": "https://github.com/mahmoud-ath/Appliances-Energy-Prediction",
-      "demo": ""
+      "demo": "",
+      "docs": "/Projects/5.energy-consumption-prediction-cart/docs/RAPPORT_CART_Prediction_de_Consommation_energetique.pdf"
     },
     "videos": [],
-    "documentation": "/Projects/5.energy-consumption-prediction-cart/docs/RAPPORT_CART_Prediction_de_Consommation_energetique.pdf",
     "tier": "standard",
     "impactScore": 20,
     "projectType": "Academic",
@@ -294,10 +295,10 @@
     "featured": true,
     "links": {
       "github": "https://github.com/mahmoud-ath/markus-pub-website-officiel",
-      "demo": "https://markus-pub-website-officiel-1hxo.vercel.app/"
+      "demo": "https://markus-pub-website-officiel-1hxo.vercel.app/",
+      "docs": ""
     },
     "videos": [],
-    "documentation": "",
     "tier": "flagship",
     "impactScore": 25,
     "projectType": "client",
@@ -331,10 +332,10 @@
     "featured": true,
     "links": {
       "github": "https://github.com/mahmoud-ath/whatsapp-chat-analyzer",
-      "demo": "https://whatsapp-chat-analyzer-2.streamlit.app/"
+      "demo": "https://whatsapp-chat-analyzer-2.streamlit.app/",
+      "docs": ""
     },
     "videos": [],
-    "documentation": "",
     "tier": "standard",
     "impactScore": 18,
     "projectType": "personal",
@@ -379,10 +380,10 @@
     "featured": true,
     "links": {
       "github": "https://github.com/mahmoud-ath/Titanic-Survivor-Prediction",
-      "demo": ""
+      "demo": "",
+      "docs": ""
     },
     "videos": [],
-    "documentation": "",
     "tier": "standard",
     "impactScore": 15,
     "projectType": "personal",
@@ -425,10 +426,10 @@
     "featured": true,
     "links": {
       "github": "https://github.com/mahmoud-ath/WATCHLY-v2",
-      "demo": "https://watchly-v2.vercel.app/"
+      "demo": "https://watchly-v2.vercel.app/",
+      "docs": ""
     },
     "videos": [],
-    "documentation": "",
     "tier": "flagship",
     "impactScore": 16,
     "projectType": "personal",
@@ -466,10 +467,9 @@
     "links": {
       "github": "",
       "demo": "",
-      "live": ""
+      "docs": ""
     },
     "videos": [],
-    "documentation": "",
     "tier": "standard",
     "impactScore": 17,
     "projectType": "personal",
@@ -504,10 +504,9 @@
     "links": {
       "github": "https://github.com/mahmoud-ath/alghaarib",
       "demo": "https://alghaarib.vercel.app/",
-      "live": "https://alghaarib.vercel.app/"
+      "docs": ""
     },
     "videos": [],
-    "documentation": "",
     "tier": "standard",
     "impactScore": 15,
     "projectType": "personal",
@@ -517,5 +516,53 @@
     "createdAt": "2026-07-14T20:37:07.883Z",
     "completedAt": "2026-03-13",
     "id": "11"
+  },
+  {
+    "slug": "ant-lion-optimizer-for-permutation-flow-shop-scheduling",
+    "title": "Ant Lion Optimizer for Permutation Flow Shop Scheduling",
+    "description": "Here is a polished Markdown description suitable for a portfolio README or project page:\n\n## Overview\n\nA research-driven implementation of the **Ant Lion Optimizer (ALO)** for the **Permutation Flow Shop Scheduling Problem (PFSP)**, one of the most challenging NP-hard optimization problems in manufacturing and production planning.\n\nThe project adapts the original continuous ALO algorithm to permutation-based scheduling using the **Random Keys** representation, allowing it to optimize job sequences while preserving the algorithm's original exploration and exploitation mechanisms. Performance is evaluated on **Taillard benchmark instances** and compared against **Genetic Algorithms** and **Random Search** through rigorous statistical benchmarking.\n\n### Highlights\n\n* 🐜 Faithful implementation of the original **Ant Lion Optimizer (Mirjalili, 2015)**.\n* 🔄 Random Keys encoding for continuous-to-permutation optimization.\n* ⚙️ Efficient makespan computation for Flow Shop Scheduling.\n* 📊 Benchmarking against Genetic Algorithm and Random Search.\n* 📈 Statistical analysis with convergence curves, box plots, Gantt charts, and scalability experiments.\n* 🏭 Evaluation on industry-standard **Taillard** scheduling benchmarks.\n\nThis project demonstrates how a continuous metaheuristic can be successfully adapted to solve complex combinatorial scheduling problems through a minimal yet elegant modification, achieving competitive results while preserving the integrity of the original algorithm.\n",
+    "category": "machine-learning",
+    "tags": [
+      "Python",
+      "Optimization",
+      "Metaheuristics",
+      "Ant Lion Optimizer",
+      "PFSP",
+      "Flow Shop Scheduling",
+      "Random Keys",
+      "Benchmarking",
+      "NumPy",
+      "Matplotlib",
+      "Scheduling",
+      "Operations Research",
+      "Jupyter Notebook"
+    ],
+    "image": "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/alo1.png",
+    "images": [
+      "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/alo1.png",
+      "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/alo2.png",
+      "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/alo3.png",
+      "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/barchart_tai20_5.png",
+      "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/benchmark_comparison.png",
+      "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/boxplot_tai20_5.png",
+      "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/convergence_tai20_5.png",
+      "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/images/scalability_time.png"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/mahmoud-ath/ALO_FLOWSHOP_METHAHEURISTIQUE",
+      "demo": "",
+      "docs": "/Projects/12.ant-lion-optimizer-for-permutation-flow-shop-scheduling/docs/Ant%20Lion%20Optimizer%20pour%20le%20Flow%20Shop%20Scheduling.pdf"
+    },
+    "videos": [],
+    "tier": "standard",
+    "impactScore": 17,
+    "projectType": "Academic",
+    "difficulty": "4",
+    "isNew": false,
+    "isTrending": false,
+    "createdAt": "2026-07-15T18:28:00.462Z",
+    "completedAt": "2026-07-08",
+    "id": "12"
   }
 ]
