@@ -21,9 +21,22 @@ const TIMING: { phase: Phase; at: number }[] = [
   { phase: 'done',      at: 2800 },
 ];
 
-// Allow instant dismiss on interactive events
-let preloaderDismissed = false;
-const dismissPreloader = () => { preloaderDismissed = true; };
+const PRELOADER_KEY = 'portfolio_preloader_seen';
+
+// Check localStorage on module load
+const hasSeenPreloader = (): boolean => {
+  try {
+    return localStorage.getItem(PRELOADER_KEY) === 'true';
+  } catch {
+    return false;
+  }
+};
+
+const markPreloaderSeen = (): void => {
+  try {
+    localStorage.setItem(PRELOADER_KEY, 'true');
+  } catch { /* noop */ }
+};
 
 /* ── Dot grid pattern ── */
 const DOTS: { x: number; y: number }[] = [];
@@ -32,11 +45,16 @@ for (let x = 0; x <= 80; x += 8)
     DOTS.push({ x, y });
 
 const Preloader = () => {
-  const [phase, setPhase] = useState<Phase>('grid');
+  const [phase, setPhase] = useState<Phase>(hasSeenPreloader() ? 'done' : 'grid');
 
   useEffect(() => {
+    if (hasSeenPreloader()) return; // skip animation on repeat visits
+
     const timers = TIMING.map(({ phase: p, at }) =>
-      setTimeout(() => setPhase(p), at)
+      setTimeout(() => {
+        setPhase(p);
+        if (p === 'done') markPreloaderSeen();
+      }, at)
     );
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -49,8 +67,8 @@ const Preloader = () => {
   useEffect(() => {
     // Dismiss preloader early if user interacts
     const onInteraction = () => {
-      if (!preloaderDismissed && phase !== 'done') {
-        preloaderDismissed = true;
+      if (phase !== 'done') {
+        markPreloaderSeen();
         setPhase('done');
       }
     };

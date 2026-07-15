@@ -6,7 +6,7 @@ import { Project } from '../../../lib/types/Project_Section';
 import { PROJECT_CATEGORIES, PROJECT_TIERS, PROJECT_TYPES } from '../../../lib/data/projects/projectConfig';
 import ProjectHeader from './detail/ProjectHeader';
 import SimilarProjects from './detail/SimilarProjects';
-import { ExternalLink, Github, Target, Zap, Clock, Image, X, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
+import { ExternalLink, Github, Target, Zap, Clock, Image, X, ChevronLeft, ChevronRight, BookOpen, ZoomIn } from 'lucide-react';
 
 interface ProjectDetailProps {
   slug: string;
@@ -109,6 +109,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ slug, onBack, onProjectSe
   const duration = getProjectDuration(project.createdAt, project.completedAt);
   const readingTime = getReadingTime(project.description);
   const images = project.images || [];
+  const allImages = [project.image, ...images]; // main image + gallery for lightbox
 
   // Extract YouTube ID for video embedding
   const extractYouTubeId = (url: string): string | null => {
@@ -193,12 +194,19 @@ const scrollToTop = () => {
                   />
                 </div>
               ) : (
-                <div className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden">
+                <div
+                  className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden cursor-zoom-in group relative"
+                  onClick={() => setLightboxIndex(0)}
+                >
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
+                  {/* Zoom overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                    <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
                 </div>
               )}
             </div>
@@ -312,7 +320,7 @@ const scrollToTop = () => {
                 <div
                   key={idx}
                   className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden cursor-pointer group"
-                  onClick={() => setLightboxIndex(idx)}
+                  onClick={() => setLightboxIndex(idx + 1)} // +1 because main image is at index 0
                 >
                   <img
                     src={img}
@@ -328,7 +336,7 @@ const scrollToTop = () => {
       )}
 
       {/* Lightbox */}
-      {lightboxIndex !== null && images.length > 0 && (
+      {lightboxIndex !== null && allImages.length > 0 && (
         <div
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
           onClick={() => setLightboxIndex(null)}
@@ -342,11 +350,11 @@ const scrollToTop = () => {
           </button>
 
           {/* Previous */}
-          {images.length > 1 && (
+          {allImages.length > 1 && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((lightboxIndex - 1 + images.length) % images.length);
+                setLightboxIndex((lightboxIndex - 1 + allImages.length) % allImages.length);
               }}
               className="absolute left-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
             >
@@ -356,18 +364,18 @@ const scrollToTop = () => {
 
           {/* Image */}
           <img
-            src={images[lightboxIndex]}
+            src={allImages[lightboxIndex]}
             alt={`${project.title} ${lightboxIndex + 1}`}
             className="max-w-[90vw] max-h-[90vh] object-contain cursor-zoom-out"
             onClick={(e) => e.stopPropagation()}
           />
 
           {/* Next */}
-          {images.length > 1 && (
+          {allImages.length > 1 && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((lightboxIndex + 1) % images.length);
+                setLightboxIndex((lightboxIndex + 1) % allImages.length);
               }}
               className="absolute right-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
             >
@@ -377,7 +385,7 @@ const scrollToTop = () => {
 
           {/* Counter */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-medium">
-            {lightboxIndex + 1} / {images.length}
+            {lightboxIndex + 1} / {allImages.length}
           </div>
         </div>
       )}
