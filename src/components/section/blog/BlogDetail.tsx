@@ -1,12 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Tag, Heart, Share2, BookOpen } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { getBlogBySlug } from "../../../lib/utils/blogUtils";
 import { BLOG_POSTS } from "../../../lib/data/blogs";
 
 interface BlogDetailProps {
   slug: string;
   onBack: () => void;
+}
+
+function joinContent(content: string[]): string {
+  return content.reduce((result, line, i) => {
+    if (i === 0) return line;
+
+    const prev = content[i - 1];
+    const currIsTable = line.startsWith('|');
+    const prevIsTable = prev.startsWith('|');
+    const currIsFence = line.startsWith('```');
+    const prevIsFence = prev.startsWith('```');
+    const prevIsList = prev.startsWith('- ') || prev.startsWith('* ') || prev.startsWith('> ');
+
+    // Table rows: join with single newline
+    if (currIsTable && prevIsTable) return result + '\n' + line;
+    // Code block content (between fences): single newline
+    if (currIsFence || prevIsFence) return result + '\n' + line;
+    // List items or blockquotes: single newline
+    if (prevIsList && (line.startsWith('- ') || line.startsWith('* ') || line.startsWith('> '))) return result + '\n' + line;
+
+    // Everything else: paragraph break
+    return result + '\n\n' + line;
+  }, '');
 }
 
 function formatDate(dateStr: string) {
@@ -100,44 +127,10 @@ export default function BlogDetail({ slug, onBack }: BlogDetailProps) {
           </div>
 
           {/* Content */}
-          <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            {post.content.map((paragraph, i) => {
-              if (paragraph.startsWith("## ")) {
-                return (
-                  <h2
-                    key={i}
-                    className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4"
-                  >
-                    {paragraph.replace("## ", "")}
-                  </h2>
-                );
-              }
-              if (paragraph.startsWith("- ")) {
-                const items = paragraph.split("\n").map((line) => line.replace("- ", ""));
-                return (
-                  <ul key={i} className="list-disc pl-5 mb-4 space-y-1.5">
-                    {items.map((item, j) => (
-                      <li key={j} className="text-gray-600 dark:text-gray-400">{item}</li>
-                    ))}
-                  </ul>
-                );
-              }
-              if (paragraph.startsWith("### ")) {
-                return (
-                  <h3
-                    key={i}
-                    className="text-base md:text-lg font-semibold text-gray-900 dark:text-white mt-6 mb-3"
-                  >
-                    {paragraph.replace("### ", "")}
-                  </h3>
-                );
-              }
-              return (
-                <p key={i} className="mb-4 leading-relaxed">
-                  {paragraph}
-                </p>
-              );
-            })}
+          <div className="text-gray-700 dark:text-gray-300 leading-relaxed prose dark:prose-invert max-w-none">
+            <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
+              {joinContent(post.content)}
+            </ReactMarkdown>
           </div>
 
           {/* Share & Like */}

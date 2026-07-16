@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { getAllProjects } from '../../../lib/api/projectsAPI';
 import { getProjectBySlug, getProjectDuration, getReadingTime } from '../../../lib/utils/projectUtils';
 import { Project } from '../../../lib/types/Project_Section';
@@ -283,7 +286,7 @@ const scrollToTop = () => {
             <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
               <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">About This Project</h2>
               <div className="text-gray-700 dark:text-gray-400 leading-relaxed prose dark:prose-invert max-w-none">
-                <ReactMarkdown>{project.description}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>{project.description}</ReactMarkdown>
               </div>
               <p className="text-xs text-gray-500 mt-3">{readingTime} min read</p>
             </div>

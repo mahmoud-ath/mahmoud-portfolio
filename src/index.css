@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "katex/dist/katex.min.css";
 
 @plugin "tailwindcss-animate";
 
@@ -284,3 +285,6 @@
 .prose a { @apply text-themeRed dark:text-themeGreen underline hover:no-underline; }
 .prose blockquote { @apply border-l-4 border-themeRed dark:border-themeGreen pl-4 italic text-gray-600 dark:text-gray-300 mb-4; }
 .prose hr { @apply border-gray-200 dark:border-gray-700 my-6; }
+.prose table { @apply w-full border-collapse border border-gray-300 dark:border-gray-600 mb-4; }
+.prose th { @apply border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-4 py-2 text-left font-semibold; }
+.prose td { @apply border border-gray-300 dark:border-gray-600 px-4 py-2; }
