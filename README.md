@@ -67,7 +67,7 @@ There was a need for a **single, performant hub** that proves technical competen
 This portfolio acts as a **living proof-of-work**:
 
 - **Live CRUD dashboard** — add/edit/delete projects and blog posts through a secure admin panel without touching code
-- **12+ real project case studies** — each with architecture explanations, tech stacks, analytics, and visual galleries (20-07-26)
+- **13+ real project case studies** — each with architecture explanations, tech stacks, analytics, and visual galleries
 - **Lighthouse-optimized** — Performance 99, Best Practices 100, SEO 100, Accessibility 91
 - **Responsive across all devices** — from 4K desktops to mobile phones, with adaptive layouts and touch-friendly interactions
 
@@ -245,11 +245,11 @@ bun install
 
 ### Environment Variables
 
-Create a `.env` file in the root:
+Create a `.env.local` file in the root:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key    # Optional — for future AI chatbot
-ADMIN_PASSWORD=Admin123!               # Admin dashboard password
+ADMIN_PASSWORD=Admin123!               # Admin dashboard password (change in src/components/admin/components/AdminLogin.tsx)
 ```
 
 ### Run Development
@@ -263,7 +263,7 @@ bun run dev          # Vite → http://localhost:3004
 bun run dev:server   # Bun API → http://localhost:3001
 ```
 
-Open `http://localhost:3004` — admin panel at `/#/admin` (default password: `Admin123!`).
+Open `http://localhost:3004` — admin panel at `/#/admin` (default password: `Admin123!`, changeable in `src/components/admin/components/AdminLogin.tsx`).
 
 ### Build Production
 
@@ -327,8 +327,8 @@ bun run preview       # Preview production build on :4173
 
 | Priority | Feature | Status |
 |---|---|---|
-| 🔴 High | ML-powered chatbot (RAG + LLM) to replace legacy rule-based bot | Planned |
-| 🔴 High | Project image WebP batch conversion for remaining 61 PNG assets | In Progress |
+| 🔴 High | ML-powered chatbot (RAG + LLM) — legacy rule-based bot archived in `src/archive/chatbot/` | Planned |
+| 🔴 High | Project image WebP batch conversion for remaining PNG assets | In Progress |
 | 🟡 Medium | Integration tests for API endpoints | Planned |
 | 🟡 Medium | Automated Lighthouse CI in GitHub Actions | Planned |
 | 🟢 Low | Blog RSS feed generation | Idea |
@@ -337,7 +337,23 @@ bun run preview       # Preview production build on :4173
 
 ---
 
-## 📄 License
+## � Documentation
+
+Detailed docs are available in the [`docs/`](docs/) folder:
+
+| # | Document | Covers |
+|---|---|---|
+| 00 | [Overview](docs/00-OVERVIEW.md) | Tech stack, directory map, run commands |
+| 01 | [Quickstart](docs/01-QUICKSTART.md) | Setup, install, run instructions |
+| 02 | [Architecture](docs/02-ARCHITECTURE.md) | System layers, data flow, routing |
+| 03 | [Admin Guide](docs/03-ADMIN-GUIDE.md) | Admin dashboard usage, project & blog forms |
+| 04 | [API Reference](docs/04-API-REFERENCE.md) | All endpoints, response format, uploads |
+| 05 | [Components](docs/05-COMPONENTS.md) | Component tree by section |
+| 06 | [Projects Dashboard](docs/06-PROJECTS-DASHBOARD.md) | Filtering, hierarchy, hooks, analytics |
+| 07 | [Multimedia](docs/07-MULTIMEDIA.md) | Project media & blog images storage |
+| 08 | [Chatbot](docs/08-CHATBOT.md) | Archived legacy chatbot (preserved for reference) |
+
+## �📄 License
 
 **MIT** — Free to use, modify, and distribute. Attribution appreciated but not required.
 
