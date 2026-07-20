@@ -110,7 +110,7 @@ const Certifications: React.FC<CertificationsProps> = ({ data, activeId, onItemC
                     </span>
                   </div>
                   <p className={`font-semibold text-sm transition-colors duration-300 line-clamp-2 ${
-                    activeId === cert.id ? 'text-themeRed dark:text-themeRed' : 'text-gray-900 dark:text-white'
+                    activeId === cert.id ? 'text-green-700 dark:text-green-400' : 'text-gray-900 dark:text-white'
                   }`}>
                     {cert.name}
                   </p>

@@ -396,7 +396,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
                 name="image"
                 value={formData.image}
                 onChange={handleChange}
-                placeholder="/Projects/image.png"
+                placeholder="/Projects/image.webp"
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none ${
                   errors.image ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 } dark:bg-gray-800 dark:text-white`}

@@ -10,9 +10,9 @@
 
     // ── Portrait images for the auto-rotating carousel ─────────
     const PORTRAITS = [
-      "/General/mahmoud-profile.jpg",
-      "/General/me2.jpeg",
-      "/General/ME 3.jpeg",
+      "/General/mahmoud-profile.webp",
+      "/General/me2.webp",
+      "/General/ME 3.webp",
     ];
 
     // ── Wireframe ring behind portrait ─────────────────────────
@@ -160,7 +160,9 @@
           id="home"
           className="relative min-h-screen flex items-center overflow-hidden bg-white dark:bg-slate-950 select-none"
           onMouseMove={handleMouse}
+          aria-label="Home"
         >
+          <h1 className="sr-only">Mahmoud EL GHARIB — Full-Stack Developer &amp; AI Engineer Portfolio</h1>
           {/* ── Background layers ── */}
           <div className="absolute inset-0 bg-white dark:bg-slate-950 z-0" />
 
@@ -192,7 +194,7 @@
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: EASE }}
-                className="text-sm md:text-base uppercase tracking-[0.3em] text-slate-500 dark:text-white/35 mb-6"
+                className="text-sm md:text-base uppercase tracking-[0.3em] text-slate-500 dark:text-white/50 mb-6"
               >
                 hello I'm
               </motion.p>
@@ -200,7 +202,7 @@
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: EASE }}
-                className="text-sm md:text-base uppercase tracking-[0.3em] text-slate-500 dark:text-white/35 mb-6"
+                className="text-sm md:text-base uppercase tracking-[0.3em] text-slate-500 dark:text-white/50 mb-6"
               >
                 Mahmoud EL GHARIB
               </motion.p>
@@ -268,17 +270,19 @@
                   onMouseEnter={() => setImageHovered(true)}
                   onMouseLeave={() => setImageHovered(false)}
                 >
-                  {/* Crossfade carousel */}
-                  <div className="relative" style={{ aspectRatio: "3/4" }}>
-                    <AnimatePresence mode="wait">
-                      <motion.img
-                        key={currentImage}
-                        src={PORTRAITS[currentImage]}
-                        alt={`Mahmoud EL GHARIB — ${currentImage + 1}`}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        draggable={false}
-                        fetchpriority={currentImage === 0 ? 'high' : 'low'}
-                        loading={currentImage === 0 ? 'eager' : 'lazy'}
+{/* Crossfade carousel (all images above fold — eager load) */}
+                    <div className="relative" style={{ aspectRatio: "3/4" }}>
+                      <AnimatePresence mode="wait">
+                        <motion.img
+                          key={currentImage}
+                          src={PORTRAITS[currentImage]}
+                          alt={`Mahmoud EL GHARIB — ${currentImage + 1}`}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          draggable={false}
+                          fetchPriority="high"
+                          loading="eager"
+                          width="960"
+                          height="1280"
                         initial={{ opacity: 0, scale: 1.05 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
@@ -307,17 +311,27 @@
                     <button
                       key={i}
                       onClick={() => setCurrentImage(i)}
-                      className="rounded-full transition-all duration-500"
+                      className="rounded-full transition-all duration-500 flex items-center justify-center"
                       style={{
-                        width: i === currentImage ? 18 : 5,
-                        height: 5,
-                        backgroundColor:
-                          i === currentImage
-                            ? ACCENT_HEX
-                            : isDarkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)",
+                        width: 24,
+                        height: 24,
+                        backgroundColor: "transparent",
                       }}
                       aria-label={`Photo ${i + 1}`}
-                    />
+                    >
+                      <span
+                        className="rounded-full"
+                        style={{
+                          width: i === currentImage ? 18 : 5,
+                          height: 5,
+                          backgroundColor:
+                            i === currentImage
+                              ? ACCENT_HEX
+                              : isDarkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)",
+                          transition: "all 0.5s",
+                        }}
+                      />
+                    </button>
                   ))}
                 </div>
 

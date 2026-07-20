@@ -113,9 +113,9 @@ const Skills: React.FC = () => {
                 >
                   {/* Category Title + Count */}
                   <div className="flex items-center gap-2">
-                    <h4 className="text-base font-semibold text-slate-900 dark:text-white">
+                    <h3 className="text-base font-semibold text-slate-900 dark:text-white">
                       {category}
-                    </h4>
+                    </h3>
                     <span className="text-xs font-medium text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
                       {skills.length}
                     </span>

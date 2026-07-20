@@ -38,7 +38,7 @@ const getStatusColor = (status: string): { bg: string; text: string; border: str
     case 'completed':
       return { bg: 'bg-green-100', text: 'text-green-700', border: 'border-green-200' };
     case 'in-progress':
-      return { bg: 'bg-themeRed/10', text: 'text-themeRed', border: 'border-themeRed/30' };
+      return { bg: 'bg-themeRed/10', text: 'text-green-700 dark:text-green-400', border: 'border-themeRed/30' };
     default:
       return { bg: 'bg-gray-100', text: 'text-gray-600', border: 'border-gray-200' };
   }

@@ -38,7 +38,7 @@ const WorkExperience: React.FC<WorkExperienceProps> = ({ data, activeId, onItemC
           >
             <p className={`font-semibold text-sm transition-colors duration-300 ${
               activeId === exp.id 
-                ? 'text-themeRed dark:text-themeRed' 
+                ? 'text-green-700 dark:text-green-400' 
                 : 'text-slate-900 dark:text-white'
             }`}>
               {exp.company}
@@ -71,7 +71,7 @@ const WorkExperience: React.FC<WorkExperienceProps> = ({ data, activeId, onItemC
               <h4 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">
                 {activeExperience.role}
               </h4>
-              <p className="text-themeRed font-semibold transition-colors duration-300">
+              <p className="text-green-700 dark:text-green-400 font-semibold transition-colors duration-300">
                 @{activeExperience.company}
               </p>
             </div>

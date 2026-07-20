@@ -347,6 +347,7 @@ const scrollToTop = () => {
           {/* Close button */}
           <button
             onClick={() => setLightboxIndex(null)}
+            aria-label="Close lightbox"
             className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
           >
             <X className="w-6 h-6" />
@@ -359,6 +360,7 @@ const scrollToTop = () => {
                 e.stopPropagation();
                 setLightboxIndex((lightboxIndex - 1 + allImages.length) % allImages.length);
               }}
+              aria-label="Previous image"
               className="absolute left-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
             >
               <ChevronLeft className="w-6 h-6" />
@@ -380,6 +382,7 @@ const scrollToTop = () => {
                 e.stopPropagation();
                 setLightboxIndex((lightboxIndex + 1) % allImages.length);
               }}
+              aria-label="Next image"
               className="absolute right-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
             >
               <ChevronRight className="w-6 h-6" />

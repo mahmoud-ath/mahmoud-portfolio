@@ -70,11 +70,11 @@ export const certificationsData: Certification[] = [
     issuer: 'ALX Africa',
     date: '2025',
     status: 'active',
-    image: 'Experience/certifications/alx.jpg',
+    image: 'Experience/certifications/alx.webp',
     description: 'Comprehensive program covering essential AI concepts, practical applications, and career development in the field of artificial intelligence. Developed hands-on skills in AI tools and methodologies.',
     skills: ['AI Fundamentals', 'Machine Learning Basics', 'Data Analysis', 'AI Ethics', 'Career Development'],
     credentialUrl: [
-      'Experience/certifications/alx-certificats.jpg',
+      'Experience/certifications/alx-certificats.webp',
     ],
   }
 ];

@@ -16,35 +16,48 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
-    <!-- Google Fonts with font-display: swap -->
+    <!-- Google Fonts with font-display: optional to prevent CLS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=optional">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=optional" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Quicksand:wght@300;400;500;600;700&display=optional" rel="stylesheet"></noscript>
     
     <!-- Preload LCP hero image -->
-    <link rel="preload" as="image" href="/General/mahmoud-profile.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="/General/mahmoud-profile.webp" fetchpriority="high">
     
     <style>
+      /* Critical above-fold styles — inlined to prevent render-blocking */
       body {
         background-color: #F8F6F6;
         overflow-x: hidden;
+        margin: 0;
+        font-family: 'Quicksand', 'Montserrat', sans-serif;
       }
+      .dark body, body.dark { background-color: #0d1117; }
       :root { color-scheme: dark light; }
-      .no-scrollbar::-webkit-scrollbar {
-          display: none;
+      
+      /* Preloader / header placeholder to prevent layout shift */
+      #root { min-height: 100vh; }
+      
+      /* Above-fold hero image sizing hint */
+      img[fetchpriority="high"] { 
+        max-width: 100%; 
+        height: auto; 
       }
-      .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-      }
-      a, button, .cursor-hover {
-        cursor: none;
-      }
+      
+      /* Utility */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      a, button, .cursor-hover { cursor: none; }
+      
+      /* Prevent FOUC — hide body until JS loads */
+      body.before-ready { opacity: 0; }
+      body.ready { opacity: 1; transition: opacity 0.15s; }
     </style>
     
-    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/index.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/index.css"></noscript>
   </head>
 
   <body>

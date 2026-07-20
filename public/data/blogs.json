@@ -27,14 +27,14 @@
       "MLOps",
       "Python"
     ],
-    "image": "/blog/building-scalable-ai-pipelines.jpg",
+    "image": "/blog/building-scalable-ai-pipelines.webp",
     "featured": true
   },
   {
     "slug": "how-a-desert-insect-inspired-a-factory-scheduling-algorithm",
     "title": "How a Desert Insect Inspired a Factory Scheduling Algorithm ",
     "excerpt": " Ant Lion Optimizer adapted for permutation optimization — faithfully mirrors Mirjalili (2015) while solving the classic Flow Shop Scheduling Problem.\n",
-    "image": "/blog/how-a-desert-insect-inspired-a-factory-scheduling-algorithm.png",
+    "image": "/blog/how-a-desert-insect-inspired-a-factory-scheduling-algorithm.webp",
     "readTime": "5 min",
     "tags": [
       "flow shop problem",

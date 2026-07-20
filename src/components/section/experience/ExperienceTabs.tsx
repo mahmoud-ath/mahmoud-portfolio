@@ -79,11 +79,11 @@ const ExperienceTabs: React.FC = () => {
                   {activeTab === tab.id && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute inset-0 bg-themeRed rounded-xl"
+                      className="absolute inset-0 bg-green-700 rounded-xl"
                       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10 flex items-center gap-2">
+                  <span className={`relative z-10 flex items-center gap-2 ${activeTab === tab.id ? 'text-white' : ''}`}>
                     <IconComponent className="w-4 h-4" />
                     <span className="hidden sm:inline">{tab.label}</span>
                   </span>

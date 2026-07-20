@@ -89,7 +89,7 @@ const Header: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
           {/* ── Logo ── */}
-          <a href="#home" className="relative flex items-center gap-2 group">
+          <a href="#home" className="relative flex items-center gap-2 group" aria-label="Home">
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
               <motion.path d="M 4,2 L 2,2 L 2,6" stroke={ACCENT} strokeWidth="1" strokeLinecap="square"
                 initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6 }} />
@@ -194,6 +194,7 @@ const Header: React.FC = () => {
 
             <button
               onClick={() => setIsOpen(true)}
+              aria-label="Open menu"
               className="p-2 text-slate-900 dark:text-white lg:hidden"
             >
               <Menu size={24} />
@@ -214,6 +215,7 @@ const Header: React.FC = () => {
           >
             <button
               onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
               className="absolute top-6 right-6 p-2 text-white/40 hover:text-white transition-colors"
             >
               <X size={28} />

@@ -10,25 +10,25 @@ const SERVICES = [
     id: "01",
     title: "Intelligent Systems",
     desc: "Engineering AI-powered applications that transform complex data into practical, scalable solutions.",
-    img: "/services/system.png",
+    img: "/services/system.webp",
   },
   {
     id: "02",
     title: "Digital Architecture",
     desc: "Designing robust software architectures that balance performance, maintainability, and scalability.",
-    img: "/services/Digital Architecture.png",
+    img: "/services/Digital Architecture.webp",
   },
   {
     id: "03",
     title: "Interactive Interfaces",
     desc: "Creating modern user experiences with thoughtful interactions, motion, and responsive design systems.",
-    img: "/services/interface.png",
+    img: "/services/interface.webp",
   },
   {
     id: "04",
     title: "Data Intelligence",
     desc: "Leveraging analytics and machine learning to uncover insights and support smarter decision-making.",
-    img: "/services/data.png",
+    img: "/services/data.webp",
   },
 ];
 
@@ -199,6 +199,7 @@ export default function Services() {
         >
           <button
             onClick={() => setLightboxOpen(false)}
+            aria-label="Close lightbox"
             className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
           >
             <X className="w-5 h-5" />

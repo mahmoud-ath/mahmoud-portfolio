@@ -10,16 +10,16 @@ const SideElements: React.FC = () => {
     <>
       {/* Left Side - Socials */}
       <div className={`fixed left-6 bottom-0 hidden md:flex flex-col items-center gap-6 z-30 transition-colors duration-300 ${isDarkBackground ? 'text-white' : 'text-themeDark'}`}>
-        <a href={SOCIAL_LINKS_DATA.github} target="_blank" rel="noreferrer" className="hover:-translate-y-1 transition-transform duration-300 hover:text-themeRed">
+        <a href={SOCIAL_LINKS_DATA.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="p-2 hover:-translate-y-1 transition-transform duration-300 hover:text-themeRed">
           <Github size={20} />
         </a>
-        <a href={SOCIAL_LINKS_DATA.instagram} target="_blank" rel="noreferrer" className="hover:-translate-y-1 transition-transform duration-300 hover:text-themeRed">
+        <a href={SOCIAL_LINKS_DATA.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="p-2 hover:-translate-y-1 transition-transform duration-300 hover:text-themeRed">
           <Instagram size={20} />
         </a>
-        <a href={SOCIAL_LINKS_DATA.linkedin} target="_blank" rel="noreferrer" className="hover:-translate-y-1 transition-transform duration-300 hover:text-themeRed">
+        <a href={SOCIAL_LINKS_DATA.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-2 hover:-translate-y-1 transition-transform duration-300 hover:text-themeRed">
           <Linkedin size={20} />
         </a>
-        <a href={SOCIAL_LINKS_DATA.wattsaps} target="_blank" rel="noreferrer" className="hover:-translate-y-1 transition-transform duration-300 hover:text-green-400">
+        <a href={SOCIAL_LINKS_DATA.wattsaps} target="_blank" rel="noreferrer" aria-label="WhatsApp" className="p-2 hover:-translate-y-1 transition-transform duration-300 hover:text-green-400">
           <FaWhatsapp size={20} />
         </a>
         <div className={`w-[1px] h-24 mt-2 transition-colors duration-300 ${isDarkBackground ? 'bg-white' : 'bg-themeDark'}`}></div>

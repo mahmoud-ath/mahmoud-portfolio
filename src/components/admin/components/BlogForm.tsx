@@ -188,7 +188,7 @@ const BlogForm: React.FC<BlogFormProps> = ({
             <span className="text-xs text-gray-500 dark:text-gray-400 self-center">or paste URL below</span>
           </div>
 
-          <input type="text" name="image" value={formData.image} onChange={handleChange} className={inputClass('image')} placeholder="/blog/my-post.jpg or https://..." />
+          <input type="text" name="image" value={formData.image} onChange={handleChange} className={inputClass('image')} placeholder="/blog/my-post.webp or https://..." />
           {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image}</p>}
           {formData.image && (
             <img src={formData.image} alt="Preview" className="mt-2 h-32 w-full object-cover rounded-lg border border-gray-200 dark:border-gray-700" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />

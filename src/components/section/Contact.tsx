@@ -82,11 +82,11 @@ const Contact: React.FC = () => {
           className="mb-8"
         >
           <div className="font-mono text-cyan-300 text-sm mb-2">// connect_with_developer</div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+          <h2 className="text-4xl md:text-6xl font-bold mb-4">
             <span className="text-white">Let's</span>{' '}
             <span className="text-themeRed">create</span>
-          </h1>
-          <div className="flex items-center gap-2 text-xl text-gray-400">
+          </h2>
+          <div className="flex items-center gap-2 text-xl text-gray-300">
             <Cpu size={20} />
             <span className="font-mono">something extraordinary</span>
           </div>
@@ -148,7 +148,7 @@ const Contact: React.FC = () => {
           className="mb-5"
         >
           <div className="text-center mb-6">
-            <div className="font-mono text-gray-400 text-sm">// digital_footprint</div>
+            <div className="font-mono text-gray-300 text-sm">// digital_footprint</div>
           </div>
           <div className="flex justify-center gap-4">
             {SOCIAL_LINKS.map((link, i) => {
@@ -189,7 +189,7 @@ const Contact: React.FC = () => {
         transition={{ duration: 3, repeat: Infinity }}
       >
         <div className="w-2 h-2 bg-green-400 rounded-full" />
-        <span className="font-mono text-sm text-gray-400">
+        <span className="font-mono text-sm text-gray-300">
           status: available
         </span>
       </motion.div>
@@ -212,7 +212,7 @@ const Contact: React.FC = () => {
       </span>
       <ArrowUp
         size={16}
-        className="text-gray-400 group-hover:text-white group-hover:-translate-y-0.5 transition-transform"
+        className="text-gray-300 group-hover:text-white group-hover:-translate-y-0.5 transition-transform"
       />
     </motion.button>
   </div>
