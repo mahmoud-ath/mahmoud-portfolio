@@ -563,5 +563,46 @@
     "createdAt": "2026-07-15",
     "completedAt": "2026-07-08",
     "id": "12"
+  },
+  {
+    "slug": "my-personal-portfolio",
+    "title": "My Personal Portfolio",
+    "description": "## Overview\n\nA high-performance portfolio designed to showcase AI, Data Science, and full-stack projects through technical case studies instead of static listings. It includes a custom CMS for managing projects and blog posts while maintaining excellent performance, accessibility, and SEO.\n\n## Problem\n\nTraditional portfolios quickly become outdated, focus on technologies rather than impact, and provide little insight into the developer's engineering process. Updating content often requires modifying the source code.\n\n## Solution\n\nBuilt a modern portfolio with:\n\n- Interactive project case studies\n- Password-protected admin dashboard\n- Live CRUD content management\n- Technical blog\n- Performance-first architecture\n- Responsive and accessible design\n\n## Architecture\n\n**Frontend:** React, TypeScript, Vite, Tailwind CSS, Framer Motion, Three.js\n\n**Backend:** Bun API with JSON-based storage for lightweight content management and easy deployment.\n\n## Challenges\n\n- Optimized large images, reducing payload by over **90%**.\n- Eliminated layout shifts through improved font loading.\n- Built a lightweight CMS without relying on a database.\n- Improved accessibility by fixing Lighthouse WCAG issues.\n\n## Results\n\n- 🚀 Performance: **99**\n- ♿ Accessibility: **91**\n- ✅ Best Practices: **100**\n- 🔍 SEO: **100**\n\nAdditional improvements include faster page loads, near-zero layout shift, responsive design, and simplified content management.\n\n## What I Learned\n\nThis project strengthened my skills in frontend performance optimization, accessibility, animation, headless CMS architecture, and full-stack development with Bun. Most importantly, it taught me that a portfolio should communicate engineering decisions and project impact, not just showcase finished work.",
+    "category": "web-dev",
+    "tags": [
+      "Framer Motion",
+      "Tailwind CSS 4",
+      "Headless CMS",
+      "portfolio",
+      "React 19",
+      "management system"
+    ],
+    "image": "/Projects/13.new-project/images/Home.webp",
+    "images": [
+      "/Projects/13.new-project/images/Home.webp",
+      "/Projects/13.new-project/images/section_blog.webp",
+      "/Projects/13.new-project/images/section_contact.webp",
+      "/Projects/13.new-project/images/section_journey.webp",
+      "/Projects/13.new-project/images/section_projects.webp",
+      "/Projects/13.new-project/images/section_projects_analytics.webp",
+      "/Projects/13.new-project/images/section_projects_details.webp",
+      "/Projects/13.new-project/images/section_service.webp"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/mahmoud-ath/mahmoud-portfolio",
+      "demo": "https://mahmoud-portfolio-two.vercel.app/",
+      "docs": ""
+    },
+    "videos": [],
+    "tier": "standard",
+    "impactScore": 18,
+    "projectType": "personal",
+    "difficulty": 3,
+    "isNew": true,
+    "isTrending": true,
+    "createdAt": "2026-01-20",
+    "completedAt": "2026-07-21",
+    "id": "13"
   }
 ]
