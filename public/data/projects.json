@@ -604,5 +604,53 @@
     "createdAt": "2026-01-20",
     "completedAt": "2026-07-21",
     "id": "13"
+  },
+  {
+    "slug": "datanova-ai-data-science-platform",
+    "title": "DataNova: Ai data science platform",
+    "description": "## Overview\n\nDataNova is an end-to-end machine learning platform that streamlines the complete data science workflow, from dataset exploration to model training, prediction, and automated reporting. Instead of operating as a black-box AutoML system, it provides explainable algorithm recommendations and a guided workflow that helps users understand **why** a model is suggested.\n\nDesigned for students, researchers, analysts, and data scientists, the platform combines dataset management, preprocessing, experimentation, visualization, prediction, and report generation into a single unified environment.\n\n---\n\n## The Problem\n\nMachine learning platforms often require significant expertise and expose users to fragmented workflows. Selecting the right algorithm, preparing data, tracking experiments, and documenting results are typically manual processes. Existing AutoML solutions prioritize prediction accuracy but rarely explain the reasoning behind their recommendations.\n\n---\n\n## The Solution\n\nDataNova delivers a guided machine learning workflow that makes model development more accessible and reproducible. The platform analyzes datasets, recommends suitable algorithms with transparent reasoning, manages preprocessing through configurable pipelines, tracks every experiment, and automatically generates structured reports for academic and professional use.\n\n---\n\n## Core Features\n\n- 📂 Dataset management and exploration\n- 🧪 Visual preprocessing pipeline builder\n- 🤖 Explainable algorithm recommendation engine\n- 📊 Statistical data visualization\n- ⚙️ Model training and experiment management\n- 🔮 Model prediction interface\n- 📝 Automated report generation\n- 📜 Complete activity logging and experiment history\n\n---\n\n## Architecture\n\nThe application follows a modular full-stack architecture with clear separation between presentation, application, and persistence layers. Machine learning components are abstracted into reusable services, allowing new algorithms and workflows to be integrated without affecting the overall system design.\n\n---\n\n## Challenges\n\nDeveloping a unified interface capable of supporting multiple machine learning algorithms while maintaining transparency was one of the project's primary challenges. Additional complexity came from handling long-running training tasks, reusable preprocessing pipelines, experiment tracking, and automated documentation without compromising the user experience.\n\n---\n\n## Results\n\nDataNova provides a complete machine learning workspace where users can manage datasets, preprocess data, train models, compare algorithms, generate predictions, and produce structured reports from a single application. By emphasizing explainability over automation, the platform improves both workflow consistency and user understanding of machine learning models.\n\n---\n\n## What I Learned\n\nBuilding DataNova strengthened my understanding of:\n\n- Designing scalable full-stack architectures\n- Developing modular and maintainable machine learning systems\n- Building explainable AI workflows\n- Managing asynchronous tasks and long-running processes\n- Structuring reusable preprocessing pipelines\n- Experiment tracking and reproducibility\n- Creating user-centered developer tools instead of focusing solely on model performance",
+    "category": "machine-learning",
+    "tags": [
+      "Machine Learning",
+      "Data Science",
+      "AutoML",
+      "Recommendation System",
+      "Data Analysis",
+      "Academic Research",
+      "Full Stack",
+      "MLOps"
+    ],
+    "image": "/Projects/14.datanova-ai-data-science-platform/images/Data-Nova-PPT.webp",
+    "images": [
+      "/Projects/14.datanova-ai-data-science-platform/images/Activity Log _ DataNova (1).webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Algorithm Recommendations _ DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Analysis _ DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Analysis _ DataNova (1).webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Dashboard _ DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Data Hub _ DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/energydata_complete.csv _ DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/expirements _ DataNova (2).webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Login _ DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Model Registry _ DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Pipeline Builder _ DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/Settings-_-DataNova.webp",
+      "/Projects/14.datanova-ai-data-science-platform/images/User-Guide-_-DataNova.webp"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/Data-Nova-Project",
+      "demo": "",
+      "docs": "/Projects/14.datanova-ai-data-science-platform/docs/Data-Nova PPT.pdf"
+    },
+    "videos": [],
+    "tier": "flagship",
+    "impactScore": 19,
+    "projectType": "Academic",
+    "difficulty": "4",
+    "isNew": true,
+    "isTrending": true,
+    "createdAt": "2026-07-21T19:08:11.137Z",
+    "completedAt": "2026-03-18",
+    "id": "14"
   }
 ]
