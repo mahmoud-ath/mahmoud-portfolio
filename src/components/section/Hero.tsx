@@ -162,7 +162,7 @@
           onMouseMove={handleMouse}
           aria-label="Home"
         >
-          <h1 className="sr-only">Mahmoud EL GHARIB — Full-Stack Developer &amp; AI Engineer Portfolio</h1>
+          <h1 className="sr-only">Mahmoud EL GHARIB — AI &amp; Data Science Portfolio</h1>
           {/* ── Background layers ── */}
           <div className="absolute inset-0 bg-white dark:bg-slate-950 z-0" />
 
@@ -276,7 +276,7 @@
                         <motion.img
                           key={currentImage}
                           src={PORTRAITS[currentImage]}
-                          alt={`Mahmoud EL GHARIB — ${currentImage + 1}`}
+                          alt="Portrait of Mahmoud EL GHARIB"
                           className="absolute inset-0 w-full h-full object-cover"
                           draggable={false}
                           fetchPriority="high"

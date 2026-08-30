@@ -1,0 +1,5 @@
+# robots.txt — https://mahmoud-elgharib.me
+User-agent: *
+Allow: /
+
+Sitemap: https://mahmoud-elgharib.me/sitemap.xml
