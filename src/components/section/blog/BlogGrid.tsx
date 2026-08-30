@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Clock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { BlogPost } from "../../../lib/data/blogs";
 
 interface BlogGridProps {
@@ -8,9 +9,14 @@ interface BlogGridProps {
 }
 
 const BlogListItem: React.FC<{ post: BlogPost; index: number }> = ({ post, index }) => {
+  const navigate = useNavigate();
   return (
     <motion.a
-      href={`#/blog/${post.slug}`}
+      href={`/blog/${post.slug}`}
+      onClick={(e) => {
+        e.preventDefault();
+        navigate(`/blog/${post.slug}`);
+      }}
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

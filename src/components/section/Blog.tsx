@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import SectionHeader from "../layout/SectionHeader";
@@ -10,6 +11,7 @@ interface BlogProps {
 }
 
 export default function Blog({ onViewAllClick }: BlogProps) {
+  const navigate = useNavigate();
   const featuredPosts = [...BLOG_POSTS]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
@@ -18,7 +20,7 @@ export default function Blog({ onViewAllClick }: BlogProps) {
     if (onViewAllClick) {
       onViewAllClick();
     } else {
-      window.location.hash = '#/blog';
+      navigate('/blog');
     }
   };
 

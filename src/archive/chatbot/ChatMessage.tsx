@@ -13,7 +13,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
   const handleProjectRedirect = () => {
     if (message.projectSlug) {
-      window.location.href = `/#/projects/${message.projectSlug}`;
+      window.location.href = `/projects/${message.projectSlug}`;
     }
   };
 

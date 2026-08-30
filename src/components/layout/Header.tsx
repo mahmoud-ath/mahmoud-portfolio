@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { X, Home, Briefcase, Code2, BookOpen, FileText, Moon, Sun, Palette, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 
 const ACCENT = "#3fb950";
@@ -14,11 +15,21 @@ const NAV_ITEMS = [
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const [currentPage, setCurrentPage] = useState<'home' | 'projects' | 'blog'>('home');
+  const [scrollActive, setScrollActive] = useState('home');
   const { isDarkMode, darkModeStyle, toggleDarkMode, cycleDarkStyle } = useDarkMode();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pathname = location.pathname;
+
+  // Active nav item: on the homepage it tracks the visible section, on sub-pages it tracks the route
+  const activeSection = useMemo(() => {
+    if (pathname.startsWith('/projects')) return 'projects';
+    if (pathname.startsWith('/blog')) return 'blog';
+    if (pathname !== '/') return 'home';
+    return scrollActive;
+  }, [pathname, scrollActive]);
 
   // ── Scroll detection ──
   useEffect(() => {
@@ -28,51 +39,63 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // ── Hash routing ──
+  // ── Scroll-based active section (homepage only) ──
   useEffect(() => {
-    const parse = () => {
-      const raw = window.location.hash.slice(1);
-      const hasSlash = raw.startsWith('/');
-      const parts = raw.split('/').filter(Boolean);
-      if (parts.length === 0 || parts[0] === 'home') setCurrentPage('home');
-      else if (parts[0] === 'projects') setCurrentPage('projects');
-      else if (parts[0] === 'blog' && hasSlash && parts.length === 1) setCurrentPage('blog');
-      else setCurrentPage('home');
-    };
-    parse();
-    window.addEventListener('hashchange', parse);
-    return () => window.removeEventListener('hashchange', parse);
-  }, []);
-
-  // ── Scroll-based active section ──
-  useEffect(() => {
-    if (currentPage !== 'home') return;
+    if (pathname !== '/') return;
     const onScroll = () => {
       for (const { id } of NAV_ITEMS) {
         const el = document.getElementById(id);
         if (!el) continue;
         const r = el.getBoundingClientRect();
-        if (r.top <= 120 && r.bottom >= 120) { setActiveSection(id); break; }
+        if (r.top <= 120 && r.bottom >= 120) { setScrollActive(id); break; }
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [currentPage]);
+  }, [pathname]);
 
   // ── Navigation handler ──
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const handleNavClick = useCallback((e: React.MouseEvent, id: string) => {
-    if (currentPage !== 'home') {
+    const onHome = pathname === '/';
+
+    if (id === 'home') {
       e.preventDefault();
-      window.location.hash = '#home';
-      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 100);
+      if (onHome) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/');
+      }
       return;
     }
-    // Double-click → dashboard
-    if ((id === 'projects' || id === 'blog') && activeSection === id) {
+
+    // Projects / Blog: on the homepage they scroll to the section; clicking again opens the full page
+    if (id === 'projects' || id === 'blog') {
       e.preventDefault();
-      window.location.hash = id === 'projects' ? '#/projects' : '#/blog';
+      if (onHome) {
+        if (activeSection === id) {
+          navigate(`/${id}`);
+        } else {
+          scrollToSection(id);
+        }
+      } else {
+        navigate(`/${id}`);
+      }
+      return;
     }
-  }, [currentPage, activeSection]);
+
+    // Services / Contact: scroll to the section (navigate home first if needed)
+    e.preventDefault();
+    if (onHome) {
+      scrollToSection(id);
+    } else {
+      navigate('/');
+      setTimeout(() => scrollToSection(id), 150);
+    }
+  }, [pathname, activeSection, navigate]);
 
   const headerHeight = scrolled ? 'h-14' : 'h-16';
   const bgOpacity = scrolled ? 'bg-white/90 dark:bg-slate-950/90' : 'bg-transparent';
@@ -89,7 +112,16 @@ const Header: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
           {/* ── Logo ── */}
-          <a href="#home" className="relative flex items-center gap-2 group" aria-label="Home">
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              if (pathname !== '/') navigate('/');
+              else window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="relative flex items-center gap-2 group"
+            aria-label="Home"
+          >
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
               <motion.path d="M 4,2 L 2,2 L 2,6" stroke={ACCENT} strokeWidth="1" strokeLinecap="square"
                 initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6 }} />

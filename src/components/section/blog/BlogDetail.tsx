@@ -7,6 +7,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { getBlogBySlug } from "../../../lib/utils/blogUtils";
 import { BLOG_POSTS } from "../../../lib/data/blogs";
+import { useNavigate } from "react-router-dom";
 
 interface BlogDetailProps {
   slug: string;
@@ -45,6 +46,7 @@ function formatDate(dateStr: string) {
 }
 
 export default function BlogDetail({ slug, onBack }: BlogDetailProps) {
+  const navigate = useNavigate();
   const [liked, setLiked] = useState(false);
   const post = getBlogBySlug(slug);
 
@@ -174,7 +176,11 @@ export default function BlogDetail({ slug, onBack }: BlogDetailProps) {
               {relatedPosts.map((related) => (
                 <a
                   key={related.id}
-                  href={`#/blog/${related.slug}`}
+                  href={`/blog/${related.slug}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/blog/${related.slug}`);
+                  }}
                   className="group bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden hover:border-themeRed dark:hover:border-themeRed transition-all duration-500"
                 >
                   <div className="h-32 bg-gray-100 dark:bg-gray-800 overflow-hidden">

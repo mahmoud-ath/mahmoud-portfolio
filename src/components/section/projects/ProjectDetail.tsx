@@ -138,7 +138,7 @@ const scrollToTop = () => {
       <div className="pt-16 sm:pt-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto pt-12">
           {/* Header with Breadcrumb */}
-          <ProjectHeader project={project} />
+          <ProjectHeader project={project} onBack={onBack} />
 
           {/* Live Demo Button */}
           <div className="flex flex-wrap gap-3 mb-8">

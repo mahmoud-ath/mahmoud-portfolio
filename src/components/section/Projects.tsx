@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getAllProjects } from '../../lib/api/projectsAPI';
 import { getFeaturedProjects } from '../../lib/utils/projectUtils';
@@ -12,6 +13,7 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ onViewAllClick }) => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,12 +43,12 @@ const Projects: React.FC<ProjectsProps> = ({ onViewAllClick }) => {
     if (onViewAllClick) {
       onViewAllClick();
     } else {
-      window.location.hash = '#/projects';
+      navigate('/projects');
     }
   };
 
   const handleProjectSelect = (slug: string) => {
-    window.location.hash = `#/projects/${slug}`;
+    navigate(`/projects/${slug}`);
   };
 
   const scrollToTop = () => {
