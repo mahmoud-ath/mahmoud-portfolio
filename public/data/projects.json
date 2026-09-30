@@ -660,5 +660,57 @@
     "createdAt": "2025-12-10",
     "completedAt": "2026-03-18",
     "id": "14"
+  },
+  {
+    "slug": "grocery-sales-bi-data-mining-machine-learning",
+    "title": "Grocery Sales: BI, Data Mining & Machine Learning",
+    "description": "# Overview\n\nGrocery Sales is an end-to-end analytics project that transforms raw grocery transaction data into actionable business insights through two complementary approaches: a classic Power BI pipeline (Apache Hop → PostgreSQL → Power BI → Data Mining → ML) and a full-stack code-oriented web dashboard (FastAPI + Next.js + PostgreSQL). The project covers the complete analytics lifecycle — ETL, data warehousing, interactive dashboards, market basket analysis, and revenue forecasting.\n\nDesigned for BI analysts, data scientists, and students, the platform demonstrates how the same dataset can be explored through both a low-code BI stack and a modern web application, reproducing all dashboards and analyses in each environment.\n\n---\n\n## The Problem\n\nGrocery retail datasets are large, relational, and messy — over 6.7 million sales transactions spread across products, customers, employees, cities, and countries. Extracting meaningful business insights requires a clean data warehouse, well-designed dashboards, association rule mining, and reliable forecasting. Most projects stop at visualization and never close the loop from ETL to prediction.\n\n---\n\n## The Solution\n\nThis project delivers two fully independent yet complementary pipelines. **Approach 1** builds a 5-step Power BI pipeline: Apache Hop handles ETL into a PostgreSQL star schema, Power BI serves interactive dashboards, DAX performs Market Basket Analysis, and a Python ML pipeline forecasts revenue. **Approach 2** rebuilds the entire experience as a production-grade web application with a FastAPI backend, Next.js frontend, materialized views, and a pandas ETL pipeline — proving the same analytics can be delivered through code.\n\n---\n\n## Core Features\n\n- 📂 Full ETL pipeline from raw Kaggle CSVs to a PostgreSQL star schema\n- 🏢 Power BI dashboards for sales, products, customers, and employees\n- 🛒 Market Basket Analysis with Support, Confidence, and Lift metrics\n- 🤖 Revenue forecasting with Holt-Winters, XGBoost, Random Forest, and weighted ensemble\n- 📊 Interactive web dashboards built with Next.js, Recharts, and TanStack Query\n- ⚙️ FastAPI backend with 8 routers, 30+ endpoints, and 5 materialized views\n- 📝 Automated reporting with PDF technical reports and PowerPoint presentations\n- 📜 Complete experiment tracking across 6 ML notebooks and 5-step pipeline\n\n---\n\n## Architecture\n\n**Approach 1 — Power BI Pipeline**\n\n```\nApache Hop (ETL) → PostgreSQL (Star Schema) → Power BI (Dashboards)\n→ Data Mining (Basket Analysis) → Machine Learning (Forecasting)\n```\n\n**Approach 2 — Dashboard Version**\n\n```\nNext.js Frontend → FastAPI API → Services → Repository → SQLAlchemy ORM → PostgreSQL\n                                      ↑\n                            ETL Pipeline (pandas)\n```\n\nThe web application follows a clean layered architecture with clear separation between presentation, API, business logic, data access, and persistence layers. Machine learning components are isolated in Jupyter notebooks with a strict execution order.\n\n---\n\n## Challenges\n\nReconciling two parallel pipelines that share the same data model but use entirely different tooling was a primary challenge. Additional complexity came from handling COVID-19 anomalies in the revenue time series (corrected via STL decomposition), building a basket analysis materialized view over 6.69M rows, ensuring reproducible ML experiments across 6 interdependent notebooks, and optimizing PostgreSQL queries with composite indexes and materialized views for sub-second dashboard response times.\n\n---\n\n## Results\n\n**Approach 1 — Power BI**\n\n- 75,020 association rules discovered in basket analysis\n- Holt-Winters champion model: **MAPE 4.92%**, R² **0.8678**\n- XGBoost best ML model: MAPE 5.56%, R² 0.8184\n- 2023 revenue forecast: **14.78M€** (+4.8% YoY vs 2022)\n\n**Approach 2 — Dashboard Version**\n\n- 6,690,599 sales transactions loaded\n- 98,759 customers, 452 products, 11 categories, 23 employees\n- 5 materialized views, 15+ indexes\n- 30+ REST API endpoints\n- 10 Recharts chart components with expandable full-screen modals\n\n---\n\n## What I Learned\n\nBuilding this project strengthened my understanding of:\n\n- Designing star schemas for analytical workloads\n- Building ETL pipelines with both Apache Hop and Python pandas\n- Writing efficient analytical SQL with materialized views and indexes\n- Implementing Market Basket Analysis with DAX and Python\n- Time series forecasting with Holt-Winters, XGBoost, and Random Forest\n- Handling COVID-19 anomalies via STL decomposition and residual interpolation\n- Ensemble methods with inverse MAPE weighting\n- Statistical testing with Diebold-Mariano and bootstrap confidence intervals\n- Building full-stack analytics dashboards with FastAPI and Next.js\n- Reproducible ML workflows with strict notebook execution order",
+    "category": "data-analyst",
+    "tags": [
+      "ETL",
+      "BI",
+      "POWER BI",
+      "XGBOOST",
+      "TIME SERIES FORECASTING",
+      "APACHE HOP",
+      "POSTGRESQL",
+      "MACHINE LEARNING"
+    ],
+    "image": "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/product_performance.png",
+    "images": [
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/Apache Hop.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/Capture d'écran 2026-06-01 014147.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/Capture d'écran 2026-06-03 020525.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/Capture d'écran 2026-06-03 020535.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/Capture d'écran 2026-06-03 020543.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/Capture d'écran 2026-06-03 020549.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/Capture d'écran 2026-06-03 020602.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/data model.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/basket_analysis.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/customer_performance.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/employee_performance.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/modal_for_each_chart.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/product_performance.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/sale_performance.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/demarche_de_projet.png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/diagaram_de architecture .png",
+      "/Projects/15.grocery-sales-bi-data-mining-machine-learning/images/etl_diagram_detailled.png"
+    ],
+    "featured": true,
+    "links": {
+      "github": "https://github.com/mahmoud-ath/Bi_project",
+      "demo": "",
+      "docs": "/Projects/15.grocery-sales-bi-data-mining-machine-learning/docs/PPT_Grocery_Sales_BI_Dashboard.pdf"
+    },
+    "videos": [],
+    "tier": "flagship",
+    "impactScore": 17,
+    "projectType": "Academic",
+    "difficulty": 3,
+    "isNew": true,
+    "isTrending": true,
+    "createdAt": "2026-09-30T10:43:14.407Z",
+    "completedAt": "2026-06-23",
+    "id": "15"
   }
 ]
